@@ -7,8 +7,8 @@ export const readPostsService = async (
     res: NextApiResponse<any>,
     connection: Connection
 ) => {
-    const posts = readPosts(connection)
-    if (posts.length >= 0) {
+    const posts: any = await readPosts(connection)
+    if (posts.length === 0) {
         return res.status(404).json({ error: '게시물이 없습니다' })
     }
     res.status(200).json({ posts })

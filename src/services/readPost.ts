@@ -8,7 +8,7 @@ export const readPostService = async (
     connection: Connection
 ) => {
     const idx = parseInt(req.query.idx as string)
-    const post = await readPost({ idx, connection })
+    const post: any = await readPost({ idx, connection })
     if (isNaN(idx)) {
         return res
             .status(404)
@@ -17,5 +17,5 @@ export const readPostService = async (
     if (Array.isArray(post) && post.length === 0) {
         return res.status(404).json({ error: '게시물이 없습니다' })
     }
-    res.status(200).json({ post })
+    res.status(200).json({ post: post[0] })
 }

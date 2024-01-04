@@ -1,15 +1,17 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { Connection } from 'mysql2/promise'
 import { createPost } from '@/dao/posts'
+import { JwtPayload } from 'jsonwebtoken'
 
 export const createPostsService = async (
     req: NextApiRequest,
     res: NextApiResponse<any>,
-    connection: Connection
+    connection: Connection,
+    payload: JwtPayload
 ) => {
-    const { userIdx, title, content } = req.body
+    const { title, content } = req.body
     const result: any = await createPost({
-        userIdx,
+        userIdx: payload.idx,
         title,
         content,
         connection,

@@ -13,9 +13,9 @@ export default async function handler(
     if (req.method === 'GET') {
         await readPostController(req, res, connection)
     } else if (req.method === 'DELETE') {
-        await deletePostController
+        await deletePostController(req, res, connection)
     } else if (req.method === 'PUT') {
-        await updatePostController
+        await updatePostController(req, res, connection)
     } else {
         res.status(400).json({ error: '해당 메서드는 지원하지 않습니다' })
     }

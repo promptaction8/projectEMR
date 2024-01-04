@@ -22,14 +22,15 @@ interface IReadPost {
     idx: number
     connection: Connection
 }
-export const readPost = async ({ idx, connection }: IReadPosts) => {
+export const readPost = async ({ idx, connection }: IReadPost) => {
     const [rows, fields] = await connection.query(
-        `SELECT * FROM post WHERE idx=${idx}`
+        `SELECT * FROM post_connect WHERE idx=${idx}`
     )
+    return rows
 }
 
 export const readPosts = async (connection: Connection) => {
-    const [rows, fields] = await connection.query(`SELECT * FROM post`)
+    const [rows, fields] = await connection.query(`SELECT * FROM post_connect`)
     return rows
 }
 
@@ -40,12 +41,14 @@ export const updatePost = async (
     connection: Connection
 ) => {
     const [rows, fields] = await connection.query(
-        `UPDATE post SET title="${title}", content="${content}" WHERE idx=${idx}`
+        `UPDATE post_connect SET title="${title}", content="${content}" WHERE idx=${idx}`
     )
+    return rows
 }
 
 export const deletePost = async (idx: number, connection: Connection) => {
     const [rows, fields] = await connection.query(
-        `DELETE FROM post WHERE idx=${idx}`
+        `DELETE FROM post_connect WHERE idx=${idx}`
     )
+    return rows
 }

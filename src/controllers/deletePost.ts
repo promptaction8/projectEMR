@@ -28,8 +28,5 @@ export const deletePostController = async (
     } catch (error) {
         return res.status(400).json({ error: '비정상적인 토큰입니다' })
     }
-    if (password === '' || password === undefined) {
-        return res.status(404).json({ message: '비밀번호가 정확하지 않습니다' })
-    }
     await deletePostService(req, res, connection, payload)
 }

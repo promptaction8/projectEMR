@@ -1,1 +1,1 @@
-export const SECRETE_KEY = '123'
+export const SECRET_KEY = '123'

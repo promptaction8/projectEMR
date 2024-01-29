@@ -1,4 +1,4 @@
-import { SECRETE_KEY } from '@/constants'
+import { SECRET_KEY } from '@/constants'
 import { authTestService } from '@/services/authTest'
 import { verify } from 'jsonwebtoken'
 import type { JwtPayload } from 'jsonwebtoken'
@@ -23,7 +23,7 @@ export const authTestController = async (
     try {
         const payload = (await verify(
             authorization.replace('Bearer ', ''),
-            SECRETE_KEY
+            SECRET_KEY
         )) as JwtPayload
         await authTestService(req, res, connection, payload)
     } catch (e) {

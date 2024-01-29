@@ -3,7 +3,7 @@ import { Connection } from 'mysql2/promise'
 import { getUser } from '@/dao/users'
 import jwt from 'jsonwebtoken'
 import { compare } from 'bcrypt'
-import { SECRETE_KEY } from '@/constants'
+import { SECRET_KEY } from '@/constants'
 
 export const loginService = async (
     req: NextApiRequest,
@@ -37,7 +37,7 @@ export const loginService = async (
             iat: issuedAt,
             exp: expirationTime,
         },
-        SECRETE_KEY
+        SECRET_KEY
     )
 
     res.status(200).json({ token: token })

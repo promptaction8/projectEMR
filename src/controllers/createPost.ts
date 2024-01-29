@@ -2,14 +2,14 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import { Connection } from 'mysql2/promise'
 import { createPostsService } from '@/services/createPost'
 import { verify, JwtPayload } from 'jsonwebtoken'
-import { SECRETE_KEY } from '@/constants'
+import { SECRET_KEY } from '@/constants'
 export const createPostsController = async (
     req: NextApiRequest,
     res: NextApiResponse<any>,
     connection: Connection
 ) => {
     const { authorization } = req.headers
-    console.log('🚀 ~ file: createPost.ts:12 ~ authorization:', authorization)
+    console.log('🚀 ~ req.headers:', req.headers)
     if (authorization === undefined) {
         return res
             .status(400)
@@ -19,7 +19,7 @@ export const createPostsController = async (
     try {
         payload = (await verify(
             authorization.replace('Bearer ', ''),
-            SECRETE_KEY
+            SECRET_KEY
         )) as JwtPayload
     } catch (error) {
         return res.status(400).json({ error: '비정상적인 토큰입니다' })

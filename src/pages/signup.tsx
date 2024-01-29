@@ -2,6 +2,7 @@ import { useMutation } from '@tanstack/react-query'
 import axios from 'axios'
 import { useForm } from 'react-hook-form'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 interface IFormField {
     name: string
@@ -11,9 +12,13 @@ interface IFormField {
 
 function SignUp() {
     const { register, handleSubmit } = useForm<IFormField>()
+    const router = useRouter()
     const signUpMutation = useMutation({
         mutationFn: (data: IFormField) => {
             return axios.post('/api/signup', data)
+        },
+        onSuccess: () => {
+            router.push('/login')
         },
     })
     const signUp = (data: IFormField) => {

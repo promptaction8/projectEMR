@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import { Connection } from 'mysql2/promise'
 import { updatePostService } from '@/services/updatePost'
 import { JwtPayload } from 'jsonwebtoken'
-import { SECRETE_KEY } from '@/constants'
+import { SECRET_KEY } from '@/constants'
 import { verify } from 'jsonwebtoken'
 
 export const updatePostController = async (
@@ -21,7 +21,7 @@ export const updatePostController = async (
     try {
         payload = (await verify(
             authorization.replace('Bearer ', ''),
-            SECRETE_KEY
+            SECRET_KEY
         )) as JwtPayload
     } catch (error) {
         return res.status(400).json({ error: '비정상적인 토큰입니다' })

@@ -3,7 +3,7 @@ import { Connection } from 'mysql2/promise'
 import { deletePostService } from '@/services/deletePost'
 import { JwtPayload } from 'jsonwebtoken'
 import { verify } from 'jsonwebtoken'
-import { SECRETE_KEY } from '@/constants'
+import { SECRET_KEY } from '@/constants'
 import { getUser } from '@/dao/users'
 
 export const deletePostController = async (
@@ -23,7 +23,7 @@ export const deletePostController = async (
     try {
         payload = (await verify(
             authorization.replace('Bearer ', ''),
-            SECRETE_KEY
+            SECRET_KEY
         )) as JwtPayload
     } catch (error) {
         return res.status(400).json({ error: '비정상적인 토큰입니다' })

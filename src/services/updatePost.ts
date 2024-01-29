@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import { Connection } from 'mysql2/promise'
 import { updatePost, readPost } from '@/dao/posts'
 import { JwtPayload } from 'jsonwebtoken'
-import { SECRETE_KEY } from '@/constants'
+import { SECRET_KEY } from '@/constants'
 import { verify } from 'jsonwebtoken'
 
 export const updatePostService = async (
@@ -14,8 +14,6 @@ export const updatePostService = async (
     const idx = parseInt(req.query.idx as string)
     const { title, content } = req.body
     const post: any = await readPost({ idx, connection })
-    console.log('🚀 ~ file: updatePost.ts:19 ~ post:', post)
-    console.log('🚀 ~ file: updatePost.ts:20 ~ payload.idx:', payload.idx)
     if (!post || post.length === 0) {
         // post 배열이 비어 있거나 undefined일 경우 에러 처리
         return res.status(404).json({ error: '게시물을 찾을 수 없습니다' })

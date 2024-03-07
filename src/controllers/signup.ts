@@ -1,8 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { Connection } from 'mysql2/promise'
-import { createUserService } from '@/services/signup'
+import { signUpService } from '@/services/signup'
 
-export const createUserController = async (
+export const signUpController = async (
     req: NextApiRequest,
     res: NextApiResponse<any>,
     connection: Connection
@@ -17,5 +17,5 @@ export const createUserController = async (
             .status(404)
             .json({ message: '빈 칸으로 제출 할 수 없습니다' })
     }
-    await createUserService(req, res, connection)
+    await signUpService(req, res, connection)
 }

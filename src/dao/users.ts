@@ -6,7 +6,6 @@ export const getUser = async (email: string, connection: Connection) => {
     const [rows, fields] = await connection.query(
         `SELECT * FROM user WHERE email="${email}"`
     )
-    console.log('🚀 ~ getUser ~ rows:', rows)
     return rows
 }
 
@@ -43,4 +42,15 @@ export const isDuplicatedUserEmailOrName = async (
         return true
     }
     return false
+}
+
+export const passwordReset = async (
+    email: string,
+    password: string,
+    connection: Connection
+) => {
+    const [rows, field] = await connection.query(
+        `UPDATE user SET password = "${password}" WHERE email="${email}"`
+    )
+    return rows
 }

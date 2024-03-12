@@ -1,12 +1,12 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { Connection } from 'mysql2/promise'
 import { loginService } from '@/services/login'
-import { passwordResetService } from '../services/passwordreset'
+import { passwordChangeService } from '../services/passwordchange'
 
-export const passwordResetController = async (
+export const passwordChangeController = async (
     req: NextApiRequest,
     res: NextApiResponse<any>,
     connection: Connection
 ) => {
-    await passwordResetService(req, res, connection)
+    await passwordChangeService(req, res, connection)
 }

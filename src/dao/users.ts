@@ -44,13 +44,24 @@ export const isDuplicatedUserEmailOrName = async (
     return false
 }
 
-export const passwordReset = async (
+export const passwordChange = async (
     email: string,
     password: string,
     connection: Connection
 ) => {
     const [rows, field] = await connection.query(
         `UPDATE user SET password = "${password}" WHERE email="${email}"`
+    )
+    return rows
+}
+
+export const passwordReset = async (
+    email: string,
+    emailCode: any,
+    connection: Connection
+) => {
+    const [rows, field] = await connection.query(
+        `INSERT INTO certification (email, emailCode) VALUES ("${email}", "${emailCode}""`
     )
     return rows
 }

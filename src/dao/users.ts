@@ -57,11 +57,11 @@ export const passwordChange = async (
 
 export const passwordReset = async (
     email: string,
-    emailCode: any,
+    emailCode: string,
     connection: Connection
 ) => {
     const [rows, field] = await connection.query(
-        `INSERT INTO certification (email, emailCode) VALUES ("${email}", "${emailCode}""`
+        `INSERT INTO certification (email, emailCode) VALUES ('${email}', '${emailCode}')`
     )
     return rows
 }

@@ -11,7 +11,6 @@ export const loginService = async (
     connection: Connection
 ) => {
     const result = await getUser(req.body.email, connection)
-
     if (Array.isArray(result) && result.length === 0) {
         res.status(400).json({
             error: {
@@ -19,7 +18,10 @@ export const loginService = async (
             },
         })
     }
-
+    const userName = await getUser(req.body.name, connection)
+    if (Array.isArray(userName) && userName.length === 0) {
+        res.status(400).json({ error: '해당하는 유저가 없습니다.' })
+    }
     const user = (result as any)[0]
     const match = await compare(req.body.password, user.password)
     if (match === false) {

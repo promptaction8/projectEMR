@@ -2,9 +2,15 @@ import type { Connection } from 'mysql2/promise'
 
 // 회원 조회
 
-export const getUser = async (email: string, connection: Connection) => {
+export const getUserEmail = async (email: string, connection: Connection) => {
     const [rows, fields] = await connection.query(
         `SELECT * FROM user WHERE email="${email}"`
+    )
+    return rows
+}
+export const getUserName = async (name: string, connection: Connection) => {
+    const [rows, fields] = await connection.query(
+        `SELECT * FROM user WHERE name="${name}"`
     )
     return rows
 }
@@ -62,6 +68,27 @@ export const passwordReset = async (
 ) => {
     const [rows, field] = await connection.query(
         `INSERT INTO certification (email, emailCode) VALUES ('${email}', '${emailCode}')`
+    )
+    return rows
+}
+
+export const passwordCompareWithTempPassword = async (
+    tempPassword: string,
+    connection: Connection
+) => {
+    const [rows, field] = await connection.query(
+        `SELECT * FROM user WHERE password = "${tempPassword}"`
+    )
+    return rows
+}
+
+export const updateTheNewPassword = async (
+    email: string,
+    hashedNewPassword: string,
+    connection: Connection
+) => {
+    const [rows, field] = await connection.query(
+        `UPDATE user SET password = "${hashedNewPassword}" WHERE email="${email}"`
     )
     return rows
 }

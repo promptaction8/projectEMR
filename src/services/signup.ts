@@ -10,9 +10,12 @@ export const signUpService = async (
     connection: Connection
 ) => {
     const { name, email, password } = req.body
-    console.log('🚀 ~ password:', password)
-    console.log('🚀 ~ email:', email)
-    console.log('🚀 ~ name:', name)
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRegex.test(email)) {
+        return res
+            .status(400)
+            .json({ message: '유효하지 않은 이메일 형식입니다.' })
+    }
     const hashedPassword = await hash(password, 10)
     const isDuplicatedUser = await isDuplicatedUserEmailOrName(
         name,

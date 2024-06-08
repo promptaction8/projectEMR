@@ -24,7 +24,7 @@ export const certificateService = async (
     }
     const newPassword = await generateRandomPassword()
     const hashedNewPassword = await hash(newPassword, 10)
-    await passwordChangeByCertificate(hashedNewPassword, connection)
+    await passwordChangeByCertificate(hashedNewPassword, email, connection)
     res.status(200).json({
         message: ' 새로 변경된 비밀번호 입니다',
         newPassword,

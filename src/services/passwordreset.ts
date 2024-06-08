@@ -1,13 +1,14 @@
 import { Connection } from 'mysql2/promise'
-import { getUser } from '@/dao/users'
+import { getUserEmail, getUserName } from '@/dao/users'
 import jwt from 'jsonwebtoken'
 import { compare, hash } from 'bcrypt'
 import { SECRET_KEY } from '@/constants'
-import { passwordChange } from '@/dao/users'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import sha256 from 'crypto-js/sha256'
 import { passwordReset } from '@/dao/users'
 import nodemailer from 'nodemailer'
+import randomstring from 'randomstring'
+import { passwordChangeByCertificate } from '@/dao/certificate'
 
 // 로직
 // 비밀번호 초기화를 요청하는 api 엔드포인트를 만듬
@@ -31,13 +32,25 @@ export const passwordResetService = async (
     res: NextApiResponse,
     connection: Connection
 ) => {
-    const { email, password } = req.body
-    const user = await getUser(email, connection)
-    if (!user) {
-        res.status(400).json({ error: '해당 이메일이 없습니다' })
+    const { email, name } = req.body
+    const isValidEmail = (email: string): boolean => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+        return emailRegex.test(email)
     }
-    const userInfo: any = await getUser(email, connection)
-    const emailCode = sha256(userInfo[2] + new Date() + userInfo[3])
+    const user: any = await getUserEmail(email, connection)
+    if (!email || !isValidEmail(email)) {
+        return res
+            .status(400)
+            .json({ error: '이메일이 유효한 형식이 아닙니다.' })
+    }
+    if (!user || user.length === 0 || user[0].email !== email) {
+        return res.status(400).json({ error: '해당 이메일이 없습니다.' })
+    }
+    const userInfo: any = await getUserEmail(email, connection)
+    const generateTempPassword = await randomstring.generate(10)
+    const hashedNewPassword = await hash(generateTempPassword, 10)
+    await passwordChangeByCertificate(hashedNewPassword, email, connection)
+    const emailCode = await sha256(userInfo[2] + new Date() + userInfo[3])
     await passwordReset(email, emailCode.toString(), connection)
     // ↑여기까지 하면 생성된 인증코드가 DB로 들어감.
     // 이 다음에 바로 DB에 들어간 인증코드가 해당 이메일로 발송되어야 함.
@@ -55,17 +68,21 @@ export const passwordResetService = async (
     )
     const mailOptions = {
         from: 'jinwoo30754@naver.com',
+        // to 부분 클라이언트 이메일로 바꿔야함
         to: 'jinwoo30754@naver.com',
         subject: '이메일 인증코드입니다',
         html: `
         <p>안녕하세요</p>
         <p>이메일 인증코드를 받으셨습니다.</p>
-        <p>아래의 코드를 사용하여 이메일 인증을 완료해주세요:</p>
-        <a href = 'http://localhost:3000/temp?code=${emailCode}'><button>인증완료하기</button></a> <!-- 여기에 실제 인증 코드를 넣어주세요 -->
-        <p>인증 코드는 10분 동안 유효합니다.</p>
+        <p>아래의 '인증완료하기' 버튼을 눌러 이메일 인증을 완료해주세요:</p>
+        <p>임시 비밀번호 입니다 ${generateTempPassword}</p>
+        <a href = 'http://localhost:3000/temp/emailcertificate?code=${emailCode}'><button>인증완료하기</button></a>
         <p>감사합니다.</p>
     `,
     }
     await transporter.sendMail(mailOptions)
-    res.status(200).json({ message: '인증 메일을 발송했습니다' })
+    res.status(200).json({
+        message: '인증 메일을 발송했습니다',
+        generateTempPassword,
+    })
 }

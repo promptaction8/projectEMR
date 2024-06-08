@@ -15,10 +15,11 @@ export const getCertificate = async (
 // 인증 후 랜덤생성된 비밀번호를 기존 비밀번호 DB에 업데이트
 export const passwordChangeByCertificate = async (
     hashedNewPassword: string,
+    email: string,
     connection: Connection
 ) => {
     const [rows, fields] = await connection.query(
-        `UPDATE user SET password = "${hashedNewPassword}"`
+        `UPDATE user SET password = "${hashedNewPassword}" WHERE email = "${email}"`
     )
     return rows
 }

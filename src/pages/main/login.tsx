@@ -2,8 +2,7 @@ import { useRouter } from 'next/router'
 import axios from 'axios'
 import { useMutation } from '@tanstack/react-query'
 import { useForm, SubmitHandler } from 'react-hook-form'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useAtom, useSetAtom } from 'jotai'
+import { useSetAtom } from 'jotai'
 import { tokenAtom } from '@/constants/token'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
@@ -32,7 +31,7 @@ function Login() {
             return tokenData
         },
         onSuccess: () => {
-            router.push('/temp/location')
+            router.push('/main/location')
             toast.success('로그인에 성공했습니다')
         },
         onError: (error: any) => {
@@ -107,7 +106,7 @@ function Login() {
     return (
         <>
             <div className="font-mono bg-cover shrink-0 bg-center bg-[url('/images/background2.jpg')] bg-no-repeat overflow-hidden justify-center w-screen h-screen">
-                <div className="flex relative shrink-0 flex-row min-w-full h-20 border-2 border-solid border-pink-400"></div>
+                <div className="flex relative shrink-0 flex-row min-w-full h-20"></div>
                 <div className="flex relative shrink-0 min-w-full my-40 h-200 items-center flex-col">
                     <div className="flex flex-col items-center w-400 h-full rounded-lg relative border-solid border-1 border-transparent bg-opacity-25 backdrop-blur-xl shadow-2xl border-gray-200">
                         <div className="flex flex-col w-130 h-150 my-20">
@@ -183,7 +182,7 @@ function Login() {
                                         <div className="flex justify-between mx-4">
                                             <div>
                                                 <Link
-                                                    href="/temp/signup"
+                                                    href="/main/signup"
                                                     className="text-white text-sm flex"
                                                 >
                                                     회원가입
@@ -191,7 +190,7 @@ function Login() {
                                             </div>
                                             <div>
                                                 <Link
-                                                    href="/temp/passwordreset"
+                                                    href="/main/passwordreset"
                                                     className="text-white text-sm flex"
                                                 >
                                                     비밀번호 변경

@@ -13,19 +13,18 @@ export const passwordCompareAndChangeService = async (
     connection: Connection
 ) => {
     const { tempPassword, newPassword, email } = await req.body
+
     const findUserInfo: any = await getUserEmail(email, connection)
 
-    const comparePassword: boolean = await compare(
-        tempPassword,
-        findUserInfo[0].password
-    )
-    if (comparePassword === false) {
+    if (tempPassword !== findUserInfo[0].password) {
         return res
             .status(400)
             .json({ message: '임시 비밀번호가 일치하지 않습니다' })
     }
+
     const hashedNewPassword = await hash(newPassword, 12)
 
     await updateTheNewPassword(email, hashedNewPassword, connection)
+
     res.status(200).json({ message: '비밀번호가 변경되었습니다' })
 }

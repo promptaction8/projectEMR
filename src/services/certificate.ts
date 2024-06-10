@@ -14,7 +14,6 @@ export const certificateService = async (
 ) => {
     const emailCode = await getCertificate(req.body.emailcode, connection)
     if (emailCode[0].emailcode !== req.body.emailcode) {
-        console.log('🚀 ~ req.body.emailcode:', req.body.emailcode)
         res.status(400).json({
             error: { message: '인증 코드가 존재하지 않습니다' },
         })

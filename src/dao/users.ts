@@ -92,3 +92,13 @@ export const updateTheNewPassword = async (
     )
     return rows
 }
+
+export const updateTempPassword = async (
+    generateTempPassword: string,
+    email: string,
+    connection: Connection
+) => {
+    const [rows, field] = await connection.query(
+        `UPDATE user SET password = "${generateTempPassword}" WHERE email = "${email}"`
+    )
+}

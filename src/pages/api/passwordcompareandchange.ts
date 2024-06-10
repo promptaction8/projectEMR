@@ -11,6 +11,6 @@ export default async function handler(
     if (req.method === 'PUT') {
         await passwordCompareAndChangeController(req, res, connection)
     } else {
-        res.status(404).json({ error: ' 해당 메서드는 지원하지 않습니다' })
+        res.status(404).json({ error: ' 엔드포인트 에러' })
     }
 }

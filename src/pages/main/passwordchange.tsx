@@ -3,8 +3,8 @@ import { useRouter } from 'next/router'
 import axios from 'axios'
 import { useMutation } from '@tanstack/react-query'
 import { useForm } from 'react-hook-form'
-import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
+import Link from 'next/link'
 
 interface IFormField {
     email: string
@@ -16,10 +16,18 @@ function PasswordChange() {
     const { register, handleSubmit, watch } = useForm<IFormField>()
     const passwordChangeMutation = useMutation({
         mutationFn: async (data: IFormField) => {
-            return await axios.put('/api/passwordcompardandchange')
+            return axios.put('/api/passwordcompareandchange', data)
         },
         onSuccess: () => {
-            router.push('/temp/login')
+            toast.success('비밀번호가 변경되었습니다')
+            router.push('/main/login')
+        },
+        onError: (error: any) => {
+            toast.error(
+                `비밀번호 변경 실패: ${
+                    error.response?.data?.message || error.message
+                }`
+            )
         },
     })
     const passwordChangeMutate = (data: IFormField) => {
@@ -28,7 +36,18 @@ function PasswordChange() {
     return (
         <>
             <div className="font-mono bg-cover shrink-0  bg-center bg-[url('/images/background2.jpg')] bg-no-repeat overflow-hidden  justify-center w-screen h-screen">
-                <div className="flex relative shrink-0 flex-row  min-w-full h-20 border-2 border-solid border-pink-400"></div>
+                <div className="flex relative shrink-0 flex-row-reverse  min-w-full h-12">
+                    <div className="flex flex-row-reverse text-center h-full w-80 ">
+                        <div className=" flex h-full my-2 ">
+                            <Link
+                                href="/main/login"
+                                className="text-white mx-4 rounded-lg relative"
+                            >
+                                로그인 페이지로 이동
+                            </Link>
+                        </div>
+                    </div>
+                </div>
                 <div className="flex relative shrink-0 min-w-full my-40 h-200  items-center flex-col">
                     <div className="flex flex-col items-center w-400 h-full rounded-lg relative border-solid border-1 border-transparent bg-opacity-25 backdrop-blur-xl shadow-2xl border-gray-200">
                         <div className=" flex flex-col w-130 h-150 my-20">
@@ -60,7 +79,7 @@ function PasswordChange() {
                                             {...register('tempPassword', {
                                                 required: true,
                                             })}
-                                            type="password"
+                                            type="text"
                                             placeholder="임시비밀번호"
                                             className="h-10 w-128 rounded-lg border-2 border-solid border-white bg-transparent pl-2 text-white placeholder:text-white"
                                         ></input>
@@ -79,9 +98,9 @@ function PasswordChange() {
                                             placeholder="새로운 비밀번호"
                                         ></input>
                                         <button className="font-sans my-10 w-128 rounded-xl bg-white px-4 py-2 duration-300 ease-in hover:-translate-y-1 hover:scale-100 hover:bg-slate-400">
-                                            <a className="text-lg text-black">
+                                            <span className="text-lg text-black">
                                                 확인
-                                            </a>
+                                            </span>
                                         </button>
                                     </label>
                                 </form>

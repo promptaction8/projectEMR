@@ -4,6 +4,7 @@ import { useMutation } from '@tanstack/react-query'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import Link from 'next/link'
 
 interface IFormField {
     email: string
@@ -25,7 +26,8 @@ function SignUp() {
             return await axios.post('/api/signup', data)
         },
         onSuccess: () => {
-            router.push('/temp/login')
+            router.push('/main/login')
+            toast.success('회원가입이 성공하였습니다')
         },
         onError: (error: any) => {
             toast.error(error.response?.data?.message || '회원가입 실패')
@@ -78,7 +80,18 @@ function SignUp() {
     return (
         <>
             <div className="font-mono bg-cover shrink-0  bg-center bg-[url('/images/background2.jpg')] bg-no-repeat overflow-hidden  justify-center w-screen h-screen">
-                <div className="flex relative shrink-0 flex-row  min-w-full h-20 border-2 border-solid border-pink-400"></div>
+                <div className="flex relative shrink-0 flex-row-reverse  min-w-full h-12">
+                    <div className="flex flex-row-reverse text-center h-full w-80 ">
+                        <div className=" flex h-full my-2 ">
+                            <Link
+                                href="/main/login"
+                                className="text-white mx-4 rounded-lg relative  "
+                            >
+                                로그인 페이지로 이동
+                            </Link>
+                        </div>
+                    </div>
+                </div>
                 <div className="flex relative shrink-0 min-w-full my-40 h-200  items-center flex-col">
                     <div className="flex flex-col items-center w-400 h-full rounded-lg relative border-solid border-1 border-transparent bg-opacity-25 backdrop-blur-xl shadow-2xl border-gray-200">
                         <div className=" flex flex-col w-130 h-150 my-20">

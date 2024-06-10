@@ -52,8 +52,7 @@ function Location() {
         if (expirationTime) {
             const timeout = setTimeout(() => {
                 setToken(null)
-                router.push('/temp/login')
-                toast.success('로그아웃 되었습니다')
+                router.push('/main/login')
             }, expirationTime.getTime() - new Date().getTime())
 
             return () => clearTimeout(timeout)
@@ -62,7 +61,8 @@ function Location() {
 
     const handleLogout = () => {
         setToken(null)
-        router.push('/temp/login')
+        toast.success('로그아웃 되었습니다')
+        router.push('/main/login')
     }
     const {
         data: data1,
@@ -92,7 +92,23 @@ function Location() {
         enabled: nowLocation !== null,
     })
     if (isLoading1 || isLoading2) {
-        return <div>...Loading</div>
+        return (
+            <>
+                <div className="font-mono bg-cover shrink-0  bg-center bg-[url('/images/background2.jpg')] bg-no-repeat overflow-hidden  justify-center w-screen h-screen">
+                    <div className="flex relative shrink-0 flex-row  min-w-full h-20"></div>
+                    <div className="flex relative shrink-0 min-w-full my-40 h-200  items-center flex-col">
+                        <div className="flex flex-col items-center w-400 h-full rounded-lg relative border-solid border-1 border-transparent bg-opacity-25 backdrop-blur-xl shadow-2xl border-gray-200">
+                            <div className=" flex flex-col w-130 h-150 my-20">
+                                <div className="text-center text-5xl  text-white"></div>
+                                <div className=" flex flex-row w-full h-full items-center text-white text-3xl">
+                                    <div className="mx-40">Loading...</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </>
+        )
     }
     if (error1 || error2) {
         return <div>Error : ERROR</div>
@@ -124,18 +140,6 @@ function Location() {
     const pty = weathers?.find(
         (item: any) => item.category === 'PTY'
     )?.obsrValue
-    // 강수 형태
-    const weatherCategory = {
-        PTY: {
-            '0': '없음',
-            '1': '비',
-            '2': '비와 눈',
-            '3': '눈',
-            '5': '빗방울',
-            '6': '눈날림과 빗방울',
-            '7': '눈날림',
-        },
-    }
 
     return (
         <>

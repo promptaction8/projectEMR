@@ -1,5 +1,5 @@
 import { Connection } from 'mysql2/promise'
-import { getUserEmail, getUserName } from '@/dao/users'
+import { getUserEmail, getUserName, updateTempPassword } from '@/dao/users'
 import jwt from 'jsonwebtoken'
 import { compare, hash } from 'bcrypt'
 import { SECRET_KEY } from '@/constants'
@@ -47,9 +47,16 @@ export const passwordResetService = async (
         return res.status(400).json({ error: '해당 이메일이 없습니다.' })
     }
     const userInfo: any = await getUserEmail(email, connection)
-    const generateTempPassword = await randomstring.generate(10)
-    const hashedNewPassword = await hash(generateTempPassword, 10)
-    await passwordChangeByCertificate(hashedNewPassword, email, connection)
+
+    const generateRandomPassword = () => {
+        return Math.random().toString(36).substring(2, 10)
+    }
+    const generateTempPassword = await generateRandomPassword()
+
+    // db에 tempPassword update 해야 함
+
+    await updateTempPassword(generateTempPassword, email, connection)
+
     const emailCode = await sha256(userInfo[2] + new Date() + userInfo[3])
     await passwordReset(email, emailCode.toString(), connection)
     // ↑여기까지 하면 생성된 인증코드가 DB로 들어감.
@@ -71,13 +78,14 @@ export const passwordResetService = async (
         // to 부분 클라이언트 이메일로 바꿔야함
         to: 'jinwoo30754@naver.com',
         subject: '이메일 인증코드입니다',
-        html: `
-        <p>안녕하세요</p>
-        <p>이메일 인증코드를 받으셨습니다.</p>
-        <p>아래의 '인증완료하기' 버튼을 눌러 이메일 인증을 완료해주세요:</p>
-        <p>임시 비밀번호 입니다 ${generateTempPassword}</p>
-        <a href = 'http://localhost:3000/temp/emailcertificate?code=${emailCode}'><button>인증완료하기</button></a>
-        <p>감사합니다.</p>
+        html: `<div style="font-family: Arial, sans-serif; padding: 20px;">
+            <h1 style="color: #333;">안녕하세요</h1>
+            <p style="font-size: 16px; color: #555;">이메일 인증코드를 받으셨습니다.</p>
+            <p style="font-size: 16px; color: #555;">아래의 '인증완료하기' 버튼을 클릭하여 이메일 인증을 완료해주세요:</p>
+            <p style="font-size: 16px; color: #555;">임시 비밀번호: <strong>${generateTempPassword}</strong></p>
+            <a href="http://localhost:3000/main/emailcertificate?code=${emailCode}" style="display: inline-block; background-color: #007bff; color: #fff; text-decoration: none; padding: 10px 20px; border-radius: 5px; margin-top: 20px;">인증완료하기</a>
+            <p style="font-size: 16px; color: #555;">감사합니다.</p>
+        </div>
     `,
     }
     await transporter.sendMail(mailOptions)

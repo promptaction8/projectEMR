@@ -5,6 +5,9 @@ import { useMutation } from '@tanstack/react-query'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 import Link from 'next/link'
+import { useAtom } from 'jotai'
+import { tokenAtom } from '@/constants/token'
+import { jwtDecode } from 'jwt-decode'
 
 interface IFormField {
     email: string
@@ -13,6 +16,7 @@ interface IFormField {
 }
 function PasswordChange() {
     const router = useRouter()
+    const [token] = useAtom(tokenAtom)
     const { register, handleSubmit, watch } = useForm<IFormField>()
     const passwordChangeMutation = useMutation({
         mutationFn: async (data: IFormField) => {
@@ -30,9 +34,33 @@ function PasswordChange() {
             )
         },
     })
+
+    const tokenPasswordChangeMutation = useMutation({
+        mutationFn: async (data: IFormField) => {
+            return axios.put('/api/passwordchagne(임시)', data)
+        },
+        onSuccess: () => {
+            toast.success(
+                '비밀번호가 변경되었습니다. 로그인 페이지로 돌아갑니다'
+            )
+            router.push('/main/login')
+        },
+        onError: (error: any) => {
+            toast.error('비밀번호 변경 실패')
+        },
+    })
+
     const passwordChangeMutate = (data: IFormField) => {
-        passwordChangeMutation.mutate(data)
+        if (!token) {
+            passwordChangeMutation.mutate(data)
+        } else if (token) {
+            const decodedToken = jwtDecode(token)
+            const userInfo = decodedToken.sub
+            const newData = { ...data, userInfo }
+            tokenPasswordChangeMutation.mutate(newData)
+        }
     }
+
     return (
         <>
             <div className="font-mono bg-cover shrink-0  bg-center bg-[url('/images/background2.jpg')] bg-no-repeat overflow-hidden  justify-center w-screen h-screen">

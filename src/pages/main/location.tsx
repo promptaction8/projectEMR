@@ -7,6 +7,9 @@ import {
     faArrowUpWideShort,
     faCloud,
     faCloudRain,
+    faDroplet,
+    faGauge,
+    faGlassWater,
     faLocationDot,
     faSnowflake,
     faSun,
@@ -28,6 +31,7 @@ function Location() {
     const { query } = useRouter()
     const [nowLocation, setLocation] = useState<NowLocation | null>(null)
     const [token, setToken] = useAtom(tokenAtom)
+    console.log('🚀 ~ Location ~ token:', token)
     const [expirationTime, setExpirationTime] = useState<Date | null>(null)
 
     // useEffect 두번째 매개변수 [] => 첫번째 렌더링에만 실행하고싶을 때 씀
@@ -64,6 +68,19 @@ function Location() {
         toast.success('로그아웃 되었습니다')
         router.push('/main/login')
     }
+
+    const handleChangePassword = () => {
+        if (token) {
+            toast.success('비밀번호를 변경하러 갑니다')
+            router.push('/main/passwordchangebytoken')
+        } else {
+            toast.error(
+                '토큰 유효기간이 만료되었습니다. 다시 로그인이 필요합니다'
+            )
+            router.push('/main/login')
+        }
+    }
+
     const {
         data: data1,
         isLoading: isLoading1,
@@ -114,7 +131,7 @@ function Location() {
         return <div>Error : ERROR</div>
     }
     const weathers = data1?.data.temp.response.body.items.item
-    const convertLocation = data2?.data.results[2].formatted_address
+    const convertLocation = data2?.data.results[5].formatted_address
 
     const t1h = weathers?.find(
         (item: any) => item.category === 'T1H'
@@ -143,18 +160,29 @@ function Location() {
 
     return (
         <>
-            <div className="font-mono bg-cover shrink-0  bg-center bg-[url('/images/background2.jpg')] bg-no-repeat overflow-hidden  justify-center w-screen h-screen">
-                <div className="font-sans flex flex-row-reverse relative shrink-0  min-w-full h-12 ">
-                    <div className="flex flex-row h-full w-100 ">
-                        <div className=" flex h-full w-1/2 text-center">
-                            로그인 만료시간 : {expirationTime?.toLocaleString()}
+            <div className="font-sans bg-cover shrink-0  bg-center bg-[url('/images/background2.jpg')] bg-no-repeat overflow-hidden  justify-center w-screen h-screen">
+                <div className="flex flex-row-reverse relative shrink-0  min-w-full h-12 ">
+                    <div className="flex flex-row-reverse h-full w-88 ">
+                        <div className=" flex flex-col justify-center h-full ">
+                            <div>
+                                로그인 만료시간 :{' '}
+                                {expirationTime?.toLocaleString()}
+                            </div>
                         </div>
-                        <div className=" flex h-full w-1/2">
+                        <div className=" flex h-full">
                             <button
-                                className="mx-4 rounded-lg relative border-solid border-1 border-transparent bg-opacity-25 backdrop-blur-3xl shadow-2xl border-gray-200 duration-300 ease-in hover:-translate-y-1 hover:scale-100 hover:bg-slate-400"
+                                className="mx-1 rounded-md  border-solid border-2  border-white duration-300 ease-in hover:-translate-x-1 hover:scale-100 hover:bg-slate-400"
                                 onClick={handleLogout}
                             >
                                 로그아웃
+                            </button>
+                        </div>
+                        <div className=" flex h-full">
+                            <button
+                                className="mx-1 rounded-md  border-solid border-2  border-white duration-300 ease-in hover:-translate-x-1 hover:scale-100 hover:bg-slate-400"
+                                onClick={handleChangePassword}
+                            >
+                                비밀번호 변경
                             </button>
                         </div>
                     </div>
@@ -163,50 +191,72 @@ function Location() {
                     <div className="flex flex-col w-400 h-full rounded-lg relative border-solid border-1 border-transparent bg-opacity-25 backdrop-blur-xl shadow-2xl border-gray-200">
                         <div className=" flex flex-col w-full h-1/2 items-center">
                             <div className="flex flex-row  w-200 h-full">
-                                <div className="flex flex-row items-center  w-3/5 h-full">
+                                <div className="flex flex-row items-center w-3/5 h-full">
                                     {pty === '0' && (
-                                        <FontAwesomeIcon
-                                            icon={faSun}
-                                            size="10x"
-                                        />
+                                        <div className="flex flex-col items-center">
+                                            <FontAwesomeIcon
+                                                icon={faSun}
+                                                size="10x"
+                                            />
+                                            <p className="text-2xl">맑음</p>
+                                        </div>
                                     )}
                                     {pty === '1' && (
-                                        <FontAwesomeIcon
-                                            icon={faCloudRain}
-                                            size="10x"
-                                        />
+                                        <div className="flex flex-col items-center">
+                                            <FontAwesomeIcon
+                                                icon={faCloudRain}
+                                                size="10x"
+                                            />
+                                            <p>비</p>
+                                        </div>
                                     )}
                                     {pty === '2' && (
-                                        <FontAwesomeIcon
-                                            icon={faCloudRain}
-                                            size="10x"
-                                        />
+                                        <div className="flex flex-col items-center">
+                                            <FontAwesomeIcon
+                                                icon={faCloudRain}
+                                                size="10x"
+                                            />
+                                            <p>비/눈</p>
+                                        </div>
                                     )}
                                     {pty === '3' && (
-                                        <FontAwesomeIcon
-                                            icon={faSnowflake}
-                                            size="10x"
-                                        />
+                                        <div className="flex flex-col items-center">
+                                            <FontAwesomeIcon
+                                                icon={faSnowflake}
+                                                size="10x"
+                                            />
+                                            <p>눈</p>
+                                        </div>
                                     )}
                                     {pty === '5' && (
-                                        <FontAwesomeIcon
-                                            icon={faCloudRain}
-                                            size="10x"
-                                        />
+                                        <div className="flex flex-col items-center">
+                                            <FontAwesomeIcon
+                                                icon={faCloudRain}
+                                                size="10x"
+                                            />
+                                            <p>빗방울</p>
+                                        </div>
                                     )}
                                     {pty === '6' && (
-                                        <FontAwesomeIcon
-                                            icon={faCloudRain}
-                                            size="10x"
-                                        />
+                                        <div className="flex flex-col items-center">
+                                            <FontAwesomeIcon
+                                                icon={faCloudRain}
+                                                size="10x"
+                                            />
+                                            <p>빗방울/눈날림</p>
+                                        </div>
                                     )}
                                     {pty === '7' && (
-                                        <FontAwesomeIcon
-                                            icon={faSnowflake}
-                                            size="10x"
-                                        />
+                                        <div className="flex flex-col items-center">
+                                            <FontAwesomeIcon
+                                                icon={faSnowflake}
+                                                size="10x"
+                                            />
+                                            <p>눈</p>
+                                        </div>
                                     )}
                                 </div>
+
                                 <div className=" flex flex-row items-center w-full h-full">
                                     <div className="flex flex-col  w-full h-2/3 ">
                                         <div className="flex flex-col my-10 w-full h-2/3 text-5xl">
@@ -226,30 +276,40 @@ function Location() {
                         </div>
                         <div className=" flex items-center w-full h-1/2 ">
                             <div className="mx-20  flex items-center w-11/12 h-4/5">
-                                <div className=" flex flex-row items-center w-full h-36">
-                                    <div className="flex-col flex items-center text-4xl  h-full w-1/6">
-                                        <FontAwesomeIcon icon={faWater} />
+                                <div className="font-sans flex flex-row items-center w-full h-36 gap-2">
+                                    <div className=" flex-col flex items-center text-2xl  h-full w-1/6">
+                                        강수량
+                                        {/* 1시간 강수량 */}
+                                        <FontAwesomeIcon icon={faGlassWater} />
                                         {rn1}
                                     </div>
-                                    <div className="flex-col flex items-center text-4xl  h-full w-1/6">
+                                    <div className="flex-col flex items-center text-2xl  h-full w-1/6">
+                                        강수 형태
+                                        {/* 강수형태 */}
                                         <FontAwesomeIcon icon={faWater} />
                                         {pty}
                                     </div>
-                                    <div className="flex-col flex items-center text-4xl  h-full w-1/6">
-                                        <FontAwesomeIcon
-                                            icon={faTemperatureQuarter}
-                                        />
+                                    <div className="flex-col flex items-center text-2xl  h-full w-1/6">
+                                        습도
+                                        {/* 습도 */}
+                                        <FontAwesomeIcon icon={faDroplet} />
                                         {reh}%
                                     </div>
-                                    <div className="flex-col flex items-center text-4xl  h-full w-1/6">
+                                    <div className="flex-col flex items-center text-2xl  h-full w-1/6">
+                                        풍향
+                                        {/* 풍향 */}
                                         <FontAwesomeIcon icon={faWind} />
                                         {vec}def
                                     </div>
-                                    <div className="flex-col flex items-center text-4xl  h-full w-1/6">
-                                        <FontAwesomeIcon icon={faWind} />
+                                    <div className="flex-col flex items-center text-2xl  h-full w-1/6">
+                                        풍속
+                                        {/* 풍속 */}
+                                        <FontAwesomeIcon icon={faGauge} />
                                         {wsd}m/s
                                     </div>
-                                    <div className="flex-col flex items-center text-4xl  h-full w-1/6">
+                                    <div className="flex-col flex items-center text-2xl  h-full w-1/6">
+                                        바람성분
+                                        {/* 남북바람성분 */}
                                         <FontAwesomeIcon
                                             icon={faArrowUpWideShort}
                                         />

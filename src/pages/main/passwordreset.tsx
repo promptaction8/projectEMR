@@ -60,7 +60,7 @@ function PasswordReset() {
                 <div className="flex relative shrink-0 min-w-full my-40 h-200  items-center flex-col">
                     <div className="flex flex-col items-center w-400 h-full rounded-lg relative border-solid border-1 border-transparent bg-opacity-25 backdrop-blur-xl shadow-2xl border-gray-200">
                         <div className=" flex flex-col w-130 h-150 my-20">
-                            <div className="text-center text-7xl  text-white">
+                            <div className="text-center text-5xl  text-white">
                                 EMAIL 인증
                             </div>
                             <div className="flex flex-row w-full h-full items-center">
@@ -81,19 +81,7 @@ function PasswordReset() {
                                             className="h-10 w-128 rounded-lg border-2 border-solid border-white bg-transparent pl-2 text-white placeholder:text-white"
                                         ></input>
                                     </label>
-                                    <label>
-                                        <p className="my-4 text-white">
-                                            USER NAME
-                                        </p>
-                                        <input
-                                            {...register('name', {
-                                                required: true,
-                                            })}
-                                            type="text"
-                                            placeholder="USERNAME"
-                                            className="h-10 w-128 rounded-lg border-2 border-solid border-white bg-transparent pl-2 text-white placeholder:text-white"
-                                        ></input>
-                                    </label>
+
                                     <label>
                                         <button className="my-10 w-128 rounded-xl bg-white px-4 py-2 duration-300 ease-in hover:-translate-y-1 hover:scale-100 hover:bg-slate-400">
                                             <a className="text-lg text-black">

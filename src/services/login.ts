@@ -20,11 +20,6 @@ export const loginService = async (
         })
     }
 
-    const userName: any = await getUserName(req.body.name, connection)
-    if (Array.isArray(userName) && userName.length === 0) {
-        return res.status(400).json({ error: '해당하는 유저가 없습니다.' })
-    }
-
     const user = result[0]
     if (!user || !user.password) {
         return res
@@ -44,7 +39,6 @@ export const loginService = async (
     const token = jwt.sign(
         {
             idx: user.idx,
-            name: user.name,
             email: user.email,
             iat: issuedAt,
             exp: expirationTime,

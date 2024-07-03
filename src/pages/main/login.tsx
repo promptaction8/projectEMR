@@ -80,15 +80,6 @@ function Login() {
             hasError = true
         }
 
-        if (data.name.trim().length === 0) {
-            setError('name', {
-                type: 'manual',
-                message: '유효한 사용자 이름을 입력해 주세요',
-            })
-            toast.error('유효한 사용자 이름을 입력해 주세요')
-            hasError = true
-        }
-
         if (!validatePassword(data.password)) {
             setError('password', {
                 type: 'manual',
@@ -137,25 +128,7 @@ function Login() {
                                             </p>
                                         )}
                                     </label>
-                                    <label>
-                                        <p className="my-4 text-white">
-                                            USER NAME
-                                        </p>
-                                        <input
-                                            {...register('name', {
-                                                required:
-                                                    '사용자 이름을 입력해 주세요',
-                                            })}
-                                            type="text"
-                                            placeholder="USERNAME"
-                                            className="h-10 w-128 rounded-lg border-2 border-solid border-white bg-transparent pl-2 text-white placeholder:text-white"
-                                        ></input>
-                                        {errors.name && (
-                                            <p className="text-red-500">
-                                                {errors.name.message}
-                                            </p>
-                                        )}
-                                    </label>
+
                                     <label>
                                         <p className="my-4 text-white">
                                             PASSWORD

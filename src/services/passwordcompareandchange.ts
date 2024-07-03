@@ -1,30 +1,44 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { Connection } from 'mysql2/promise'
-import {
-    getUserEmail,
-    passwordCompareWithTempPassword,
-    updateTheNewPassword,
-} from '@/dao/users'
-import { compare, hash } from 'bcrypt'
+import { findEmailFromCode, updateNewPassword } from '@/dao/users'
+import { hash } from 'bcrypt'
+import { error } from 'console'
 
 export const passwordCompareAndChangeService = async (
     req: NextApiRequest,
     res: NextApiResponse,
     connection: Connection
 ) => {
-    const { tempPassword, newPassword, email } = await req.body
+    const { newPassword, checkNewPassword, code } = await req.body
+    console.log('🚀 ~ code:', code)
 
-    const findUserInfo: any = await getUserEmail(email, connection)
+    const findEmail: any = await findEmailFromCode(code as string, connection)
 
-    if (tempPassword !== findUserInfo[0].password) {
-        return res
-            .status(400)
-            .json({ message: '임시 비밀번호가 일치하지 않습니다' })
+    if (!findEmail || findEmail.length === 0) {
+        return res.status(400).json({ error: '유효하지 않은 코드입니다' })
     }
 
-    const hashedNewPassword = await hash(newPassword, 12)
+    const email = findEmail[0].email
 
-    await updateTheNewPassword(email, hashedNewPassword, connection)
+    if (!email) {
+        return res.status(400).json({ error: '유효하지 않은 이메일입니다' })
+    }
+
+    if (!code || code === undefined) {
+        return res.status(400).json({ error: '코드값이 들어오지 않았습니다' })
+    }
+
+    if (!newPassword || !checkNewPassword) {
+        return res.status(400).json({ error: '비밀번호를 입력해 주세요' })
+    }
+
+    if (newPassword !== checkNewPassword) {
+        return res.status(404).json({ error: '비밀번호가 동일하지 않습니다.' })
+    }
+
+    const hashedCheckPassword: any = await hash(checkNewPassword, 10)
+
+    await updateNewPassword(hashedCheckPassword, email, connection)
 
     res.status(200).json({ message: '비밀번호가 변경되었습니다' })
 }

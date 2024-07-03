@@ -1,53 +1,35 @@
 import { useRouter } from 'next/router'
-import { Query, useQuery } from '@tanstack/react-query'
 import axios from 'axios'
-import { toast } from 'react-toastify'
-import { useEffect, useState } from 'react'
-import { useForm } from 'react-hook-form'
 import { useMutation } from '@tanstack/react-query'
+import { useForm } from 'react-hook-form'
+import { toast } from 'react-toastify'
 import Link from 'next/link'
+import { useAtom } from 'jotai'
+import { tokenAtom } from '@/constants/token'
+import { jwtDecode } from 'jwt-decode'
 
 interface IFormField {
     newPassword: string
-    checkNewPassword: string
-    code?: string
+    checkPassword: string
 }
-
-function EmailCertificate() {
+function PasswordChangeByToken() {
     const router = useRouter()
-    const { code } = router.query
-    const [isVerified, setIsVerified] = useState(false)
-
-    const { data, error, isLoading } = useQuery({
-        queryKey: ['emailcodecheck'],
-        queryFn: () => axios.get(`/api/emailcodecheck?emailcode=${code}`),
-        enabled: !!code,
-    })
-
-    useEffect(() => {
-        if (data) {
-            toast.success('이메일 인증이 완료되었습니다')
-            setIsVerified(true)
-        }
-        if (error) {
-            toast.error('이메일 인증이 실패하였습니다')
-        }
-    }, [data, error])
-
+    const [token, setToken] = useAtom(tokenAtom)
     const {
         register,
         handleSubmit,
-        setError,
         formState: { errors },
     } = useForm<IFormField>()
-
     const passwordChangeMutation = useMutation({
         mutationFn: async (data: IFormField) => {
-            return axios.put('/api/passwordcompareandchange', data)
+            return axios.put('/api/passwordchangebytoken', data, {
+                headers: { Authorization: `Bearer ${token}` },
+            })
         },
-
         onSuccess: () => {
-            toast.success('비밀번호가 변경되었습니다')
+            toast.success(
+                '비밀번호가 변경되었습니다. 로그인 페이지로 돌아갑니다'
+            )
             router.push('/main/login')
         },
         onError: (error: any) => {
@@ -58,47 +40,19 @@ function EmailCertificate() {
             )
         },
     })
-    const passwordChangeMutate = (data: IFormField) => {
-        if (data.newPassword.length < 6) {
-            setError('newPassword', {
-                type: 'minLength',
-                message: '비밀번호는 최소 6자 이상이어야 합니다.',
-            })
-            toast.error('비밀번호는 최소 6자 이상이어야 합니다.')
-            return
-        }
-        if (data.newPassword !== data.checkNewPassword) {
-            setError('checkNewPassword', {
-                type: 'validate',
-                message: '비밀번호가 일치하지 않습니다.',
-            })
-            toast.error('비밀번호가 일치하지 않습니다.')
-            return
-        }
-        const formData = { ...data, code: code as string }
-        passwordChangeMutation.mutate(formData)
+    const handleLogout = () => {
+        setToken(null)
+        router.push('/main/login')
     }
-
-    if (isLoading) {
-        return (
-            <div className="font-mono bg-cover shrink-0 bg-center bg-[url('/images/background2.jpg')] bg-no-repeat overflow-hidden justify-center w-screen h-screen">
-                <div className="flex relative shrink-0 flex-row min-w-full h-20"></div>
-                <div className="flex relative shrink-0 min-w-full my-40 h-200 items-center flex-col">
-                    <div className="flex flex-col items-center w-400 h-full rounded-lg relative border-solid border-1 border-transparent bg-opacity-25 backdrop-blur-xl shadow-2xl border-gray-200">
-                        <div className="flex flex-col w-130 h-150 my-20">
-                            <div className="text-center text-5xl text-white"></div>
-                            <div className="flex flex-row w-full h-full items-center text-white text-3xl">
-                                <div className="mx-40">인증중..</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        )
+    const passwordChangeByTokenMutation = (data: IFormField) => {
+        if (!token || token === null) {
+            toast.error('다시 로그인 해주세요')
+            router.push('/main/login')
+        }
+        passwordChangeMutation.mutate(data)
     }
-
-    if (isVerified) {
-        return (
+    return (
+        <>
             <div className="font-mono bg-cover shrink-0 bg-center bg-[url('/images/background2.jpg')] bg-no-repeat overflow-hidden justify-center w-screen h-screen">
                 <div className="flex relative shrink-0 flex-row-reverse min-w-full h-12">
                     <div className="flex flex-row-reverse text-center h-full w-80">
@@ -106,6 +60,7 @@ function EmailCertificate() {
                             <Link
                                 href="/main/login"
                                 className="text-white mx-4 rounded-lg relative"
+                                onClick={handleLogout}
                             >
                                 로그인 페이지로 이동
                             </Link>
@@ -121,7 +76,7 @@ function EmailCertificate() {
                             <div className="flex flex-row w-full h-full items-center">
                                 <form
                                     onSubmit={handleSubmit(
-                                        passwordChangeMutate
+                                        passwordChangeByTokenMutation
                                     )}
                                 >
                                     <label>
@@ -149,7 +104,7 @@ function EmailCertificate() {
                                             새로운 비밀번호 확인
                                         </p>
                                         <input
-                                            {...register('checkNewPassword', {
+                                            {...register('checkPassword', {
                                                 required:
                                                     '새로운 비밀번호와 동일하게 입력해 주세요',
                                             })}
@@ -158,9 +113,9 @@ function EmailCertificate() {
                                             placeholder="새 비밀번호를 한번 더 입력해주세요"
                                         ></input>
                                     </label>
-                                    {errors.checkNewPassword && (
+                                    {errors.checkPassword && (
                                         <p className="text-red-500">
-                                            {errors.checkNewPassword.message}
+                                            {errors.checkPassword.message}
                                         </p>
                                     )}
                                     <button className="font-sans my-10 w-128 rounded-xl bg-white px-4 py-2 duration-300 ease-in hover:-translate-y-1 hover:scale-100 hover:bg-slate-400">
@@ -174,10 +129,7 @@ function EmailCertificate() {
                     </div>
                 </div>
             </div>
-        )
-    }
-
-    return null
+        </>
+    )
 }
-
-export default EmailCertificate
+export default PasswordChangeByToken

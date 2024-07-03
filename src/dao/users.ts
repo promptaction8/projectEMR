@@ -101,4 +101,35 @@ export const updateTempPassword = async (
     const [rows, field] = await connection.query(
         `UPDATE user SET password = "${generateTempPassword}" WHERE email = "${email}"`
     )
+    return rows
+}
+
+export const findEmailFromCode = async (
+    code: string,
+    connection: Connection
+) => {
+    const [rows, field] = await connection.query(
+        `SELECT * FROM certification WHERE emailcode = "${code}"`
+    )
+    return rows
+}
+
+export const updateNewPassword = async (
+    hashedCheckPassword: string,
+    email: string,
+    connection: Connection
+) => {
+    const [rows, fields] = await connection.query(
+        `UPDATE user SET password = "${hashedCheckPassword}" WHERE email = "${email}"`
+    )
+}
+
+export const updateNewPasswordByToken = async (
+    hashedCheckPassword: string,
+    email: string,
+    connection: Connection
+) => {
+    const [rows, fields] = await connection.query(
+        `UPDATE user SET password = "${hashedCheckPassword}" WHERE email = "${email}"`
+    )
 }

@@ -12,6 +12,14 @@ const config: Config = {
     ],
     theme: {
         extend: {
+            boxShadow: {
+                '3xl': '0 35px 60px -15px rgba(0, 0, 0, 0.3)',
+                '4xl': '0 40px 70px -20px rgba(0, 0, 0, 0.3)',
+                '5xl': '0 45px 80px -25px rgba(0, 0, 0, 0.3)',
+                '6xl': '0 50px 90px -30px rgba(0, 0, 0, 0.3)',
+                '7xl': '0 60px 100px -35px rgba(0, 0, 0, 0.5)', // 더 진한 그림자
+            },
+
             backgroundImage: {
                 'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
                 'gradient-conic':

@@ -1,18 +1,40 @@
 import React from 'react'
+import { useState } from 'react'
+import Modal from './loginpagecomponent/loginpageemploymodal'
+import Modal2 from './loginpagecomponent/loginpagepatiendmodal'
+import DropdownMenu from './loginpagecomponent/dropdown'
 
 function LoginPage() {
+    const [isModalOpen, setModalOpen] = useState(false)
+    const handleOpenModal = () => {
+        setModalOpen(true)
+    }
+    const handleCloseModal = () => {
+        setModalOpen(false)
+    }
+    const [isModalOpen2, setModalOpen2] = useState(false)
+    const handleOpenModal2 = () => {
+        setModalOpen2(true)
+    }
+    const handleCloseModal2 = () => {
+        setModalOpen2(false)
+    }
+
     return (
         <>
             <div className="flex flex-col h-screen w-screen bg-gray-100 font-sans">
                 {/* 상단 바 */}
-                <div className="flex w-full h-16 bg-[#0EA5E9] shadow-md">
+                <div className="flex w-full h-16 bg-[#0EA5E9] shadow-md ">
                     <div className="flex flex-row items-center justify-center h-full w-40 text-3xl text-white font-bold">
                         <div>EMR</div>
+                    </div>
+                    <div className="flex ml-auto  items-center justify-center text-xl w-40 h-full text-white">
+                        <DropdownMenu />
                     </div>
                 </div>
                 {/* 메인 컴포넌트 */}
                 <div className="flex flex-col items-center justify-center h-full">
-                    <div className="flex flex-col border rounded-lg border-[#0EA5E9] h-200 w-120 shadow-2xl bg-white">
+                    <div className="flex flex-col border-4 rounded-t-xl border-[#0EA5E9] h-200 w-120 shadow-7xl bg-white">
                         <div className="flex h-20 w-full bg-[#0EA5E9] items-center justify-center rounded-t-lg">
                             <div className="text-4xl text-white font-semibold">
                                 LOGIN
@@ -46,9 +68,11 @@ function LoginPage() {
                                 <button className="bg-[#0EA5E9] text-white rounded-md h-12 p-3 mt-6 hover:bg-[#0A74B9] transition duration-300 w-full">
                                     로그인
                                 </button>
-                                <p className="text-sm mt-10">
-                                    비밀번호를 잊어버렸을 시 시설팀에 문의
-                                    바랍니다
+                                <p
+                                    className="text-sm mt-10 cursor-pointer"
+                                    onClick={handleOpenModal}
+                                >
+                                    비밀번호 찾기
                                 </p>
                             </div>
                             {/* flex-grow를 사용하여 공간을 분리 */}
@@ -80,11 +104,19 @@ function LoginPage() {
                                 <button className="bg-[#0EA5E9] text-white rounded-md h-12 p-3 mt-6 hover:bg-[#0A74B9] transition duration-300 w-full">
                                     로그인
                                 </button>
+                                <p
+                                    className="text-sm mt-10 cursor-pointer"
+                                    onClick={handleOpenModal2}
+                                >
+                                    비밀번호 찾기
+                                </p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <Modal isOpen={isModalOpen} onClose={handleCloseModal} />
+            <Modal2 isOpen2={isModalOpen2} onClose2={handleCloseModal2} />
         </>
     )
 }

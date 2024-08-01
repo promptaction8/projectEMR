@@ -1,14 +1,34 @@
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 
 const DropdownMenu = () => {
     const [isDropOpen, setDropOpen] = useState(false)
+    const dropdownRef = useRef<HTMLDivElement>(null) // TypeScript를 위한 타입 지정
 
     const toggleDropdown = () => {
         setDropOpen(!isDropOpen)
     }
 
+    const handleClickOutside = (e: MouseEvent) => {
+        // 드롭다운 외부 클릭 확인
+        if (
+            dropdownRef.current &&
+            !dropdownRef.current.contains(e.target as Node)
+        ) {
+            setDropOpen(false)
+        }
+    }
+
+    useEffect(() => {
+        // 클릭 이벤트 리스너 등록
+        document.addEventListener('mousedown', handleClickOutside)
+        return () => {
+            // 컴포넌트 언마운트 시 리스너 제거
+            document.removeEventListener('mousedown', handleClickOutside)
+        }
+    }, [])
+
     return (
-        <div className="relative ml-auto">
+        <div className="relative ml-auto" ref={dropdownRef}>
             <button
                 onClick={toggleDropdown}
                 className="text-white px-4 py-2 focus:outline-none mr-40"

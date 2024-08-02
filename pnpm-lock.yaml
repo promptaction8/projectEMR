@@ -32,6 +32,9 @@ dependencies:
   dotenv:
     specifier: ^16.3.1
     version: 16.3.1
+  gh-copilot:
+    specifier: github:github/gh-copilot
+    version: github.com/github/gh-copilot/f85a1926cb1c9369a2f1ad7f8a1a7b074ba12eab
   gsap:
     specifier: ^3.12.5
     version: 3.12.5
@@ -3557,3 +3560,9 @@ packages:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
     dev: true
+
+  github.com/github/gh-copilot/f85a1926cb1c9369a2f1ad7f8a1a7b074ba12eab:
+    resolution: {tarball: https://codeload.github.com/github/gh-copilot/tar.gz/f85a1926cb1c9369a2f1ad7f8a1a7b074ba12eab}
+    name: gh-copilot
+    version: 0.0.0
+    dev: false

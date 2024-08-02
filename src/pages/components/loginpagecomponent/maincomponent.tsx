@@ -74,7 +74,7 @@ function MainComponent() {
                                 onClick={handleOpenModal3}
                                 className="text-sm mt-10 cursor-pointer"
                             >
-                                계정 생성(temp)
+                                직원 계정 생성
                             </p>
                         </div>
                         {/* flex-grow를 사용하여 공간을 분리 */}

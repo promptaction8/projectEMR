@@ -26,7 +26,7 @@ export const createEmployeeAccountService = async (
     if (emailRegex.test(Email) === false) {
         return res.status(400).json('이메일 형식이 올바르지 않습니다')
     }
-    const isDuplicatedId = await isDuplicated(id, connection)
+    const isDuplicatedId: any = await isDuplicated(id, connection)
     if (isDuplicatedId.length > 0) {
         return res.status(400).json('이미 존재하는 아이디입니다')
     }

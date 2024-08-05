@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useRouter } from 'next/dist/client/router'
+import { useRouter } from 'next/router'
 import { useMutation } from '@tanstack/react-query'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import axios from 'axios'
@@ -37,7 +37,6 @@ const AccountCreationModal = ({ onClose3 }: AccountCreationModalProps) => {
     } = useForm<IFormField>()
     const createEmployeeAccountMutation = useMutation({
         mutationFn: async (data: IFormField) => {
-            console.log('🚀 ~ mutationFn: ~ data:', data)
             return await axios.post(
                 '/api/createaccount/createemployeeaccount',
                 data

@@ -36,11 +36,8 @@ export const getEmployeeAccount = async (connection: Connection) => {
     return rows
 }
 //중복된 계정 조회
-export const isDuplicated = async (
-    id: string,
-    connection: Connection
-): Promise<any> => {
-    const [rows, fields] = await connection.query(
+export const isDuplicated = async (id: string, connection: Connection) => {
+    const [rows] = await connection.query(
         `SELECT * FROM employeeAccount WHERE id = "${id}"`
     )
     if (rows.length > 0) {

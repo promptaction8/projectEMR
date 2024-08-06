@@ -4,7 +4,7 @@ import Modal from './loginpagecomponent/loginpageemploymodal'
 import Modal2 from './loginpagecomponent/loginpagepatiendmodal'
 import DropdownMenu from './loginpagecomponent/dropdown'
 import Link from 'next/link'
-import Modal3 from './loginpagecomponent/createaccountmodal'
+import Modal3 from './loginpagecomponent/createemployeeaccountmodal'
 import UpperBar from './loginpagecomponent/upperbar'
 import MainComponent from './loginpagecomponent/maincomponent'
 function LoginPage() {

@@ -35,6 +35,15 @@ export const getEmployeeAccount = async (connection: Connection) => {
     )
     return rows
 }
+
+// 직원 아이디로 DB 조회
+export const getEmployeeId = async (id: string, connection: Connection) => {
+    const [rows] = await connection.query(
+        `SELECT * FROM employeeAccount WHERE id = "${id}"`
+    )
+    return rows
+}
+
 //중복된 계정 조회
 export const isDuplicated = async (id: string, connection: Connection) => {
     const [rows] = await connection.query(

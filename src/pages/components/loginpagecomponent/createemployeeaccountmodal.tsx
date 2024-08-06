@@ -4,6 +4,7 @@ import { useMutation } from '@tanstack/react-query'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import axios from 'axios'
 import { toast } from 'react-toastify'
+import { error } from 'console'
 
 interface ModalProps {
     isOpen3: boolean
@@ -44,11 +45,13 @@ const AccountCreationModal = ({ onClose3 }: AccountCreationModalProps) => {
         },
 
         onSuccess: () => {
+            onClose3()
             router.push('/MainPage')
             toast.success('회원가입이 성공했습니다')
         },
-        onError: () => {
-            toast.error('회원가입에 실패했습니다')
+        onError: (error: any) => {
+            const errorMessage = error.response.data
+            toast.error(errorMessage)
         },
     })
 

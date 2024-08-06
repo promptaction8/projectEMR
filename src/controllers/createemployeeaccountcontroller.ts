@@ -28,7 +28,7 @@ export const createEmployeeAccountController = async (
         !Position ||
         !DateOfJoining
     ) {
-        return res.status(400).send('필수 데이터가 없습니다')
+        return res.status(400).json('필수 데이터가 없습니다')
     }
     await createEmployeeAccountService(req, res, connection)
 }

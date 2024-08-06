@@ -1,7 +1,23 @@
 import { useState } from 'react'
 import Modal from './loginpageemploymodal'
 import Modal2 from './loginpagepatiendmodal'
-import Modal3 from './createaccountmodal'
+import Modal3 from './createemployeeaccountmodal'
+import { useMutation } from '@tanstack/react-query'
+import axios from 'axios'
+import { toast } from 'react-toastify'
+import { useRouter } from 'next/router'
+import { tokenAtom } from '@/constants/token'
+import { useSetAtom } from 'jotai/react'
+import { useForm, SubmitHandler } from 'react-hook-form'
+import LoginSuccessAndLink from './loginsuccessandlink'
+import EmployeeLogin from './employeelogin'
+import PatientLogin from './patientlogin'
+
+interface IEmployeeLoginData {
+    id: string
+    Password: string
+}
+
 function MainComponent() {
     const [isModalOpen, setModalOpen] = useState(false)
     const handleOpenModal = () => {
@@ -26,6 +42,36 @@ function MainComponent() {
     const handleCloseModal3 = () => {
         setModalOpen3(false)
     }
+    const {
+        handleSubmit,
+        register,
+        formState: { errors },
+        setError,
+        clearErrors,
+    } = useForm<IEmployeeLoginData>()
+
+    const setToken = useSetAtom(tokenAtom)
+
+    const [isLogin, setIsLogin] = useState(false)
+
+    const employeeLogin = useMutation({
+        mutationFn: async (data: IEmployeeLoginData) => {
+            const tokenData = await axios.post('/api/login/employeelogin', data)
+            setToken(tokenData.data.token)
+            return tokenData
+        },
+        onSuccess: () => {
+            toast.success('로그인 성공')
+            setIsLogin(true) // 로그인 성공 시 상태 변경
+        },
+        onError: (error: any) => {
+            toast.error(error.response.data.message)
+        },
+    })
+
+    const Login: SubmitHandler<IEmployeeLoginData> = async (data) => {
+        await employeeLogin.mutate(data)
+    }
 
     return (
         <>
@@ -36,83 +82,83 @@ function MainComponent() {
                             LOGIN
                         </div>
                     </div>
-                    <div className="flex flex-grow flex-col p-6 items-center justify-center ">
-                        <div className="flex flex-col w-full  mt-30">
-                            <div className="mb-4">
-                                <p className="mb-10 font-noto text-2xl">
-                                    직원 로그인
-                                </p>
-                                <label className="text-lg font-medium">
-                                    ID
-                                </label>
-                                <input
-                                    type="text"
-                                    placeholder="아이디를 입력하세요"
-                                    className="border border-gray-300 rounded-md p-3 mt-2 w-full focus:outline-none focus:ring-2 focus:ring-[#0EA5E9] transition duration-300"
-                                />
-                            </div>
-                            <div className="mb-4">
-                                <label className="text-lg font-medium">
-                                    PASSWORD
-                                </label>
-                                <input
-                                    type="password"
-                                    placeholder="비밀번호를 입력하세요"
-                                    className="border border-gray-300 rounded-md p-3 mt-2 w-full focus:outline-none focus:ring-2 focus:ring-[#0EA5E9] transition duration-300"
-                                />
-                            </div>
-                            <button className="bg-[#0EA5E9] text-white rounded-md h-12 p-3 mt-6 hover:bg-[#0A74B9] transition duration-300 w-full">
-                                로그인
-                            </button>
-                            <p
-                                className="text-sm mt-10 cursor-pointer"
-                                onClick={handleOpenModal}
-                            >
-                                비밀번호 찾기
-                            </p>
-                            <p
-                                onClick={handleOpenModal3}
-                                className="text-sm mt-10 cursor-pointer"
-                            >
-                                직원 계정 생성
-                            </p>
-                        </div>
-                        {/* flex-grow를 사용하여 공간을 분리 */}
-                        <div className="flex-grow"></div>
-                        <div className="flex flex-col w-full mb-20">
-                            <div className="mb-4">
-                                <p className="mb-10 font-noto text-2xl">
-                                    환자 로그인
-                                </p>
-                                <label className="text-lg font-medium">
-                                    환자 번호
-                                </label>
-                                <input
-                                    type="text"
-                                    placeholder="환자 고유 번호를 입력하세요"
-                                    className="border border-gray-300 rounded-md p-3 mt-2 w-full focus:outline-none focus:ring-2 focus:ring-[#0EA5E9] transition duration-300"
-                                />
-                            </div>
-                            <div className="mb-4">
-                                <label className="text-lg font-medium">
-                                    PASSWORD
-                                </label>
-                                <input
-                                    type="password"
-                                    placeholder="비밀번호를 입력하세요"
-                                    className="border border-gray-300 rounded-md p-3 mt-2 w-full focus:outline-none focus:ring-2 focus:ring-[#0EA5E9] transition duration-300"
-                                />
-                            </div>
-                            <button className="bg-[#0EA5E9] text-white rounded-md h-12 p-3 mt-6 hover:bg-[#0A74B9] transition duration-300 w-full">
-                                로그인
-                            </button>
-                            <p
-                                className="text-sm mt-10 cursor-pointer"
-                                onClick={handleOpenModal2}
-                            >
-                                비밀번호 찾기
-                            </p>
-                        </div>
+                    <div className="flex flex-grow flex-col p-6 items-center justify-center">
+                        {isLogin ? (
+                            <LoginSuccessAndLink />
+                        ) : (
+                            <>
+                                <div className="flex flex-col w-full mt-30">
+                                    <form onSubmit={handleSubmit(Login)}>
+                                        <div className="mb-4">
+                                            <p className="mb-10 font-noto text-2xl">
+                                                직원 로그인
+                                            </p>
+                                            <label className="text-lg font-medium">
+                                                ID
+                                            </label>
+                                            <input
+                                                {...register('id', {
+                                                    required:
+                                                        '아이디를 입력하세요',
+                                                })}
+                                                type="text"
+                                                placeholder="아이디를 입력하세요"
+                                                className="border border-gray-300 rounded-md p-3 mt-2 w-full focus:outline-none focus:ring-2 focus:ring-[#0EA5E9] transition duration-300"
+                                            />
+                                            {errors.id && (
+                                                <p className="text-red-500">
+                                                    {errors.id.message}
+                                                </p>
+                                            )}
+                                        </div>
+                                        <div className="mb-4">
+                                            <label className="text-lg font-medium">
+                                                PASSWORD
+                                            </label>
+                                            <input
+                                                {...register('Password', {
+                                                    required:
+                                                        '비밀번호를 입력하세요',
+                                                })}
+                                                type="password"
+                                                placeholder="비밀번호를 입력하세요"
+                                                className="border border-gray-300 rounded-md p-3 mt-2 w-full focus:outline-none focus:ring-2 focus:ring-[#0EA5E9] transition duration-300"
+                                            />
+                                            {errors.Password && (
+                                                <p className="text-red-500">
+                                                    {errors.Password.message}
+                                                </p>
+                                            )}
+                                        </div>
+                                        <button className="bg-[#0EA5E9] text-white rounded-md h-12 p-3 mt-6 hover:bg-[#0A74B9] transition duration-300 w-full">
+                                            로그인
+                                        </button>
+                                    </form>
+                                    <p
+                                        className="text-sm mt-10 cursor-pointer"
+                                        onClick={handleOpenModal}
+                                    >
+                                        비밀번호 찾기
+                                    </p>
+                                    <p
+                                        onClick={handleOpenModal3}
+                                        className="text-sm mt-10 cursor-pointer"
+                                    >
+                                        직원 계정 생성
+                                    </p>
+                                </div>
+                                <div className="flex-grow"></div>
+                                <div className="flex flex-col w-full mb-20">
+                                    <PatientLogin />
+                                    <p
+                                        className="text-sm mt-10 cursor-pointer"
+                                        onClick={handleOpenModal2}
+                                    >
+                                        비밀번호 찾기
+                                    </p>
+                                </div>
+                            </>
+                        )}
                     </div>
                 </div>
             </div>
@@ -122,4 +168,5 @@ function MainComponent() {
         </>
     )
 }
+
 export default MainComponent

@@ -1,0 +1,41 @@
+import React from 'react'
+import UpperBar from './loginpagecomponent/upperbar'
+import ExtraBar from './dashboardcomponents/extrabar'
+
+function DashboardComponents() {
+    return (
+        <div className="flex flex-col h-screen w-screen bg-gray-100 font-sans">
+            {/* 상단 바 */}
+            <UpperBar />
+            {/* 추가 바 */}
+            <ExtraBar />
+            {/* 대시보드 컴포넌트 */}
+            <div className="flex flex-grow p-4 ">
+                <div className="flex flex-col w-1/5 pr-8  ml-50">
+                    {/* 왼쪽 상단 작은 박스 */}
+                    <div className="bg-white shadow-lg p-3 mb-20 h-80">
+                        작은 박스
+                    </div>{' '}
+                    {/* 긴 박스 */}
+                    <div className="bg-white shadow-lg p-3 flex-grow mb-8">
+                        긴 박스
+                    </div>{' '}
+                </div>
+                <div className="flex flex-col w-3/4  px-40">
+                    {/* 오른쪽 박스 3개 */}
+                    <div className="bg-white shadow-lg p-3 mb-8 flex-1">
+                        박스 1
+                    </div>{' '}
+                    <div className="bg-white shadow-lg p-3 mb-8 flex-1">
+                        박스 2
+                    </div>{' '}
+                    <div className="bg-white shadow-lg p-3 mb-8 flex-1">
+                        박스 3
+                    </div>{' '}
+                </div>
+            </div>
+        </div>
+    )
+}
+
+export default DashboardComponents

@@ -27,25 +27,25 @@ function LoginSuccessAndLink() {
                     <div className="bg-gray-50 border rounded-lg shadow-md mt-2">
                         <ul className="py-2">
                             <li className="font-bold text-gray-800 px-4 py-2 border-b">
-                                진료부
+                                진료부(미구현)
                             </li>
                             <li
                                 onClick={() => navigateTo('/temp')}
                                 className="px-4 py-2 hover:bg-blue-100 cursor-pointer transition duration-200"
                             >
-                                외래 진료
+                                외래 진료(미구현)
                             </li>
                             <li
                                 onClick={() => navigateTo('/temp')}
                                 className="px-4 py-2 hover:bg-blue-100 cursor-pointer transition duration-200"
                             >
-                                병동 진료
+                                병동 진료(미구현)
                             </li>
                             <li
                                 onClick={() => navigateTo('/temp')}
                                 className="px-4 py-2 hover:bg-blue-100 cursor-pointer transition duration-200"
                             >
-                                수술 관리
+                                수술 관리(미구현)
                             </li>
 
                             <li className="font-bold text-gray-800 px-4 py-2 border-b">
@@ -55,19 +55,19 @@ function LoginSuccessAndLink() {
                                 onClick={() => navigateTo('/temp')}
                                 className="px-4 py-2 hover:bg-blue-100 cursor-pointer transition duration-200"
                             >
-                                ER
+                                ER(미구현)
                             </li>
                             <li
                                 onClick={() => navigateTo('/temp')}
                                 className="px-4 py-2 hover:bg-blue-100 cursor-pointer transition duration-200"
                             >
-                                ICU
+                                ICU(미구현)
                             </li>
                             <li
                                 onClick={() => navigateTo('/temp')}
                                 className="px-4 py-2 hover:bg-blue-100 cursor-pointer transition duration-200"
                             >
-                                OR
+                                OR(미구현)
                             </li>
                             <li
                                 onClick={() => navigateTo('/temp')}
@@ -79,25 +79,25 @@ function LoginSuccessAndLink() {
                                 onClick={() => navigateTo('/temp')}
                                 className="px-4 py-2 hover:bg-blue-100 cursor-pointer transition duration-200"
                             >
-                                5병동
+                                5병동(미구현)
                             </li>
                             <li
                                 onClick={() => navigateTo('/temp')}
                                 className="px-4 py-2 hover:bg-blue-100 cursor-pointer transition duration-200"
                             >
-                                6병동
+                                6병동(미구현)
                             </li>
                             <li
                                 onClick={() => navigateTo('/temp')}
                                 className="px-4 py-2 hover:bg-blue-100 cursor-pointer transition duration-200"
                             >
-                                8병동
+                                8병동(미구현)
                             </li>
                             <li
                                 onClick={() => navigateTo('/temp')}
                                 className="px-4 py-2 hover:bg-blue-100 cursor-pointer transition duration-200"
                             >
-                                11병동
+                                11병동(미구현)
                             </li>
 
                             <li className="font-bold text-gray-800 px-4 py-2 border-b">
@@ -107,13 +107,13 @@ function LoginSuccessAndLink() {
                                 onClick={() => navigateTo('/pharmacy')}
                                 className="px-4 py-2 hover:bg-blue-100 cursor-pointer transition duration-200"
                             >
-                                약품 목록
+                                약품 목록(미구현)
                             </li>
                             <li
                                 onClick={() => navigateTo('/prescriptions')}
                                 className="px-4 py-2 hover:bg-blue-100 cursor-pointer transition duration-200"
                             >
-                                처방전 관리
+                                처방전 관리(미구현)
                             </li>
                         </ul>
                     </div>

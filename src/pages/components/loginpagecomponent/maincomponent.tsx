@@ -10,7 +10,6 @@ import { tokenAtom } from '@/constants/token'
 import { useSetAtom } from 'jotai/react'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import LoginSuccessAndLink from './loginsuccessandlink'
-import EmployeeLogin from './employeelogin'
 import PatientLogin from './patientlogin'
 
 interface IEmployeeLoginData {

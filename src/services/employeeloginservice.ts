@@ -16,13 +16,15 @@ export const employeeLoginService = async (
     Connection: Connection
 ) => {
     const { id, Password } = req.body
-    console.log('🚀 ~ req.body:', req.body)
     const checkAccount: any = await getEmployeeId(id, Connection)
+
+    // 아이디와 비밀번호 입력 확인
     if (!id || !Password) {
         return res
             .status(401)
             .json({ message: '아이디와 비밀번호를 입력해주세요' })
     }
+
     // 계정 존재 여부 확인
     if (
         !checkAccount ||
@@ -31,12 +33,15 @@ export const employeeLoginService = async (
     ) {
         return res.status(401).json({ message: '아이디가 존재하지 않습니다' })
     }
+
     // 비밀번호 비교
     const matchPassword = await compare(Password, checkAccount[0].password)
 
     if (!matchPassword) {
         return res.status(401).json({ message: '비밀번호가 일치하지 않습니다' })
     }
+
+    // 토큰 발급
     const issuedAt = Math.floor(Date.now() / 1000)
     const expirationTime = issuedAt + 5400 // 90분
     const token = sign(

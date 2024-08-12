@@ -1,19 +1,32 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useRouter } from 'next/router'
-import { FiFolder } from 'react-icons/fi' // 파일 아이콘을 위한 react-icons 패키지
+import { FiFolder } from 'react-icons/fi'
+import { useState } from 'react'
+import { jwtDecode } from 'jwt-decode'
 
 function LoginSuccessAndLink() {
     const router = useRouter()
+    const [username, setUsername] = useState('')
+
+    useEffect(() => {
+        const token = localStorage.getItem('token')
+        if (token) {
+            const decodedToken = jwtDecode(token) as any
+            setUsername(decodedToken.id)
+        } else {
+            router.push('/mainpage')
+        }
+    }, [])
 
     const navigateTo = (path: any) => {
         router.push(path) // 경로로 이동
     }
 
     return (
-        <div className="flex flex-col items-center justify-center w-full h-full">
-            <div className="bg-white rounded-lg p-6 w-full">
+        <div className="flex flex-col items-center w-full h-full">
+            <div className="bg-white rounded-lg p-6 w-full ">
                 <h1 className="text-2xl font-bold text-center mb-4">
-                    환영합니다!
+                    {username}님 어서오세요
                 </h1>
                 <p className="text-lg text-gray-600 text-center mb-6">
                     성공적으로 로그인했습니다.
@@ -24,6 +37,7 @@ function LoginSuccessAndLink() {
                         <FiFolder className="text-2xl mr-2 text-blue-600" />
                         <span className="text-xl font-semibold">부서 목록</span>
                     </div>
+                    {/* 기존 gray-50 박스 제거하고 아래로 이동 */}
                     <div className="bg-gray-50 border rounded-lg shadow-md mt-2">
                         <ul className="py-2">
                             <li className="font-bold text-gray-800 px-4 py-2 border-b">
@@ -70,34 +84,34 @@ function LoginSuccessAndLink() {
                                 OR(미구현)
                             </li>
                             <li
-                                onClick={() => navigateTo('/temp')}
+                                onClick={() => navigateTo('/warddashboard')}
                                 className="px-4 py-2 hover:bg-blue-100 cursor-pointer transition duration-200"
                             >
                                 4병동
                             </li>
                             <li
-                                onClick={() => navigateTo('/temp')}
+                                onClick={() => navigateTo('/warddashboard')}
                                 className="px-4 py-2 hover:bg-blue-100 cursor-pointer transition duration-200"
                             >
-                                5병동(미구현)
+                                5병동
                             </li>
                             <li
-                                onClick={() => navigateTo('/temp')}
+                                onClick={() => navigateTo('/warddashboard')}
                                 className="px-4 py-2 hover:bg-blue-100 cursor-pointer transition duration-200"
                             >
-                                6병동(미구현)
+                                6병동
                             </li>
                             <li
-                                onClick={() => navigateTo('/temp')}
+                                onClick={() => navigateTo('/warddashboard')}
                                 className="px-4 py-2 hover:bg-blue-100 cursor-pointer transition duration-200"
                             >
-                                8병동(미구현)
+                                8병동
                             </li>
                             <li
-                                onClick={() => navigateTo('/temp')}
+                                onClick={() => navigateTo('/warddashboard')}
                                 className="px-4 py-2 hover:bg-blue-100 cursor-pointer transition duration-200"
                             >
-                                11병동(미구현)
+                                11병동
                             </li>
 
                             <li className="font-bold text-gray-800 px-4 py-2 border-b">
@@ -119,13 +133,19 @@ function LoginSuccessAndLink() {
                     </div>
                 </div>
             </div>
-
-            <div className="flex justify-between bg-gray-50 mt-6 shadow-md border-2 border-gray-300 rounded-lg w-full">
-                <div className="flex-1 border-r-2 border-gray-300 h-40 flex items-center justify-center">
-                    <span className="text-lg font-semibold">Section 1</span>
+            {/* 아래 박스 추가 */}
+            <div className="grid grid-cols-2 gap-4 bg-white rounded-lg p-6 w-full mt-4">
+                <div className="bg-gray-50 border rounded-lg shadow-md p-4">
+                    개발중
                 </div>
-                <div className="flex-1 h-40 flex items-center justify-center">
-                    <span className="text-lg font-semibold">Section 2</span>
+                <div className="bg-gray-50 border rounded-lg shadow-md p-4">
+                    개발중
+                </div>
+                <div className="bg-gray-50 border rounded-lg shadow-md p-4">
+                    개발중
+                </div>
+                <div className="bg-gray-50 border rounded-lg shadow-md p-4">
+                    개발중
                 </div>
             </div>
         </div>

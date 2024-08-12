@@ -1,12 +1,12 @@
 import React from 'react'
 import { useState } from 'react'
-import Modal from './loginpagecomponent/loginpageemploymodal'
-import Modal2 from './loginpagecomponent/loginpagepatiendmodal'
-import DropdownMenu from './loginpagecomponent/dropdown'
+import Modal from './loginpagecomponents/loginpageemployeemodal'
+import Modal2 from './loginpagecomponents/loginpagepatiendmodal'
+import DropdownMenu from './loginpagecomponents/dropdown'
 import Link from 'next/link'
-import Modal3 from './loginpagecomponent/createemployeeaccountmodal'
-import UpperBar from './loginpagecomponent/upperbar'
-import MainComponent from './loginpagecomponent/maincomponent'
+import Modal3 from './loginpagecomponents/createemployeeaccountmodal'
+import UpperBar from './upperbar'
+import MainComponent from './loginpagecomponents/maincomponent'
 function LoginPage() {
     return (
         <>

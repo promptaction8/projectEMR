@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import Modal from './loginpageemploymodal'
+import Modal from './loginpageemployeemodal'
 import Modal2 from './loginpagepatiendmodal'
 import Modal3 from './createemployeeaccountmodal'
 import { useMutation } from '@tanstack/react-query'

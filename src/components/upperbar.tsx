@@ -2,6 +2,7 @@ import DropdownMenu from './loginpagecomponents/dropdown'
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { jwtDecode } from 'jwt-decode'
+import Image from 'next/image'
 
 function UpperBar() {
     const router = useRouter()
@@ -75,7 +76,15 @@ function UpperBar() {
         <>
             <div className="flex w-full h-16 bg-[#0EA5E9] shadow-md">
                 <div className="flex flex-row items-center justify-center h-full w-40 text-3xl text-white font-bold">
-                    <div>EMR</div>
+                    <div className="flex items-center ml-40">
+                        <Image
+                            src="/images/EMR.png"
+                            alt="EMR Logo"
+                            width={50}
+                            height={50}
+                        />
+                        <span className="ml-10">EMR</span>
+                    </div>
                 </div>
                 <div className="flex ml-auto items-center h-full w-220 ">
                     <div className="flex items-center justify-between w-full h-full text-xl text-white p-2">

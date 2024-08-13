@@ -1,6 +1,6 @@
 import React from 'react'
 import UpperBar from './upperbar'
-import ExtraBar from './warddashboardcomponent/extrabar'
+import WardExtraBar from './warddashboardcomponent/wardextrabar'
 
 function DashboardComponents() {
     return (
@@ -8,7 +8,7 @@ function DashboardComponents() {
             {/* 상단 바 */}
             <UpperBar />
             {/* 추가 바 */}
-            <ExtraBar />
+            <WardExtraBar />
             {/* 대시보드 컴포넌트 */}
             <div className="flex flex-grow p-4 ">
                 <div className="flex flex-col w-1/5 pr-8  ml-50">

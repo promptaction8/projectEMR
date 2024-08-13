@@ -46,7 +46,7 @@ const AccountCreationModal = ({ onClose3 }: AccountCreationModalProps) => {
 
         onSuccess: () => {
             onClose3()
-            router.push('/MainPage')
+            router.push('/loginpage')
             toast.success('회원가입이 성공했습니다')
         },
         onError: (error: any) => {

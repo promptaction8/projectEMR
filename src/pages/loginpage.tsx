@@ -1,10 +1,8 @@
+import UpperBar from '@/components/upperbar'
 import React from 'react'
 import EmployeeLoginPage from '@/components/employeeloginpage'
-import UpperBar from '@/components/upperbar'
-import { IoIosLogIn } from 'react-icons/io'
-import LoginBox from '@/components/loginpagecomponents/loginbox'
 
-function MainPage() {
+function LoginPage() {
     return (
         <>
             <div className="flex flex-col h-screen w-screen bg-gray-100 font-sans">
@@ -12,10 +10,9 @@ function MainPage() {
                 <UpperBar />
 
                 {/* 중앙 박스 컨테이너 */}
-                <LoginBox />
+                <EmployeeLoginPage />
             </div>
         </>
     )
 }
-
-export default MainPage
+export default LoginPage

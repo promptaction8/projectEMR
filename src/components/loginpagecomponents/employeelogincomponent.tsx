@@ -5,7 +5,6 @@ import Modal3 from './createemployeeaccountmodal'
 import { useMutation } from '@tanstack/react-query'
 import axios from 'axios'
 import { toast } from 'react-toastify'
-import { useRouter } from 'next/router'
 import { tokenAtom } from '@/constants/token'
 import { useSetAtom } from 'jotai/react'
 import { useForm, SubmitHandler } from 'react-hook-form'
@@ -17,7 +16,7 @@ interface IEmployeeLoginData {
     Password: string
 }
 
-function MainComponent() {
+function EmployeeLoginComponent() {
     const [isModalOpen, setModalOpen] = useState(false)
     const handleOpenModal = () => {
         setModalOpen(true)
@@ -45,8 +44,6 @@ function MainComponent() {
         handleSubmit,
         register,
         formState: { errors },
-        setError,
-        clearErrors,
     } = useForm<IEmployeeLoginData>()
 
     const setToken = useSetAtom(tokenAtom)
@@ -168,4 +165,4 @@ function MainComponent() {
     )
 }
 
-export default MainComponent
+export default EmployeeLoginComponent

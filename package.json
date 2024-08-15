@@ -38,6 +38,7 @@
         "react-icons": "^5.2.1",
         "react-query": "^3.39.3",
         "react-toastify": "^10.0.3",
+        "react-tooltip": "^5.28.0",
         "styled-components": "^6.1.11",
         "use-router": "^0.4.2"
     },

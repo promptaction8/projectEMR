@@ -9,6 +9,7 @@ import {
     isDuplicated,
 } from '@/dao/employeeaccount'
 import { SECRET_KEY } from '@/constants'
+import { setCookie } from 'nookies'
 
 export const employeeLoginService = async (
     req: NextApiRequest,
@@ -55,6 +56,13 @@ export const employeeLoginService = async (
         },
         SECRET_KEY
     )
+
+    setCookie({ res }, 'token', token, {
+        maxAge: 60 * 60, // 1시간
+        path: '/', // 쿠키의 경로
+        httpOnly: true,
+        secure: false,
+    })
 
     // 로그인 성공
     res.status(200).json({ message: '로그인 성공', token })

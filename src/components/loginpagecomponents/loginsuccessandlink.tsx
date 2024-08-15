@@ -1,34 +1,23 @@
-import React, { useEffect } from 'react'
+import React, { use, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { FiFolder } from 'react-icons/fi'
 import { useState } from 'react'
-import { jwtDecode } from 'jwt-decode'
+import { useQuery } from '@tanstack/react-query'
+import axios from 'axios'
 
 function LoginSuccessAndLink() {
     const router = useRouter()
     const [username, setUsername] = useState('')
+    const [token, setToken] = useState('')
 
-    useEffect(() => {
-        const token = localStorage.getItem('token')
-        if (token) {
-            const decodedToken = jwtDecode(token) as any
-            setUsername(decodedToken.id)
-        } else {
-            router.push('/mainpage')
-        }
-    }, [])
-
-    const navigateTo = (path: any) => {
-        router.push(path) // 경로로 이동
+    const navigateTo = (path: string) => {
+        router.push(path)
     }
 
     return (
         <div className="flex flex-col items-center w-full h-full">
             <div className="bg-white rounded-lg p-6 w-full ">
-                <h1 className="text-2xl font-bold text-center mb-4">
-                    {username}님 어서오세요
-                </h1>
-                <p className="text-lg text-gray-600 text-center mb-6">
+                <p className="text-lg text-gray-600 text-center  my-30">
                     성공적으로 로그인했습니다.
                 </p>
 
@@ -144,8 +133,8 @@ function LoginSuccessAndLink() {
                 <div className="bg-gray-50 border rounded-lg shadow-md p-4">
                     개발중
                 </div>
-                <div className="bg-gray-50 border rounded-lg shadow-md p-4">
-                    개발중
+                <div className="justify-center items-center flex bg-gray-50 border rounded-lg shadow-md p-4">
+                    <span>로그아웃</span>
                 </div>
             </div>
         </div>

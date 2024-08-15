@@ -1,6 +1,7 @@
 import UpperBar from '@/components/upperbar'
 import React from 'react'
 import EmployeeLoginPage from '@/components/employeeloginpage'
+import WardExtraBar from '@/components/warddashboardcomponent/wardextrabar'
 
 function LoginPage() {
     return (

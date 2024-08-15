@@ -6,10 +6,11 @@ import { useMutation } from '@tanstack/react-query'
 import axios from 'axios'
 import { toast } from 'react-toastify'
 import { tokenAtom } from '@/constants/token'
-import { useSetAtom } from 'jotai/react'
+import { useSetAtom, useAtom } from 'jotai/react'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import LoginSuccessAndLink from './loginsuccessandlink'
 import PatientLogin from './patientlogin'
+import WardExtraBar from '../warddashboardcomponent/wardextrabar'
 
 interface IEmployeeLoginData {
     id: string
@@ -46,19 +47,23 @@ function EmployeeLoginComponent() {
         formState: { errors },
     } = useForm<IEmployeeLoginData>()
 
-    const setToken = useSetAtom(tokenAtom)
+    const [token, setToken] = useAtom(tokenAtom)
 
     const [isLogin, setIsLogin] = useState(false)
 
     const employeeLogin = useMutation({
         mutationFn: async (data: IEmployeeLoginData) => {
-            const tokenData = await axios.post('/api/login/employeelogin', data)
-            setToken(tokenData.data.token)
-            return tokenData
+            const tokenData = await axios.post(
+                '/api/loginlogout/employeelogin',
+                data
+            )
+
+            return setToken(tokenData.data.token)
         },
         onSuccess: () => {
             toast.success('로그인 성공')
-            setIsLogin(true) // 로그인 성공 시 상태 변경
+            setIsLogin(true)
+            // 로그인 성공 시 상태 변경
         },
         onError: (error: any) => {
             toast.error(error.response.data.message)
@@ -68,7 +73,6 @@ function EmployeeLoginComponent() {
     const Login: SubmitHandler<IEmployeeLoginData> = async (data) => {
         await employeeLogin.mutate(data)
     }
-
     return (
         <>
             <div className="flex flex-col items-center justify-center h-full">

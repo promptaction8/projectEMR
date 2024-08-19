@@ -76,7 +76,7 @@ function EmployeeLoginComponent() {
     return (
         <>
             <div className="flex flex-col items-center justify-center h-full">
-                <div className="flex flex-col border-4 rounded-t-xl border-[#0EA5E9] h-200 w-120 shadow-7xl bg-white">
+                <div className="flex flex-col border-4 rounded-t-xl border-[#0EA5E9] w-120 shadow-7xl bg-white">
                     <div className="flex h-20 w-full bg-[#0EA5E9] items-center justify-center rounded-t-lg">
                         <div className="text-4xl text-white font-semibold">
                             LOGIN
@@ -148,15 +148,6 @@ function EmployeeLoginComponent() {
                                     </p>
                                 </div>
                                 <div className="flex-grow"></div>
-                                <div className="flex flex-col w-full mb-20">
-                                    <PatientLogin />
-                                    <p
-                                        className="text-sm mt-10 cursor-pointer"
-                                        onClick={handleOpenModal2}
-                                    >
-                                        비밀번호 찾기
-                                    </p>
-                                </div>
                             </>
                         )}
                     </div>

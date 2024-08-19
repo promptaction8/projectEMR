@@ -3,7 +3,7 @@ import React from 'react'
 import EmployeeLoginPage from '@/components/employeeloginpage'
 import WardExtraBar from '@/components/warddashboardcomponent/wardextrabar'
 
-function LoginPage() {
+function ELoginPage() {
     return (
         <>
             <div className="flex flex-col h-screen w-screen bg-gray-100 font-sans">
@@ -16,4 +16,4 @@ function LoginPage() {
         </>
     )
 }
-export default LoginPage
+export default ELoginPage

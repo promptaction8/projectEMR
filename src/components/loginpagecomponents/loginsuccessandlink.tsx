@@ -1,9 +1,7 @@
-import React, { use, useEffect } from 'react'
+import React from 'react'
 import { useRouter } from 'next/router'
 import { FiFolder } from 'react-icons/fi'
 import { useState } from 'react'
-import { useQuery } from '@tanstack/react-query'
-import axios from 'axios'
 
 function LoginSuccessAndLink() {
     const router = useRouter()

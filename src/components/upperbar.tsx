@@ -1,11 +1,7 @@
 import DropdownMenu from './loginpagecomponents/dropdown'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useRouter } from 'next/router'
-import { jwtDecode } from 'jwt-decode' // jwtDecode를 디폴트로 임포트해야 합니다.
 import Image from 'next/image'
-import { SECRET_KEY } from '@/constants'
-import jwt from 'jsonwebtoken'
-import axios from 'axios'
 
 function UpperBar() {
     const router = useRouter()
@@ -30,10 +26,10 @@ function UpperBar() {
                 <div className="flex flex-row items-center justify-center h-full w-40 text-3xl text-white font-bold">
                     <div className="flex items-center ml-40">
                         <Image
-                            src="/images/EMR.png"
+                            src="/images/logo backgroundremove.png"
                             alt="EMR Logo"
-                            width={50}
-                            height={50}
+                            width={70}
+                            height={70}
                         />
                         <span className="ml-10 text-4xl">EMR</span>
                     </div>

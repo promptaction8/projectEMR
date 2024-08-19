@@ -29,7 +29,7 @@ function LoginBox() {
                             로그인 해주세요.
                         </p>
                         <Link
-                            href="/loginpage"
+                            href="/eloginpage"
                             className="bg-gray-100 border-2 border-[#0EA5E9] text-[#0EA5E9] py-3 px-8  rounded-lg text-3xl font-mono shadow-xl transition-transform transform hover:scale-105 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-[#0EA5E9] focus:ring-opacity-50"
                         >
                             Employee Login
@@ -50,9 +50,12 @@ function LoginBox() {
                             의료기록 열람을 원하시는 환자분들은 이곳으로 로그인
                             해주세요.
                         </p>
-                        <button className="bg-gray-100 border-2 border-[#0EA5E9] text-[#0EA5E9] py-3 px-8 rounded-lg text-3xl font-mono shadow-xl transition-transform transform hover:scale-105 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-[#0EA5E9] focus:ring-opacity-50">
+                        <Link
+                            href={'/ploginpage'}
+                            className="bg-gray-100 border-2 border-[#0EA5E9] text-[#0EA5E9] py-3 px-8 rounded-lg text-3xl font-mono shadow-xl transition-transform transform hover:scale-105 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-[#0EA5E9] focus:ring-opacity-50"
+                        >
                             Patient Login
-                        </button>
+                        </Link>
                         <div className="relative w-full mt-40">
                             <div className="absolute left-0 right-0 bottom-0 h-1">
                                 <div className="h-full bg-gradient-to-r from-transparent via-[#0EA5E9] to-transparent"></div>

@@ -3,11 +3,7 @@ import { Connection } from 'mysql2/promise'
 import { Jwt, sign } from 'jsonwebtoken'
 import { compare } from 'bcrypt'
 import { createConnection } from './../../public/utils/mysql'
-import {
-    getEmployeeAccount,
-    getEmployeeId,
-    isDuplicated,
-} from '@/dao/employeeaccount'
+import { getEmployeeId, isDuplicated } from '@/dao/employeeaccount'
 import { SECRET_KEY } from '@/constants'
 import { setCookie } from 'nookies'
 
@@ -17,7 +13,7 @@ export const employeeLoginService = async (
     Connection: Connection
 ) => {
     const { id, Password } = req.body
-    const checkAccount: any = await getEmployeeId(id, Connection)
+    const checkAccount: any = await getEmployeeId(id)
 
     // 아이디와 비밀번호 입력 확인
     if (!id || !Password) {

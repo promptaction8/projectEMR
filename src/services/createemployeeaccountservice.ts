@@ -1,9 +1,5 @@
 import { Connection } from 'mysql2/promise'
-import {
-    createEmployeeAccount,
-    getEmployeeAccount,
-    isDuplicated,
-} from '@/dao/employeeaccount'
+import { createEmployeeAccount, isDuplicated } from '@/dao/employeeaccount'
 import { NextApiHandler, NextApiRequest, NextApiResponse } from 'next'
 import { hash } from 'bcrypt'
 
@@ -26,7 +22,7 @@ export const createEmployeeAccountService = async (
     if (emailRegex.test(Email) === false) {
         return res.status(400).json('이메일 형식이 올바르지 않습니다')
     }
-    const isDuplicatedId: any = await isDuplicated(id, connection)
+    const isDuplicatedId: any = await isDuplicated(id)
     if (isDuplicatedId.length > 0) {
         return res.status(400).json('이미 존재하는 아이디입니다')
     }
@@ -49,13 +45,13 @@ export const createEmployeeAccountService = async (
     }
     await createEmployeeAccount({
         id,
-        Password: hashedPassword,
-        Email,
-        Phone,
-        Address,
-        Department,
-        Position,
-        DateOfJoining,
+        password: hashedPassword,
+        email: Email,
+        phonenumber: Phone,
+        address: Address,
+        depart: Department,
+        position: Position,
+        dateofjoining: DateOfJoining,
         connection,
     })
     res.status(200).json('직원 계정 생성 완료')

@@ -1,0 +1,30 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Certification {
+  idx       Int      @id @default(autoincrement())
+  email     String   @db.VarChar(100)
+  emailcode String   @db.VarChar(100)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+}
+
+model EmployeeAccount {
+  idx           Int       @id @default(autoincrement())
+  id            String    @db.VarChar(100) @unique
+  password      String    @db.VarChar(100)
+  email         String    @db.VarChar(100)
+  phonenumber   String    @db.VarChar(100)
+  address       String    @db.VarChar(100)
+  depart        String    @db.VarChar(100)
+  position      String    @db.VarChar(100)
+  dateofjoining String    @db.VarChar(100)
+  createdAt     DateTime? @default(now()) @db.Timestamp(0)
+  updatedAt     DateTime? @default(now()) @db.Timestamp(0)
+}

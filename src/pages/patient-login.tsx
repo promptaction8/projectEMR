@@ -1,8 +1,6 @@
 import UpperBar from '@/components/upperbar'
 import React from 'react'
-import EmployeeLoginPage from '@/components/employeeloginpage'
-import WardExtraBar from '@/components/warddashboardcomponent/wardextrabar'
-import PatientLoginPage from '@/components/patientloginpage'
+import PatientLoginPage from '@/components/patienLoginPage'
 
 function PLoginPage() {
     return (

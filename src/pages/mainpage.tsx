@@ -1,5 +1,5 @@
 import React from 'react'
-import EmployeeLoginPage from '@/components/employeeloginpage'
+import EmployeeLoginPage from '@/components/employeeLoginPage'
 import UpperBar from '@/components/upperbar'
 import { IoIosLogIn } from 'react-icons/io'
 import LoginBox from '@/components/loginpagecomponents/loginbox'

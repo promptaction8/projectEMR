@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { createConnection } from './../../../../public/utils/mysql'
-import { employeeLoginController } from '@/controllers/employeelogincontroller'
+import { createConnection } from '../../../../public/utils/mysql'
+import { createEmployeeAccountController } from '../../../controllers/createemployeeaccountcontroller'
 
 export default async function handler(
     req: NextApiRequest,
@@ -9,7 +9,7 @@ export default async function handler(
     const connection = await createConnection()
 
     if (req.method === 'POST') {
-        await employeeLoginController(req, res, connection)
+        await createEmployeeAccountController(req, res, connection)
     } else {
         res.status(404).json({ error: ' 해당 메서드는 지원하지 않습니다' })
     }

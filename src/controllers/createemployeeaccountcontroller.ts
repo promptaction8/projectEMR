@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { Connection } from 'mysql2/promise'
-import { createEmployeeAccountService } from '@/services/createemployeeaccountservice'
+import { createEmployeeAccountService } from '@/services/createEmployeeAccountService'
 
 // 직원 계정 생성
 export const createEmployeeAccountController = async (

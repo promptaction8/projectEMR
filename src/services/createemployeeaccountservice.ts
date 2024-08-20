@@ -1,6 +1,6 @@
 import { Connection } from 'mysql2/promise'
-import { createEmployeeAccount, isDuplicated } from '@/dao/employeeaccount'
-import { NextApiHandler, NextApiRequest, NextApiResponse } from 'next'
+import { createEmployeeAccount, isDuplicated } from '@/dao/employeeAccounts'
+import { NextApiRequest, NextApiResponse } from 'next'
 import { hash } from 'bcrypt'
 
 export const createEmployeeAccountService = async (

@@ -1,9 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { Connection } from 'mysql2/promise'
-import { Jwt, sign } from 'jsonwebtoken'
+import { sign } from 'jsonwebtoken'
 import { compare } from 'bcrypt'
-import { createConnection } from './../../public/utils/mysql'
-import { getEmployeeId, isDuplicated } from '@/dao/employeeaccount'
+import { getEmployeeId } from '@/dao/employeeAccounts'
 import { SECRET_KEY } from '@/constants'
 import { setCookie } from 'nookies'
 

@@ -1,6 +1,4 @@
 import React from 'react'
-import UpperBar from './upperbar'
-import MainComponent from './loginpagecomponents/employeelogincomponent'
 import EmployeeLoginComponent from './loginpagecomponents/employeelogincomponent'
 function EmployeeLoginPage() {
     return (

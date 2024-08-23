@@ -22,7 +22,7 @@ Project EMR - 전자 의료 기록 시스템 개선을 위한 프로젝트.
 
 ## 📌 와이어 프레임 및 개발 설계 정리
 
-- 와이어프레임 제작, 현재 까지 구성된 화면 정리는 Notion(https://leeward-tuna-dea.notion.site/EMR-dc31fa73298c4685866a0e8b8f5db422?pvs=4) 에 있습니다.
+- 와이어프레임 제작, 현재 까지 구성된 화면 정리는 [Notion](https://leeward-tuna-dea.notion.site/EMR-dc31fa73298c4685866a0e8b8f5db422?pvs=4) 에 있습니다.
 
 ## ℹ️ IA
 

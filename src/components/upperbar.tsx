@@ -4,28 +4,11 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
+const menus = ['PACS', 'CPOE', 'RIS', 'CDS', 'HIS']
+
 function UpperBar() {
     const router = useRouter()
-    const handleHome = async () => {
-        try {
-            const response = await axios.post(
-                'api/token-verify',
-                {},
-                { withCredentials: true }
-            )
-
-            if (response.status === 200) {
-                return router.push('/')
-            }
-            if (response.status === 400 || response.status === 401) {
-                return router.push('/login')
-            }
-        } catch (error) {
-            console.error('Error during token verification:', error)
-            // 요청 실패 시에도 /login로 리다이렉트
-            return router.push('/login')
-        }
-    }
+    const handleHome = () => router.push('/')
 
     return (
         <>
@@ -46,33 +29,17 @@ function UpperBar() {
                 <div className="flex ml-auto items-center h-full w-260 ">
                     <div className="flex items-center justify-between w-full h-full text-xl text-white p-2">
                         <div className="hidden md:flex ml-auto">
-                            <ul className="flex space-x-12 pr-40">
-                                <li className="text-lg text-white border-2 border-transparent hover:border-blue-600 rounded-md p-2 transition duration-300 ease-in-out">
-                                    <button>
-                                        <a>PACS</a>
-                                    </button>
-                                </li>
-
-                                <li className="text-lg text-white border-2 border-transparent hover:border-blue-600 rounded-md p-2 transition duration-300 ease-in-out">
-                                    <button>
-                                        <a>CPOE</a>
-                                    </button>
-                                </li>
-                                <li className="text-lg text-white border-2 border-transparent hover:border-blue-600 rounded-md p-2 transition duration-300 ease-in-out">
-                                    <button>
-                                        <a>RIS</a>
-                                    </button>
-                                </li>
-                                <li className="text-lg text-white border-2 border-transparent hover:border-blue-600 rounded-md p-2 transition duration-300 ease-in-out">
-                                    <button>
-                                        <a>CDS</a>
-                                    </button>
-                                </li>
-                                <li className="text-lg text-white border-2 border-transparent hover:border-blue-600 rounded-md p-2 transition duration-300 ease-in-out">
-                                    <button>
-                                        <a>HIS</a>
-                                    </button>
-                                </li>
+                            <ul className="flex gap-x-4 pr-40">
+                                {menus.map((menu) => (
+                                    <li
+                                        key={menu}
+                                        className="text-lg text-white border-2 border-transparent hover:border-blue-600 rounded-md p-2 transition duration-300 ease-in-out"
+                                    >
+                                        <button>
+                                            <a>{menu}</a>
+                                        </button>
+                                    </li>
+                                ))}
                             </ul>
                         </div>
                         <div className="flex md:hidden ml-auto">

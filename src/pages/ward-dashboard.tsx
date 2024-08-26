@@ -1,11 +1,7 @@
 import React from 'react'
 import DashboardComponents from '@/components/dashboardComponents'
 
-function Dashboard() {
-    return (
-        <div>
-            <DashboardComponents />
-        </div>
-    )
+function WardDashboardPage() {
+    return <DashboardComponents />
 }
-export default Dashboard
+export default WardDashboardPage

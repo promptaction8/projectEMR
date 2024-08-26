@@ -4,9 +4,7 @@ import WardExtraBar from './warddashboardcomponent/wardExtraBar'
 
 function DashboardComponents() {
     return (
-        <div className="flex flex-col h-screen w-screen bg-gray-100 font-sans dark:bg-gray-100">
-            {/* 상단 바 */}
-            <UpperBar />
+        <div className="flex flex-col h-full w-full bg-gray-100 font-sans dark:bg-gray-100">
             {/* 추가 바 */}
             <WardExtraBar />
             {/* 대시보드 컴포넌트 */}

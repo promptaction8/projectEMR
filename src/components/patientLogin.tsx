@@ -1,5 +1,6 @@
 import React from 'react'
-import PatientLoginComponent from '@/components/loginpagecomponents/patientLoginComponent'
+import PatientLoginComponent from './loginpagecomponents/patientLoginComponent'
+
 function PatientLogin() {
     return (
         <>

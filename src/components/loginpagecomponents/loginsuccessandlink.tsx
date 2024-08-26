@@ -14,7 +14,7 @@ function LoginSuccessAndLink() {
         try {
             const response = await axios.post(
                 '/api/logout', //요청할 URL
-                {}, // 요청의 페이로드(빈 객체)
+                null, // 요청의 페이로드(빈 객체)
                 {
                     withCredentials: true,
                 } // 쿠키를 포함하도록 설정하는 withCredentials(자격증명- 쿠키, HTTP 인증 정보) 옵션.

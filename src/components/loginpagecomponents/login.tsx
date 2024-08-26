@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import { CiLogin } from 'react-icons/ci'
 import Link from 'next/link'
 
-function LoginBox() {
+function Login() {
     const router = useRouter()
     const onClickEmployeeLogin = () => {
         router.push('/loginpage')
@@ -68,4 +68,4 @@ function LoginBox() {
     )
 }
 
-export default LoginBox
+export default Login

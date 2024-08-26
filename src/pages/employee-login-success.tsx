@@ -5,14 +5,9 @@ import LoginSuccessAndLink from '@/components/loginpagecomponents/loginSuccessAn
 function EmployeeLoginSuccess() {
     return (
         <div className="flex flex-col h-screen w-screen bg-white font-sans">
-            {/* 상단 바 */}
-            <UpperBar />
-            {/* 로그인 성공 및 링크 */}
-            <div className="flex flex-col h-screen w-screen bg-white font-sans">
-                <div className="flex flex-col items-center justify-center h-full">
-                    <div className="flex flex-col border-2 rounded-md border-blue-600  w-120 shadow-7xl bg-white p-10">
-                        <LoginSuccessAndLink />
-                    </div>
+            <div className="flex flex-col items-center justify-center h-full">
+                <div className="flex flex-col border-2 rounded-md border-blue-600  w-120 shadow-7xl bg-white p-10">
+                    <LoginSuccessAndLink />
                 </div>
             </div>
         </div>

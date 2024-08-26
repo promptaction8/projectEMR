@@ -12,13 +12,14 @@ import { Modal } from 'react-responsive-modal'
 import FindEmployeePassword from './modal/findEmployeePassword'
 import 'react-responsive-modal/styles.css'
 import CreateEmployeeAccountModal from './modal/createEmployeeAccountModal'
+import { useQuery } from '@tanstack/react-query'
 
 interface IEmployeeLoginData {
     id: string
     password: string
 }
 
-function EmployeeLoginComponent() {
+function EmployeeLogin() {
     const [open, setOpen] = useState(false)
     const onOpenModal = () => setOpen(true)
     const onCloseModal = () => setOpen(false)
@@ -42,7 +43,16 @@ function EmployeeLoginComponent() {
 
     const [token, setToken] = useAtom(tokenAtom)
 
-    const [isLogin, setIsLogin] = useState(false)
+    const { refetch } = useQuery({
+        queryKey: ['token'],
+        queryFn: async () => {
+            const response = await axios.get('/api/token-verify', {
+                withCredentials: true,
+            })
+            return response.data
+        },
+    })
+
     const router = useRouter()
     const employeeLogin = useMutation({
         mutationFn: async (data: IEmployeeLoginData) => {
@@ -50,18 +60,17 @@ function EmployeeLoginComponent() {
 
             return setToken(tokenData.data.token)
         },
-        onSuccess: () => {
+        onSuccess: async () => {
+            await refetch()
             toast.success('로그인 성공')
-            setIsLogin(true)
             router.push('/')
-            // 로그인 성공 시 상태 변경
         },
         onError: (error: any) => {
             toast.error(error.response.data.message)
         },
     })
 
-    const Login: SubmitHandler<IEmployeeLoginData> = async (data) => {
+    const login: SubmitHandler<IEmployeeLoginData> = async (data) => {
         await employeeLogin.mutate(data)
     }
     return (
@@ -75,7 +84,7 @@ function EmployeeLoginComponent() {
                     </div>
                     <div className="flex flex-grow flex-col p-6 items-center justify-center">
                         <div className="flex flex-col w-full mt-10">
-                            <form onSubmit={handleSubmit(Login)}>
+                            <form onSubmit={handleSubmit(login)}>
                                 <div className="mb-4">
                                     <p className="mb-10 font-noto text-2xl">
                                         직원 로그인
@@ -151,4 +160,4 @@ function EmployeeLoginComponent() {
     )
 }
 
-export default EmployeeLoginComponent
+export default EmployeeLogin

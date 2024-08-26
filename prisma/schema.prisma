@@ -15,7 +15,7 @@ model Certification {
   updatedAt DateTime @default(now()) @updatedAt
 }
 
-model EmployeeAccount {
+model Employeeaccount {
   idx           Int       @id @default(autoincrement())
   id            String    @db.VarChar(100) @unique
   password      String    @db.VarChar(100)

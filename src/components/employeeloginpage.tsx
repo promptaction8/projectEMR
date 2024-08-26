@@ -1,9 +1,9 @@
 import React from 'react'
-import EmployeeLoginComponent from './loginpagecomponents/employeelogincomponent'
+import EmployeeLoginComponent from './loginpagecomponents/employeeLoginComponent'
 function EmployeeLoginPage() {
     return (
         <>
-            <div className="flex flex-col h-screen w-screen bg-gray-100 font-sans">
+            <div className="flex flex-col h-screen w-screen bg-white font-sans">
                 {/* 메인 컴포넌트 */}
                 <EmployeeLoginComponent />
             </div>

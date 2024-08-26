@@ -18,7 +18,6 @@ function WardExtraBar() {
     const [isMedicationRecordModal, setIsMedicationRecordModal] =
         useState(false)
 
-    const [token, setToken] = useAtom(tokenAtom)
     const [timeRemaining, setTimeRemaining] = useState<string>('')
     const router = useRouter()
 
@@ -31,13 +30,12 @@ function WardExtraBar() {
     } = useQuery({
         queryKey: ['token'],
         queryFn: async () => {
-            const response = await axios.get('/api/tokendecoding', {
+            const response = await axios.get('/api/token-verify', {
                 withCredentials: true,
             })
             return response.data
         },
-        refetchInterval: 500,
-        enabled: !!token,
+        refetchInterval: 10000,
     })
     // 로그인 만료시간 계산
     useEffect(() => {
@@ -70,22 +68,67 @@ function WardExtraBar() {
 
     // 로그아웃
     const handleLogout = async () => {
-        const response = await axios.post('/api/loginlogout/logout', {
-            withCredentials: true,
-        })
-        if (response.status === 200) {
-            toast.success('로그아웃 되었습니다.')
-            router.push('/loginpage')
+        try {
+            const response = await axios.post(
+                '/api/logout', //요청할 URL
+                {}, // 요청의 페이로드(빈 객체)
+                {
+                    withCredentials: true,
+                } // 쿠키를 포함하도록 설정하는 withCredentials(자격증명- 쿠키, HTTP 인증 정보) 옵션.
+            )
+
+            if (response.status === 200) {
+                toast.success('로그아웃 되었습니다.')
+                router.push('/login')
+            }
+        } catch (error: unknown) {
+            if (axios.isAxiosError(error)) {
+                // Axios 에러일 경우
+                if (error.response) {
+                    if (error.response.status === 401) {
+                        router.push('/login')
+                    } else {
+                        router.push('/login')
+                    }
+                } else {
+                    router.push('/login')
+                }
+            } else {
+                // 다른 유형의 에러 처리
+                router.push('/login')
+            }
         }
     }
 
     // 로그인 시간 연장
-    const extendLoginTIme = async () => {
-        await axios.post('/api/loginlogout/extendlogintime', {
-            withCredentials: true,
-        })
+    const extendLoginTime = async () => {
+        try {
+            const response = await axios.post(
+                '/api/token-reset',
+                {},
+                {
+                    withCredentials: true,
+                }
+            )
+            if (response.status === 200) {
+                toast.success('로그인 시간이 연장되었습니다.')
+            }
+        } catch (error: unknown) {
+            if (axios.isAxiosError(error)) {
+                if (error.response) {
+                    if (error.response.status === 401) {
+                        router.push('/login')
+                    } else {
+                        router.push('/login')
+                    }
+                } else {
+                    router.push('/login')
+                }
+            } else {
+                router.push('/login')
+            }
+        }
     }
-
     // 모달 연결
     const patientRegisterModal = () => setIsPatientRegisterModal(true)
     const handleClosePatientRegisterModal = () =>
@@ -124,69 +167,69 @@ function WardExtraBar() {
                     <div className="flex space-x-7">
                         <button
                             onClick={patientRegisterModal}
-                            className="bg-white text-[#0EA5E9] border border-[#0EA5E9] px-10 py-5 rounded-md hover:bg-[#0EA5E9] hover:text-white transition duration-300 transform hover:scale-105"
+                            className="bg-white text-blue-600  border-blue-600 border-2 px-10 py-5 rounded-md hover:bg-[#0EA5E9] hover:text-white transition duration-300 transform hover:scale-105"
                         >
                             환자 등록
                         </button>
                         <button
                             onClick={nurseRecordModal}
-                            className="bg-white text-[#0EA5E9] border border-[#0EA5E9] px-10 py-5 rounded-md hover:bg-[#0EA5E9] hover:text-white transition duration-300 transform hover:scale-105"
+                            className="bg-white text-blue-600  border-blue-600 border-2 px-10 py-5 rounded-md hover:bg-[#0EA5E9] hover:text-white transition duration-300 transform hover:scale-105"
                         >
                             간호 기록
                         </button>
                         <button
                             onClick={nurseInfoModal}
-                            className="bg-white text-[#0EA5E9] border border-[#0EA5E9] px-10 py-5 rounded-md hover:bg-[#0EA5E9] hover:text-white transition duration-300 transform hover:scale-105"
+                            className="bg-white text-blue-600  border-blue-600 border-2 px-10 py-5 rounded-md hover:bg-[#0EA5E9] hover:text-white transition duration-300 transform hover:scale-105"
                         >
                             간호정보조사지
                         </button>
                         <button
                             onClick={surgeryRegisterModal}
-                            className="bg-white text-[#0EA5E9] border border-[#0EA5E9] px-10 py-5 rounded-md hover:bg-[#0EA5E9] hover:text-white transition duration-300 transform hover:scale-105"
+                            className="bg-white text-blue-600  border-blue-600 border-2 px-10 py-5 rounded-md hover:bg-[#0EA5E9] hover:text-white transition duration-300 transform hover:scale-105"
                         >
                             수술 등록
                         </button>
                         <button
                             onClick={consultationModal}
-                            className="bg-white text-[#0EA5E9] border border-[#0EA5E9] px-10 py-5 rounded-md hover:bg-[#0EA5E9] hover:text-white transition duration-300 transform hover:scale-105"
+                            className="bg-white text-blue-600  border-blue-600 border-2 px-10 py-5 rounded-md hover:bg-[#0EA5E9] hover:text-white transition duration-300 transform hover:scale-105"
                         >
                             협진
                         </button>
                         <button
                             onClick={prnOrderModal}
-                            className="bg-white text-[#0EA5E9] border border-[#0EA5E9] px-10 py-5 rounded-md hover:bg-[#0EA5E9] hover:text-white transition duration-300 transform hover:scale-105"
+                            className="bg-white text-blue-600  border-blue-600 border-2 px-10 py-5 rounded-md hover:bg-[#0EA5E9] hover:text-white transition duration-300 transform hover:scale-105"
                         >
                             PRN 오더
                         </button>
                         <button
                             onClick={assessmentToolModal}
-                            className="bg-white text-[#0EA5E9] border border-[#0EA5E9] px-10 py-5 rounded-md hover:bg-[#0EA5E9] hover:text-white transition duration-300 transform hover:scale-105"
+                            className="bg-white text-blue-600  border-blue-600 border-2 px-10 py-5 rounded-md hover:bg-[#0EA5E9] hover:text-white transition duration-300 transform hover:scale-105"
                         >
                             사정 도구 템플릿
                         </button>
                         <button
                             onClick={medicationRecordModal}
-                            className="bg-white text-[#0EA5E9] border border-[#0EA5E9] px-10 py-5 rounded-md hover:bg-[#0EA5E9] hover:text-white transition duration-300 transform hover:scale-105"
+                            className="bg-white text-blue-600  border-blue-600 border-2 px-10 py-5 rounded-md hover:bg-[#0EA5E9] hover:text-white transition duration-300 transform hover:scale-105"
                         >
                             투약 기록 목록
                         </button>
                     </div>
                     <div className="flex flex-row justify-center items-center">
-                        <div className="text-[#0ea5e9] mr-40 text-sm">
+                        <div className="text-blue-600 mr-40 text-sm">
                             {tokenId}님 환영합니다
                         </div>
-                        <div className="text-[#0ea5e9] m-6 mr-80 text-sm">
+                        <div className="text-blue-600 m-6 mr-80 text-sm">
                             로그인 만료시간: {timeRemaining}
                         </div>
                         <button
-                            onClick={extendLoginTIme}
-                            className="bg-white text-[#0EA5E9] border border-[#0EA5E9] px-10 py-5 mr-40 rounded-md hover:bg-[#0EA5E9] hover:text-white transition duration-300 transform hover:scale-105"
+                            onClick={extendLoginTime}
+                            className="bg-white text-blue-600 border-2 border-blue-600 px-10 py-5 mr-40 rounded-md hover:bg-[#0EA5E9] hover:text-white transition duration-300 transform hover:scale-105"
                         >
                             로그인 시간 연장
                         </button>
                         <button
                             onClick={handleLogout}
-                            className="bg-white text-[#0EA5E9] border border-[#0EA5E9] px-10 py-5 mr-40 rounded-md hover:bg-[#0EA5E9] hover:text-white transition duration-300 transform hover:scale-105"
+                            className="bg-white text-blue-600 border-2 border-blue-600 px-10 py-5 mr-40 rounded-md hover:bg-[#0EA5E9] hover:text-white transition duration-300 transform hover:scale-105"
                         >
                             로그아웃
                         </button>

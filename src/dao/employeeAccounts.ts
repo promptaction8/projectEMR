@@ -9,10 +9,10 @@ interface ICreateEmployeeUser {
     depart: string // 부서명
     position: string // 직위
     dateofjoining: string
-    connection: Connection // 입사일
 }
 const prisma = new PrismaClient()
 
+//직원 계정 생성
 export const createEmployeeAccount = async (data: ICreateEmployeeUser) => {
     const result = await prisma.employeeAccount.create({
         data,

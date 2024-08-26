@@ -1,9 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { verify, sign } from 'jsonwebtoken'
-import { SECRET_KEY } from '@/constants'
 import { setCookie } from 'nookies'
 
-export default async function employeeLoginService(
+export default async function tokenReset(
     req: NextApiRequest,
     res: NextApiResponse<any>
 ) {
@@ -11,7 +10,7 @@ export default async function employeeLoginService(
     if (!cookies) {
         return res.status(401).json({ message: '토큰이 존재하지 않습니다' })
     }
-    const verifyCookies: any = verify(cookies, SECRET_KEY)
+    const verifyCookies: any = verify(cookies, process.env.SECRET_KEY)
     // 재발급
     const reissue = sign(
         {
@@ -22,7 +21,7 @@ export default async function employeeLoginService(
             iat: Math.floor(Date.now() / 1000),
             exp: Math.floor(Date.now() / 1000) + 5400,
         },
-        SECRET_KEY
+        process.env.SECRET_KEY
     )
 
     setCookie({ res }, 'token', reissue, {

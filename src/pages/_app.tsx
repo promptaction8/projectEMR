@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-page-custom-font */
 import '@/styles/globals.css'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import type { AppProps } from 'next/app'
@@ -17,11 +18,7 @@ export default function App({ Component, pageProps }: AppProps) {
                     content="width=device-width, initial-scale=1"
                 />
                 <meta name="theme-color" content="#000000" />
-                <link
-                    rel="icon"
-                    href="/logo-backgroundremove.ico"
-                    sizes="48x48"
-                />
+                <link rel="icon" href="/EMR FAVICON.ico" sizes="48x48" />
                 <link
                     href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap"
                     rel="stylesheet"

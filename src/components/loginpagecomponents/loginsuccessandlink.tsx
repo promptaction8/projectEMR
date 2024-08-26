@@ -1,30 +1,65 @@
 import React from 'react'
 import { useRouter } from 'next/router'
 import { FiFolder } from 'react-icons/fi'
-import { useState } from 'react'
+import axios from 'axios'
+import { toast } from 'react-toastify'
 
 function LoginSuccessAndLink() {
     const router = useRouter()
-    const [username, setUsername] = useState('')
-    const [token, setToken] = useState('')
 
     const navigateTo = (path: string) => {
         router.push(path)
     }
+    const handleLogout = async () => {
+        try {
+            const response = await axios.post(
+                '/api/logout', //요청할 URL
+                {}, // 요청의 페이로드(빈 객체)
+                {
+                    withCredentials: true,
+                } // 쿠키를 포함하도록 설정하는 withCredentials(자격증명- 쿠키, HTTP 인증 정보) 옵션.
+            )
 
+            if (response.status === 200) {
+                toast.success('로그아웃 되었습니다.')
+                router.push('/login')
+            }
+        } catch (error: unknown) {
+            if (axios.isAxiosError(error)) {
+                // Axios 에러일 경우
+                if (error.response) {
+                    if (error.response.status === 401) {
+                        router.push('/login')
+                        toast.success('로그아웃 되었습니다.')
+                    } else {
+                        router.push('/login')
+                        toast.success('로그아웃 되었습니다.')
+                    }
+                } else {
+                    router.push('/login')
+                    toast.success('로그아웃 되었습니다.')
+                }
+            } else {
+                // 다른 유형의 에러 처리
+                router.push('/login')
+                toast.success('로그아웃 되었습니다.')
+            }
+        }
+    }
     return (
         <div className="flex flex-col items-center w-full h-full">
-            <div className="bg-white rounded-lg p-6 w-full ">
-                <p className="text-lg text-gray-600 text-center  my-30">
+            <div className="bg-white rounded-lg p-6 w-full">
+                <p className="text-md text-gray-600 text-center my-10 ">
                     성공적으로 로그인했습니다.
                 </p>
-
-                <div className="relative mt-4">
-                    <div className="flex items-center mb-2">
+                <p className="text-md text-gray-600 text-center my-10 ">
+                    접근 가능한 부서 목록을 로딩합니다.
+                </p>
+                <div className="relative">
+                    <div className="flex items-center mb-6">
                         <FiFolder className="text-2xl mr-2 text-blue-600" />
                         <span className="text-xl font-semibold">부서 목록</span>
                     </div>
-                    {/* 기존 gray-50 박스 제거하고 아래로 이동 */}
                     <div className="bg-gray-50 border rounded-lg shadow-md mt-2">
                         <ul className="py-2">
                             <li className="font-bold text-gray-800 px-4 py-2 border-b">
@@ -71,31 +106,31 @@ function LoginSuccessAndLink() {
                                 OR(미구현)
                             </li>
                             <li
-                                onClick={() => navigateTo('/warddashboard')}
+                                onClick={() => navigateTo('/ward-dashboard')}
                                 className="px-4 py-2 hover:bg-blue-100 cursor-pointer transition duration-200"
                             >
                                 4병동
                             </li>
                             <li
-                                onClick={() => navigateTo('/warddashboard')}
+                                onClick={() => navigateTo('/ward-dashboard')}
                                 className="px-4 py-2 hover:bg-blue-100 cursor-pointer transition duration-200"
                             >
                                 5병동
                             </li>
                             <li
-                                onClick={() => navigateTo('/warddashboard')}
+                                onClick={() => navigateTo('/ward-dashboard')}
                                 className="px-4 py-2 hover:bg-blue-100 cursor-pointer transition duration-200"
                             >
                                 6병동
                             </li>
                             <li
-                                onClick={() => navigateTo('/warddashboard')}
+                                onClick={() => navigateTo('/ward-dashboard')}
                                 className="px-4 py-2 hover:bg-blue-100 cursor-pointer transition duration-200"
                             >
                                 8병동
                             </li>
                             <li
-                                onClick={() => navigateTo('/warddashboard')}
+                                onClick={() => navigateTo('/ward-dashboard')}
                                 className="px-4 py-2 hover:bg-blue-100 cursor-pointer transition duration-200"
                             >
                                 11병동
@@ -122,18 +157,26 @@ function LoginSuccessAndLink() {
             </div>
             {/* 아래 박스 추가 */}
             <div className="grid grid-cols-2 gap-4 bg-white rounded-lg p-6 w-full mt-4">
-                <div className="bg-gray-50 border rounded-lg shadow-md p-4">
-                    개발중
-                </div>
-                <div className="bg-gray-50 border rounded-lg shadow-md p-4">
-                    개발중
-                </div>
-                <div className="bg-gray-50 border rounded-lg shadow-md p-4">
-                    개발중
-                </div>
-                <div className="justify-center items-center flex bg-gray-50 border rounded-lg shadow-md p-4">
-                    <span>로그아웃</span>
-                </div>
+                <button>
+                    <div className="bg-gray-50 rounded-lg shadow-md p-4 border-2 border-blue-600 border-solid ">
+                        개발중
+                    </div>
+                </button>
+                <button>
+                    <div className="bg-gray-50  rounded-lg shadow-md p-4 border-2 border-blue-600 border-solid ">
+                        개발중
+                    </div>
+                </button>
+                <button>
+                    <div className="bg-gray-50 rounded-lg shadow-md p-4 border-2 border-blue-600 border-solid">
+                        개발중
+                    </div>
+                </button>
+                <button onClick={handleLogout}>
+                    <div className=" bg-gray-50 rounded-lg shadow-md p-4 border-2 border-blue-600 border-solid">
+                        <span>로그아웃</span>
+                    </div>
+                </button>
             </div>
         </div>
     )

@@ -1,6 +1,6 @@
-import UpperBar from '@/components/upperbar'
+import UpperBar from '@/components/upperBar'
 import React from 'react'
-import PatientLoginPage from '@/components/patienLoginPage'
+import PatientLoginPage from '@/components/patientLoginPage'
 
 function PLoginPage() {
     return (

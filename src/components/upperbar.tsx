@@ -1,23 +1,30 @@
+import axios from 'axios'
 import DropdownMenu from './loginpagecomponents/dropdown'
-import { useState } from 'react'
-import { useRouter } from 'next/router'
 import Image from 'next/image'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 function UpperBar() {
     const router = useRouter()
-    const [id, setId] = useState('')
-    const [token, setToken] = useState('')
-    const [expirationTime, setExpirationTime] = useState<Date | null>(null)
-    const [timeRemaining, setTimeRemaining] = useState<number | null>(null)
+    const handleHome = async () => {
+        try {
+            const response = await axios.post(
+                'api/token-verify',
+                {},
+                { withCredentials: true }
+            )
 
-    // 로그아웃 처리
-
-    // 남은 시간을 시, 분, 초로 변환하는 함수
-    const formatTimeRemaining = (time: number) => {
-        const hours = Math.floor(time / (1000 * 60 * 60))
-        const minutes = Math.floor((time % (1000 * 60 * 60)) / (1000 * 60))
-        const seconds = Math.floor((time % (1000 * 60)) / 1000)
-        return `${hours}시간 ${minutes}분 ${seconds}초`
+            if (response.status === 200) {
+                return router.push('/')
+            }
+            if (response.status === 400 || response.status === 401) {
+                return router.push('/login')
+            }
+        } catch (error) {
+            console.error('Error during token verification:', error)
+            // 요청 실패 시에도 /login로 리다이렉트
+            return router.push('/login')
+        }
     }
 
     return (
@@ -25,40 +32,46 @@ function UpperBar() {
             <div className="flex w-full h-16 bg-[#0EA5E9] shadow-md">
                 <div className="flex flex-row items-center justify-center h-full w-40 text-3xl text-white font-bold">
                     <div className="flex items-center ml-40">
-                        <Image
-                            src="/images/logo backgroundremove.png"
-                            alt="EMR Logo"
-                            width={70}
-                            height={70}
-                        />
-                        <span className="ml-10 text-4xl">EMR</span>
+                        <button onClick={handleHome}>
+                            <Image
+                                src="/images/EMR LOGO BG-REMOVE.png"
+                                alt="EMR Logo"
+                                width={140}
+                                height={100}
+                                priority
+                            />
+                        </button>
                     </div>
                 </div>
                 <div className="flex ml-auto items-center h-full w-260 ">
                     <div className="flex items-center justify-between w-full h-full text-xl text-white p-2">
-                        {token && (
-                            <div className="flex items-center p-1 mr-4">
-                                <button className="bg-white text-[#0EA5E9] mx-4 px-4 py-2 rounded-lg shadow hover:bg-gray-200 transition duration-300">
-                                    로그아웃
-                                </button>
-                            </div>
-                        )}
                         <div className="hidden md:flex ml-auto">
-                            <ul className="flex space-x-4 pr-40">
-                                <li className="text-lg text-white hover:bg-gray-200 hover:rounded-md transition duration-300 ease-in-out">
-                                    PACS
+                            <ul className="flex space-x-12 pr-40">
+                                <li className="text-lg text-white border-2 border-transparent hover:border-blue-600 rounded-md p-2 transition duration-300 ease-in-out">
+                                    <button>
+                                        <a>PACS</a>
+                                    </button>
                                 </li>
-                                <li className="text-lg text-white hover:bg-gray-200 hover:rounded-md transition duration-300 ease-in-out">
-                                    CPOE
+
+                                <li className="text-lg text-white border-2 border-transparent hover:border-blue-600 rounded-md p-2 transition duration-300 ease-in-out">
+                                    <button>
+                                        <a>CPOE</a>
+                                    </button>
                                 </li>
-                                <li className="text-lg text-white hover:bg-gray-200 hover:rounded-md transition duration-300 ease-in-out">
-                                    RIS
+                                <li className="text-lg text-white border-2 border-transparent hover:border-blue-600 rounded-md p-2 transition duration-300 ease-in-out">
+                                    <button>
+                                        <a>RIS</a>
+                                    </button>
                                 </li>
-                                <li className="text-lg text-white hover:bg-gray-200 hover:rounded-md transition duration-300 ease-in-out">
-                                    CDS
+                                <li className="text-lg text-white border-2 border-transparent hover:border-blue-600 rounded-md p-2 transition duration-300 ease-in-out">
+                                    <button>
+                                        <a>CDS</a>
+                                    </button>
                                 </li>
-                                <li className="text-lg text-white hover:bg-gray-200 hover:rounded-md transition duration-300 ease-in-out">
-                                    HIS
+                                <li className="text-lg text-white border-2 border-transparent hover:border-blue-600 rounded-md p-2 transition duration-300 ease-in-out">
+                                    <button>
+                                        <a>HIS</a>
+                                    </button>
                                 </li>
                             </ul>
                         </div>

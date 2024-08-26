@@ -1,6 +1,6 @@
 import React from 'react'
-import UpperBar from './upperbar'
-import WardExtraBar from './warddashboardcomponent/wardextrabar'
+import UpperBar from './upperBar'
+import WardExtraBar from './warddashboardcomponent/wardExtraBar'
 
 function DashboardComponents() {
     return (

@@ -1,4 +1,4 @@
-import PatientLogin from '../loginpagecomponents/patientlogin'
+import PatientLogin from './patientLogin'
 
 function PatiendLoginComponent() {
     return (

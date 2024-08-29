@@ -19,7 +19,7 @@ interface ICreateEmployeeAccountData {
     dateofjoining: string
 }
 
-function CreateEmployeeAccountModal() {
+function EmployeeAccount() {
     const router = useRouter()
     const [selectedRole, setSelectedRole] = useState('')
     const {
@@ -242,4 +242,4 @@ function CreateEmployeeAccountModal() {
     )
 }
 
-export default CreateEmployeeAccountModal
+export default EmployeeAccount

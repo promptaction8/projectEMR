@@ -1,4 +1,4 @@
-import UpperBar from '@/components/upperBar'
+import HeaderBar from '@/components/headerBar'
 import React from 'react'
 import PatientLogin from '@/components/patientLogin'
 

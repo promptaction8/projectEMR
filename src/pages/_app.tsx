@@ -10,7 +10,7 @@ import axios from 'axios'
 import { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { PUBLIC_PAGES } from '@/constants'
-import UpperBar from '@/components/upperBar'
+import HeaderBar from '@/components/headerBar'
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -52,7 +52,7 @@ function Template({ children }: any) {
 
     return (
         <div className="flex flex-col h-screen w-screen bg-white font-sans dark:bg-gray-700">
-            <UpperBar />
+            <HeaderBar />
             {children}
         </div>
     )

@@ -6,7 +6,7 @@ import { useRouter } from 'next/router'
 
 const menus = ['PACS', 'CPOE', 'RIS', 'CDS', 'HIS']
 
-function UpperBar() {
+function HeaderBar() {
     const router = useRouter()
     const handleHome = () => router.push('/')
 
@@ -18,7 +18,7 @@ function UpperBar() {
                         <button onClick={handleHome}>
                             <Image
                                 src="/images/EMR LOGO BG-REMOVE.png"
-                                alt="EMR Logo"
+                                alt="EMR LOGO"
                                 width={140}
                                 height={100}
                                 priority
@@ -52,4 +52,4 @@ function UpperBar() {
     )
 }
 
-export default UpperBar
+export default HeaderBar

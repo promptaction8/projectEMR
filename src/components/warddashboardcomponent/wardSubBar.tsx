@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import axios from 'axios'
-import { useAtom } from 'jotai/react'
 import { toast } from 'react-toastify'
-import { useQuery } from '@tanstack/react-query'
-import { tokenAtom } from '@/constants/token'
-import PatientRegisterModal from './modals/patientregistermodal'
+import { Mutation, useQuery } from '@tanstack/react-query'
+import { useMutation } from '@tanstack/react-query'
+import PatientRegister from './modals/patientregister'
+import { resolve } from 'path'
 
-function WardExtraBar() {
-    const [isPatientRegisterModal, setIsPatientRegisterModal] = useState(false)
+function WardSubBar() {
+    const [isPatientRegister, setIsPatientRegister] = useState(false)
     const [isNurseRecordModal, setIsNurseRecordModal] = useState(false)
     const [isNurseInfoModal, setIsNurseInfoModal] = useState(false)
     const [isSurgeryRegisterModal, setIsSurgeryRegisterModal] = useState(false)
@@ -26,7 +26,9 @@ function WardExtraBar() {
     const {
         data: jwtInfo,
         error,
-        isLoading,
+        isLoading: extendTimeIsLoading,
+        isRefetching: extendTimeIsRefetching,
+        refetch,
     } = useQuery({
         queryKey: ['token'],
         queryFn: async () => {
@@ -37,6 +39,7 @@ function WardExtraBar() {
         },
         refetchInterval: 10000,
     })
+
     // 로그인 만료시간 계산
     useEffect(() => {
         if (jwtInfo?.verifyToken?.exp) {
@@ -67,53 +70,63 @@ function WardExtraBar() {
     }, [jwtInfo])
 
     // 로그아웃
-    const handleLogout = async () => {
-        try {
+    const logout = useMutation({
+        mutationFn: async () => {
             const response = await axios.post(
-                '/api/logout', //요청할 URL
-                {}, // 요청의 페이로드(빈 객체)
+                '/api/logout',
+                {},
                 {
                     withCredentials: true,
-                } // 쿠키를 포함하도록 설정하는 withCredentials(자격증명- 쿠키, HTTP 인증 정보) 옵션.
+                }
             )
-
-            if (response.status === 200) {
-                toast.success('로그아웃 되었습니다.')
-                router.push('/login')
-            }
-        } catch (error: unknown) {
+            return response.data
+        },
+        onSuccess: () => {
+            toast.success('로그아웃 되었습니다.')
+            router.push('/login')
+        },
+        onError: (error: any) => {
             if (axios.isAxiosError(error)) {
-                // Axios 에러일 경우
                 if (error.response) {
                     if (error.response.status === 401) {
                         router.push('/login')
+                        toast.success('로그아웃 되었습니다.')
                     } else {
                         router.push('/login')
+                        toast.success('로그아웃 되었습니다.')
                     }
                 } else {
                     router.push('/login')
+                    toast.success('로그아웃 되었습니다.')
                 }
             } else {
-                // 다른 유형의 에러 처리
                 router.push('/login')
+                toast.success('로그아웃 되었습니다.')
             }
-        }
+        },
+    })
+    const logoutMutate = async () => {
+        await logout.mutate()
     }
 
-    // 로그인 시간 연장
-    const extendLoginTime = async () => {
-        try {
-            const response = await axios.post(
+    // 로그인 시간 연장 useMutation
+    const extendLoginTime = useMutation({
+        mutationFn: async () => {
+            // 시간 연장
+            await new Promise((resolve) => setTimeout(resolve, 4000))
+            await axios.post(
                 '/api/token-reset',
                 {},
                 {
                     withCredentials: true,
                 }
             )
-            if (response.status === 200) {
-                toast.success('로그인 시간이 연장되었습니다.')
-            }
-        } catch (error: unknown) {
+        },
+        onSuccess: () => {
+            toast.success('로그인 시간이 연장되었습니다.')
+            refetch()
+        },
+        onError: (error: any) => {
             if (axios.isAxiosError(error)) {
                 if (error.response) {
                     if (error.response.status === 401) {
@@ -127,12 +140,15 @@ function WardExtraBar() {
             } else {
                 router.push('/login')
             }
-        }
+        },
+    })
+    const extendLoginTimeMutate = async () => {
+        await extendLoginTime.mutate()
     }
+
     // 모달 연결
-    const patientRegisterModal = () => setIsPatientRegisterModal(true)
-    const handleClosePatientRegisterModal = () =>
-        setIsPatientRegisterModal(false)
+    const patientRegister = () => setIsPatientRegister(true)
+    const handleClosePatientRegister = () => setIsPatientRegister(false)
 
     const nurseRecordModal = () => setIsNurseRecordModal(true)
     const handleCloseNurseRecordModal = () => setIsNurseRecordModal(false)
@@ -166,7 +182,7 @@ function WardExtraBar() {
                 <div className="flex flex-wrap justify-between mt-2 ml-40">
                     <div className="flex space-x-7">
                         <button
-                            onClick={patientRegisterModal}
+                            onClick={patientRegister}
                             className="bg-white text-blue-600  border-blue-600 border-2 px-10 py-5 rounded-md hover:bg-[#0EA5E9] hover:text-white transition duration-300 transform hover:scale-105"
                         >
                             환자 등록
@@ -222,27 +238,41 @@ function WardExtraBar() {
                             로그인 만료시간: {timeRemaining}
                         </div>
                         <button
-                            onClick={extendLoginTime}
+                            onClick={extendLoginTimeMutate}
+                            disabled={extendLoginTime.isPending}
                             className="bg-white text-blue-600 border-2 border-blue-600 px-10 py-5 mr-40 rounded-md hover:bg-[#0EA5E9] hover:text-white transition duration-300 transform hover:scale-105"
                         >
-                            로그인 시간 연장
+                            {extendLoginTime.isPending ? (
+                                <div className="flex items-center justify-center">
+                                    <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-gray-900"></div>
+                                </div>
+                            ) : (
+                                '로그인 시간 연장'
+                            )}
                         </button>
                         <button
-                            onClick={handleLogout}
+                            disabled={logout.isPending}
+                            onClick={logoutMutate}
                             className="bg-white text-blue-600 border-2 border-blue-600 px-10 py-5 mr-40 rounded-md hover:bg-[#0EA5E9] hover:text-white transition duration-300 transform hover:scale-105"
                         >
-                            로그아웃
+                            {logout.isPending ? (
+                                <div className="flex items-center justify-center">
+                                    <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-gray-900"></div>
+                                </div>
+                            ) : (
+                                '로그아웃'
+                            )}
                         </button>
                     </div>
                 </div>
             </div>
 
-            <PatientRegisterModal
-                isOpen={isPatientRegisterModal}
-                onClose={handleClosePatientRegisterModal}
+            <PatientRegister
+                isOpen={isPatientRegister}
+                onClose={handleClosePatientRegister}
             />
         </>
     )
 }
 
-export default WardExtraBar
+export default WardSubBar

@@ -1,12 +1,12 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
 
-interface PatientRegisterModalProps {
+interface PatientRegisterProps {
     isOpen: boolean
     onClose: () => void
 }
 
-function PatientRegisterModal({ isOpen, onClose }: PatientRegisterModalProps) {
+function PatientRegister({ isOpen, onClose }: PatientRegisterProps) {
     if (!isOpen) return null
     return (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
@@ -85,4 +85,4 @@ function PatientRegisterModal({ isOpen, onClose }: PatientRegisterModalProps) {
     )
 }
 
-export default PatientRegisterModal
+export default PatientRegister

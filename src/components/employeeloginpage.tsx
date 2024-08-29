@@ -1,5 +1,5 @@
 import React from 'react'
-import EmployeeLogin from './loginpagecomponents/employeeLoginComponent'
+import EmployeeLogin from './loginpagecomponents/employeeLogin'
 function EmployeeLoginPage() {
     return (
         <>

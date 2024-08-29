@@ -1,6 +1,5 @@
 import { useState } from 'react'
-import Modal2 from './modal/loginPatientModal'
-import Modal3 from './modal/createEmployeeAccountModal'
+import PatientLoginModal from './modal/patientLogin'
 import { useMutation } from '@tanstack/react-query'
 import axios from 'axios'
 import { toast } from 'react-toastify'
@@ -9,10 +8,10 @@ import { useAtom } from 'jotai/react'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { useRouter } from 'next/router'
 import { Modal } from 'react-responsive-modal'
-import FindEmployeePassword from './modal/findEmployeePassword'
+import FindEmployeePassword from './modal/employeePassword'
 import 'react-responsive-modal/styles.css'
-import CreateEmployeeAccountModal from './modal/createEmployeeAccountModal'
 import { useQuery } from '@tanstack/react-query'
+import EmployeeAccount from './modal/employeeAccount'
 
 interface IEmployeeLoginData {
     id: string
@@ -91,15 +90,15 @@ function EmployeeLogin() {
                                     </p>
                                     <label className="text-lg font-medium">
                                         ID
+                                        <input
+                                            {...register('id', {
+                                                required: '아이디를 입력하세요',
+                                            })}
+                                            type="text"
+                                            placeholder="아이디를 입력하세요"
+                                            className="border border-gray-300 rounded-md p-3 mt-2 w-full focus:outline-none focus:ring-2 focus:ring-[#0EA5E9] transition duration-300"
+                                        />
                                     </label>
-                                    <input
-                                        {...register('id', {
-                                            required: '아이디를 입력하세요',
-                                        })}
-                                        type="text"
-                                        placeholder="아이디를 입력하세요"
-                                        className="border border-gray-300 rounded-md p-3 mt-2 w-full focus:outline-none focus:ring-2 focus:ring-[#0EA5E9] transition duration-300"
-                                    />
                                     {errors.id && (
                                         <p className="text-red-500">
                                             {errors.id.message}
@@ -124,8 +123,17 @@ function EmployeeLogin() {
                                         </p>
                                     )}
                                 </div>
-                                <button className="bg-white text-blue-600 border-blue-600 border-2 border-solid rounded-md h-12 p-3 mt-6 hover:bg-[#0A74B9] hover:text-white transition duration-300 w-full">
-                                    로그인
+                                <button
+                                    disabled={employeeLogin.isPending}
+                                    className="bg-white text-blue-600 border-blue-600 border-2 border-solid rounded-md h-12 p-3 mt-6 hover:bg-[#0A74B9] hover:text-white transition duration-300 w-full"
+                                >
+                                    {employeeLogin.isPending ? (
+                                        <div className="flex items-center justify-center">
+                                            <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                                        </div>
+                                    ) : (
+                                        '로그인'
+                                    )}
                                 </button>
                             </form>
                             <p
@@ -149,7 +157,7 @@ function EmployeeLogin() {
                                 center
                                 closeOnOverlayClick={false}
                             >
-                                <CreateEmployeeAccountModal />
+                                <EmployeeAccount />
                             </Modal>
                         </div>
                         <div className="flex-grow"></div>

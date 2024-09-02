@@ -1,5 +1,6 @@
 import { Connection } from 'mysql2/promise'
 import { PrismaClient } from '@prisma/client'
+import EmployeeAccount from './../components/loginpagecomponents/modal/employeeAccount'
 interface ICreateEmployeeUser {
     id: string // 사용자 ID
     password: string // 비밀번호
@@ -14,7 +15,7 @@ const prisma = new PrismaClient()
 
 //직원 계정 생성
 export const createEmployeeAccount = async (data: ICreateEmployeeUser) => {
-    const result = await prisma.employeeAccount.create({
+    const result = await prisma.employeeaccount.create({
         data,
     })
     return result
@@ -22,7 +23,7 @@ export const createEmployeeAccount = async (data: ICreateEmployeeUser) => {
 
 //직원 아이디로 DB 조회
 export const getEmployeeId = async (id: string) => {
-    return await prisma.employeeAccount.findUnique({
+    return await prisma.employeeaccount.findUnique({
         where: {
             id,
         },
@@ -31,7 +32,7 @@ export const getEmployeeId = async (id: string) => {
 
 //중복된 계정 조회
 export const isDuplicated = async (id: string) => {
-    const duplicates = await prisma.employeeAccount.findMany({
+    const duplicates = await prisma.employeeaccount.findMany({
         where: {
             id: id,
         },

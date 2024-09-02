@@ -11,6 +11,7 @@ import { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { PUBLIC_PAGES } from '@/constants'
 import HeaderBar from '@/components/headerBar'
+import Footer from '@/components/footer'
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -92,6 +93,7 @@ export default function App({ Component, pageProps }: AppProps) {
                     theme="colored"
                 />
             </QueryClientProvider>
+            <Footer />
         </>
     )
 }

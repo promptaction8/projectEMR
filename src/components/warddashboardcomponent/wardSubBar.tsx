@@ -2,22 +2,14 @@ import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import axios from 'axios'
 import { toast } from 'react-toastify'
-import { Mutation, useQuery } from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query'
 import { useMutation } from '@tanstack/react-query'
-import PatientRegister from './modals/patientregister'
-import { resolve } from 'path'
+import { Modal } from 'react-responsive-modal'
+import 'react-responsive-modal/styles.css'
+import PatientRegister from './modals/patientRegister'
+import TemplateDropDown from './templateDropDown'
 
 function WardSubBar() {
-    const [isPatientRegister, setIsPatientRegister] = useState(false)
-    const [isNurseRecordModal, setIsNurseRecordModal] = useState(false)
-    const [isNurseInfoModal, setIsNurseInfoModal] = useState(false)
-    const [isSurgeryRegisterModal, setIsSurgeryRegisterModal] = useState(false)
-    const [isConsultationModal, setIsConsultationModal] = useState(false)
-    const [isPrnOrderModal, setIsPrnOrderModal] = useState(false)
-    const [isAssessmentToolModal, setIsAssessmentToolModal] = useState(false)
-    const [isMedicationRecordModal, setIsMedicationRecordModal] =
-        useState(false)
-
     const [timeRemaining, setTimeRemaining] = useState<string>('')
     const router = useRouter()
 
@@ -145,36 +137,54 @@ function WardSubBar() {
     const extendLoginTimeMutate = async () => {
         await extendLoginTime.mutate()
     }
-
-    // 모달 연결
-    const patientRegister = () => setIsPatientRegister(true)
-    const handleClosePatientRegister = () => setIsPatientRegister(false)
-
-    const nurseRecordModal = () => setIsNurseRecordModal(true)
-    const handleCloseNurseRecordModal = () => setIsNurseRecordModal(false)
-
-    const nurseInfoModal = () => setIsNurseInfoModal(true)
-    const handleCloseNurseInfoModal = () => setIsNurseInfoModal(false)
-
-    const surgeryRegisterModal = () => setIsSurgeryRegisterModal(true)
-    const handleCloseSurgeryRegisterModal = () =>
-        setIsSurgeryRegisterModal(false)
-
-    const consultationModal = () => setIsConsultationModal(true)
-    const handleCloseConsultationModal = () => setIsConsultationModal(false)
-
-    const prnOrderModal = () => setIsPrnOrderModal(true)
-    const handleClosePrnOrderModal = () => setIsPrnOrderModal(false)
-
-    const assessmentToolModal = () => setIsAssessmentToolModal(true)
-    const handleCloseAssessmentToolModal = () => setIsAssessmentToolModal(false)
-
-    const medicationRecordModal = () => setIsMedicationRecordModal(true)
-    const handleCloseMedicationRecordModal = () =>
-        setIsMedicationRecordModal(false)
-
     const tokenData = jwtInfo?.verifyToken
     const tokenId = tokenData?.id
+
+    // 모달 연결
+    // PatientRegister 모달
+    const [open, setOpen] = useState(false)
+    const onOpenModal = () => setOpen(true)
+    const onCloseModal = () => setOpen(false)
+
+    // NurseRecord 모달
+    const [open2, setOpen2] = useState(false)
+    const onOpenModal2 = () => setOpen2(true)
+    const onCloseModal2 = () => setOpen2(false)
+
+    // NursingInfoSurvey 모달
+    const [open3, setOpen3] = useState(false)
+    const onOpenModal3 = () => setOpen3(true)
+    const onCloseModal3 = () => setOpen3(false)
+
+    // SurgeryRegister 모달
+    const [open4, setOpen4] = useState(false)
+    const onOpenModal4 = () => setOpen4(true)
+    const onCloseModal4 = () => setOpen4(false)
+
+    // Consultation 모달
+    const [open5, setOpen5] = useState(false)
+    const onOpenModal5 = () => setOpen5(true)
+    const onCloseModal5 = () => setOpen5(false)
+
+    // PRNOrder 모달
+    const [open6, setOpen6] = useState(false)
+    const onOpenModal6 = () => setOpen6(true)
+    const onCloseModal6 = () => setOpen6(false)
+
+    // AssessmentToolTemplate 모달
+    const [open7, setOpen7] = useState(false)
+    const onOpenModal7 = () => setOpen7(true)
+    const onCloseModal7 = () => setOpen7(false)
+
+    // MedicationRecordList 모달
+    const [open8, setOpen8] = useState(false)
+    const onOpenModal8 = () => setOpen8(true)
+    const onCloseModal8 = () => setOpen8(false)
+
+    // Nursing Plan 모달
+    const [open9, setOpen9] = useState(false)
+    const onOpenModal9 = () => setOpen9(true)
+    const onCloseModal9 = () => setOpen9(false)
 
     return (
         <>
@@ -182,53 +192,104 @@ function WardSubBar() {
                 <div className="flex flex-wrap justify-between mt-2 ml-40">
                     <div className="flex space-x-7">
                         <button
-                            onClick={patientRegister}
+                            onClick={onOpenModal}
                             className="bg-white text-blue-600  border-blue-600 border-2 px-10 py-5 rounded-md hover:bg-[#0EA5E9] hover:text-white transition duration-300 transform hover:scale-105"
                         >
                             환자 등록
                         </button>
+                        <Modal
+                            open={open}
+                            onClose={onCloseModal}
+                            center
+                            closeOnOverlayClick={false}
+                        >
+                            <PatientRegister />
+                        </Modal>
+
                         <button
-                            onClick={nurseRecordModal}
+                            onClick={onOpenModal2}
                             className="bg-white text-blue-600  border-blue-600 border-2 px-10 py-5 rounded-md hover:bg-[#0EA5E9] hover:text-white transition duration-300 transform hover:scale-105"
                         >
                             간호 기록
                         </button>
+                        <Modal
+                            open={open2}
+                            onClose={onCloseModal2}
+                            center
+                        ></Modal>
+
+                        <button className="bg-white text-blue-600  border-blue-600 border-2 px-10 py-5 rounded-md hover:bg-[#0EA5E9] hover:text-white transition duration-300 transform hover:scale-105">
+                            간호 계획
+                        </button>
+                        <Modal
+                            open={open9}
+                            onClose={onCloseModal9}
+                            center
+                        ></Modal>
+
                         <button
-                            onClick={nurseInfoModal}
+                            onClick={onOpenModal3}
                             className="bg-white text-blue-600  border-blue-600 border-2 px-10 py-5 rounded-md hover:bg-[#0EA5E9] hover:text-white transition duration-300 transform hover:scale-105"
                         >
                             간호정보조사지
                         </button>
+                        <Modal
+                            open={open3}
+                            onClose={onCloseModal3}
+                            center
+                        ></Modal>
+
                         <button
-                            onClick={surgeryRegisterModal}
+                            onClick={onOpenModal4}
                             className="bg-white text-blue-600  border-blue-600 border-2 px-10 py-5 rounded-md hover:bg-[#0EA5E9] hover:text-white transition duration-300 transform hover:scale-105"
                         >
                             수술 등록
                         </button>
+                        <Modal
+                            open={open4}
+                            onClose={onCloseModal4}
+                            center
+                        ></Modal>
+
                         <button
-                            onClick={consultationModal}
+                            onClick={onOpenModal5}
                             className="bg-white text-blue-600  border-blue-600 border-2 px-10 py-5 rounded-md hover:bg-[#0EA5E9] hover:text-white transition duration-300 transform hover:scale-105"
                         >
                             협진
                         </button>
+                        <Modal
+                            open={open5}
+                            onClose={onCloseModal5}
+                            center
+                        ></Modal>
+
                         <button
-                            onClick={prnOrderModal}
+                            onClick={onOpenModal6}
                             className="bg-white text-blue-600  border-blue-600 border-2 px-10 py-5 rounded-md hover:bg-[#0EA5E9] hover:text-white transition duration-300 transform hover:scale-105"
                         >
                             PRN 오더
                         </button>
+                        <Modal
+                            open={open6}
+                            onClose={onCloseModal6}
+                            center
+                        ></Modal>
+
+                        <div className="bg-white text-blue-600  border-blue-600 border-2 px-10 py-5 rounded-md hover:bg-[#0EA5E9] hover:text-white transition duration-300 transform hover:scale-105">
+                            <TemplateDropDown />
+                        </div>
+
                         <button
-                            onClick={assessmentToolModal}
-                            className="bg-white text-blue-600  border-blue-600 border-2 px-10 py-5 rounded-md hover:bg-[#0EA5E9] hover:text-white transition duration-300 transform hover:scale-105"
-                        >
-                            사정 도구 템플릿
-                        </button>
-                        <button
-                            onClick={medicationRecordModal}
+                            onClick={onOpenModal8}
                             className="bg-white text-blue-600  border-blue-600 border-2 px-10 py-5 rounded-md hover:bg-[#0EA5E9] hover:text-white transition duration-300 transform hover:scale-105"
                         >
                             투약 기록 목록
                         </button>
+                        <Modal
+                            open={open8}
+                            onClose={onCloseModal8}
+                            center
+                        ></Modal>
                     </div>
                     <div className="flex flex-row justify-center items-center">
                         <div className="text-blue-600 mr-40 text-sm">
@@ -266,11 +327,6 @@ function WardSubBar() {
                     </div>
                 </div>
             </div>
-
-            <PatientRegister
-                isOpen={isPatientRegister}
-                onClose={handleClosePatientRegister}
-            />
         </>
     )
 }

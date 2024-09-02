@@ -33,7 +33,7 @@ function PatientLogin() {
                             />
                         </label>
                     </div>
-                    <button className="bg-[#0EA5E9] text-white rounded-md h-12 p-3 mt-6 hover:bg-[#0A74B9] transition duration-300 w-full">
+                    <button className="bg-white text-blue-600 border-blue-600 border-2 border-solid rounded-md h-12 p-3 mt-6 hover:bg-[#0A74B9] hover:text-white transition duration-300 w-full">
                         로그인
                     </button>
                 </form>

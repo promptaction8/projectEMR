@@ -79,8 +79,8 @@ function EmployeeDepart() {
     ]
     // 간호부 ward map
     const wardDashboard = [
-        'ER(미구현)',
-        'ICU(미구현)',
+        'ER',
+        'ICU',
         '4병동',
         '5병동',
         '6병동',

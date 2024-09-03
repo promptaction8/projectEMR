@@ -17,7 +17,7 @@ model Certification {
 
 model Employeeaccount {
   idx           Int       @id @default(autoincrement())
-  id            String    @db.VarChar(100) @unique
+  id            String    @unique @db.VarChar(100)
   password      String    @db.VarChar(100)
   email         String    @db.VarChar(100)
   phonenumber   String    @db.VarChar(100)
@@ -30,66 +30,65 @@ model Employeeaccount {
 }
 
 model Patient {
-  idx   Int       @id @default(autoincrement()) @map("patientIdx")
-  name         String    @db.VarChar(100)
-  dateOfBirth  String    @db.VarChar(100)
-  gender       String    @db.VarChar(100)
-  phone       String    @db.VarChar(100) @unique
-  ssn          String    @db.VarChar(100) @unique
-  address      String    @db.VarChar(100)
-  occupation   String    @db.VarChar(100)
-  bloodType    String    @db.VarChar(100)
-  marriageStatus String  @db.VarChar(100)
-  patientContury      String    @db.VarChar(100)
-  patientGuardianName String @db.VarChar(100)
-  patientGuardianRelation String @db.VarChar(100)
-  patientGuardianPhone String @db.VarChar(100)
-  insuranceStatus Boolean
-  emergencyContactName String @db.VarChar(100)
-  emergencyContactPhone String @db.VarChar(100)
-  religion     String    @db.VarChar(100)
-  primaryPhysician String @db.VarChar(100)
-  createdAt    DateTime  @default(now()) @db.Timestamp(0)
-  updatedAt    DateTime  @default(now()) @db.Timestamp(0)
+  idx                   Int      @id @default(autoincrement())
+  name                  String   @db.VarChar(100)
+  dateOfBirth           DateTime @db.Timestamp(0)
+  gender                Boolean  @default(false)
+  phone                 String   @unique @db.VarChar(50)
+  ssn                   String   @unique @db.VarChar(50)
+  address               String   @db.VarChar(200)
+  occupation            String   @db.VarChar(100)
+  bloodType             String   @db.VarChar(100)
+  marriageStatus        Boolean  @default(false)
+  Contury               String   @db.VarChar(100)
+  GuardianName          String   @db.VarChar(100)
+  GuardianRelation      String   @db.VarChar(100)
+  GuardianPhone         String   @db.VarChar(100)
+  insuranceStatus       Boolean
+  emergencyContactName  String   @db.VarChar(100)
+  emergencyContactPhone String   @db.VarChar(100)
+  religion              String   @db.VarChar(100)
+  primaryPhysician      String   @db.VarChar(100)
+  createdAt             DateTime @default(now()) @db.Timestamp(0)
+  updatedAt             DateTime @default(now()) @db.Timestamp(0)
 
-  insurance Insurance[]
-  medicalHistory MedicalHistory[]
-  nursingHistory NursingHistory[]
-  nursingPlan NursingPlan[]
-  nursingSurvey NursingSurvey[]
-  surgeryRegister SurgeryRegister[]
-  cooperation Cooperation[]
-  prnOrder PrnOrder[]
-  morseFallScale MorseFallScale[]
-  bradenScale BradenScale[]
+  insurance              Insurance[]
+  medicalHistory         MedicalHistory[]
+  nursingHistory         NursingHistory[]
+  nursingPlan            NursingPlan[]
+  nursingSurvey          NursingSurvey[]
+  surgeryRegister        SurgeryRegister[]
+  cooperation            Cooperation[]
+  prnOrder               PrnOrder[]
+  morseFallScale         MorseFallScale[]
+  bradenScale            BradenScale[]
   numericPainRatingScale NumericPainRatingScale[]
-  mmse MMSE[]
-  medicationRecord MedicationRecord[]
+  mmse                   MMSE[]
+  medicationRecord       MedicationRecord[]
 }
 
-model Insurance{
+model Insurance {
   patientIdx Int
-  insuranceIdx Int @id @default(autoincrement())
-  insuranceType String @db.VarChar(100)
-  insuranceCompany String @db.VarChar(100)
-  insuranceNumber String @db.VarChar(100)
+  idx        Int    @id @default(autoincrement())
+  type       String @db.VarChar(100)
+  company    String @db.VarChar(100)
+  code       String @db.VarChar(100)
 
   patient Patient @relation(fields: [patientIdx], references: [idx])
 }
 
-
-model MedicalHistory{
-  patientIdx Int
-  medicalHistoryIdx Int @id @default(autoincrement())
-  mainSymptoms String @db.VarChar(100)
-  pastMedicalHistory String @db.VarChar(100)
-  allergicHistory String @db.VarChar(100)
-  usingDrugs String @db.VarChar(100)
-  familyMedicalHistory String @db.VarChar(100)
-  mentalHealthStatus String @db.VarChar(100)
-  physicalHealthStatus String @db.VarChar(100)
+model MedicalHistory {
+  patientIdx               Int
+  idx                      Int    @id @default(autoincrement())
+  mainSymptoms             String @db.VarChar(100)
+  pastMedicalHistory       String @db.VarChar(100)
+  allergicHistory          String @db.VarChar(100)
+  usingDrugs               String @db.VarChar(100)
+  familyMedicalHistory     String @db.VarChar(100)
+  mentalHealthStatus       String @db.VarChar(100)
+  physicalHealthStatus     String @db.VarChar(100)
   previousTreatmentHistory String @db.VarChar(100)
-  livingEnvironment String @db.VarChar(100)
+  livingEnvironment        String @db.VarChar(100)
 
   patient Patient @relation(fields: [patientIdx], references: [idx])
 }
@@ -97,197 +96,195 @@ model MedicalHistory{
 //간호기록
 model NursingHistory {
   patientIdx Int
-  nursingHistoryIdx Int @id @default(autoincrement())
-  nursingDate DateTime @db.Timestamp(0)
-  nursingTime String @db.VarChar(100)
-  nursingContent String @db.VarChar(100)
-  nursingType String @db.VarChar(100)
-  nursingResult String @db.VarChar(100)
-  nursingEmployee String @db.VarChar(100)
+  idx        Int      @id @default(autoincrement())
+  date       DateTime @db.Timestamp(0)
+  time       String   @db.VarChar(100)
+  content    String   @db.VarChar(100)
+  type       String   @db.VarChar(100)
+  result     String   @db.VarChar(100)
+  employee   String   @db.VarChar(100)
 
   patient Patient @relation(fields: [patientIdx], references: [idx])
 }
 
-
 //간호계획
 model NursingPlan {
   patientIdx Int
-  nursingPlanIdx Int @id @default(autoincrement())
-  nursingPlanDate DateTime @db.Timestamp(0)
-  nursingPlanTime String @db.VarChar(100)
-  nursingPlanContent String @db.VarChar(100)
-  nursingPlanType String @db.VarChar(100)
-  nursingPlanEmployee String @db.VarChar(100)
+  idx        Int      @id @default(autoincrement())
+  date       DateTime @db.Timestamp(0)
+  time       String   @db.VarChar(100)
+  content    String   @db.VarChar(100)
+  type       String   @db.VarChar(100)
+  employee   String   @db.VarChar(100)
 
   patient Patient @relation(fields: [patientIdx], references: [idx])
 }
 
 //간호정보조사지
 model NursingSurvey {
-  patientIdx Int
-  nursingSurveyIdx Int @id @default(autoincrement())
-  patientName String @db.VarChar(100)
-  patientGender String @db.VarChar(100)
-  patientDateOfBirth String @db.VarChar(100)
-  patientPhone String @db.VarChar(100)
-  patientAddress String @db.VarChar(100)
-  pastMedicalHistory String @db.VarChar(100)
+  patientIdx           Int
+  idx                  Int    @id @default(autoincrement())
+  patientName          String @db.VarChar(100)
+  patientGender        String @db.VarChar(100)
+  patientDateOfBirth   String @db.VarChar(100)
+  patientPhone         String @db.VarChar(100)
+  patientAddress       String @db.VarChar(100)
+  pastMedicalHistory   String @db.VarChar(100)
   familyMedicalHistory String @db.VarChar(100)
-  allergicHistory String @db.VarChar(100)
-  usingDrugs String @db.VarChar(100)
-  mainSymptoms String @db.VarChar(100)
-  vitalSigns String @db.VarChar(100)
-  physicalStatus String @db.VarChar(100)
-  mentalStatus String @db.VarChar(100)
-  smokingStatus String @db.VarChar(100)
-  drinkingStatus String @db.VarChar(100)
-  dietStatus String @db.VarChar(100)
-  occupationStatus String @db.VarChar(100)
-  religionStatus String @db.VarChar(100)
-  patientContury String @db.VarChar(100)
-  needNursingService String @db.VarChar(100)
-  needEducation String @db.VarChar(100)
-  patientRoomNumber String @db.VarChar(100)
-
+  allergicHistory      String @db.VarChar(100)
+  usingDrugs           String @db.VarChar(100)
+  mainSymptoms         String @db.VarChar(100)
+  vitalSigns           String @db.VarChar(100)
+  physicalStatus       String @db.VarChar(100)
+  mentalStatus         String @db.VarChar(100)
+  smokingStatus        String @db.VarChar(100)
+  drinkingStatus       String @db.VarChar(100)
+  dietStatus           String @db.VarChar(100)
+  occupationStatus     String @db.VarChar(100)
+  religionStatus       String @db.VarChar(100)
+  patientContury       String @db.VarChar(100)
+  needNursingService   String @db.VarChar(100)
+  needEducation        String @db.VarChar(100)
+  patientRoomNumber    String @db.VarChar(100)
 
   patient Patient @relation(fields: [patientIdx], references: [idx])
 }
 
 // 수술 등록
 model SurgeryRegister {
-  patientIdx Int
-  surgeryIdx Int @id @default(autoincrement())
-  surgeryName String @db.VarChar(100)
-  surgeryDate DateTime @db.Timestamp(0)
-  surgeryTime String @db.VarChar(100)
-  surgeryType String @db.VarChar(100)
-  surgeryEmployee String @db.VarChar(100)
-  surgeryPatient String @db.VarChar(100)
-  surgeryContent String @db.VarChar(100)
-  surgeryResult String @db.VarChar(100)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now()) @updatedAt
+  patientIdx      Int
+  surgeryIdx      Int      @id @default(autoincrement())
+  surgeryName     String   @db.VarChar(100)
+  surgeryDate     DateTime @db.Timestamp(0)
+  surgeryTime     String   @db.VarChar(100)
+  surgeryType     String   @db.VarChar(100)
+  surgeryEmployee String   @db.VarChar(100)
+  surgeryPatient  String   @db.VarChar(100)
+  surgeryContent  String   @db.VarChar(100)
+  surgeryResult   String   @db.VarChar(100)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @default(now()) @updatedAt
 
   patient Patient @relation(fields: [patientIdx], references: [idx])
 }
 
 //협진
 model Cooperation {
-  idx Int @id @default(autoincrement())
-  patientIdx Int
-  cooperationDate DateTime @db.Timestamp(0)
-  cooperationTime String @db.VarChar(100)
-  cooperationContent String @db.VarChar(100)
-  cooperationEmployee String @db.VarChar(100)
-  cooperationResult String @db.VarChar(100)
+  idx                 Int      @id @default(autoincrement())
+  patientIdx          Int
+  cooperationDate     DateTime @db.Timestamp(0)
+  cooperationTime     String   @db.VarChar(100)
+  cooperationContent  String   @db.VarChar(100)
+  cooperationEmployee String   @db.VarChar(100)
+  cooperationResult   String   @db.VarChar(100)
 
   patient Patient @relation(fields: [patientIdx], references: [idx])
 }
 
 //PRN order
 model PrnOrder {
-  idx Int @id @default(autoincrement())
-  patientIdx Int
-  prnOrderDate DateTime @db.Timestamp(0)
-  prnOrderTime String @db.VarChar(100)
-  prnOrderContent String @db.VarChar(100)
-  prnOrderEmployee String @db.VarChar(100)
-  prnOrderResult String @db.VarChar(100)
+  idx              Int      @id @default(autoincrement())
+  patientIdx       Int
+  prnOrderDate     DateTime @db.Timestamp(0)
+  prnOrderTime     String   @db.VarChar(100)
+  prnOrderContent  String   @db.VarChar(100)
+  prnOrderEmployee String   @db.VarChar(100)
+  prnOrderResult   String   @db.VarChar(100)
 
   patient Patient @relation(fields: [patientIdx], references: [idx])
 }
 
 // Morse Fall Scale
 model MorseFallScale {
-  idx Int @id @default(autoincrement())
-  patientIdx Int
-  patientRoomNumber String @db.VarChar(100)
-  patientName String @db.VarChar(100)
-  patientGender String @db.VarChar(100)
-  patientDateOfBirth String @db.VarChar(100)
+  idx                   Int    @id @default(autoincrement())
+  patientIdx            Int
+  patientRoomNumber     String @db.VarChar(100)
+  patientName           String @db.VarChar(100)
+  patientGender         String @db.VarChar(100)
+  patientDateOfBirth    String @db.VarChar(100)
   fallHistoryFor3Months String @db.VarChar(100)
-  secondaryDiagnosis String @db.VarChar(100)
-  ambulatoryAid String @db.VarChar(100)
-  intravenousTherapy String @db.VarChar(100)
-  gait String @db.VarChar(100)
-  mentalStatus String @db.VarChar(100)
-  fallRiskFactors String @db.VarChar(100)
-  totalScore String @db.VarChar(100)
-  riskLevel String @db.VarChar(100)
-  riskLevelColor String @db.VarChar(100)
+  secondaryDiagnosis    String @db.VarChar(100)
+  ambulatoryAid         String @db.VarChar(100)
+  intravenousTherapy    String @db.VarChar(100)
+  gait                  String @db.VarChar(100)
+  mentalStatus          String @db.VarChar(100)
+  fallRiskFactors       String @db.VarChar(100)
+  totalScore            String @db.VarChar(100)
+  riskLevel             String @db.VarChar(100)
+  riskLevelColor        String @db.VarChar(100)
 
   patient Patient @relation(fields: [patientIdx], references: [idx])
 }
 
 // Braden Scale
 model BradenScale {
-  idx Int @id @default(autoincrement())
-  patientIdx Int
-  patientRoomNumber String @db.VarChar(100)
-  patientName String @db.VarChar(100)
-  patientGender String @db.VarChar(100)
+  idx                Int    @id @default(autoincrement())
+  patientIdx         Int
+  patientRoomNumber  String @db.VarChar(100)
+  patientName        String @db.VarChar(100)
+  patientGender      String @db.VarChar(100)
   patientDateOfBirth String @db.VarChar(100)
-  sensoryPerception String @db.VarChar(100)
-  moisture String @db.VarChar(100)
-  activity String @db.VarChar(100)
-  mobility String @db.VarChar(100)
-  nutrition String @db.VarChar(100)
-  frictionAndShear String @db.VarChar(100)
-  totalScore String @db.VarChar(100)
-  riskLevel String @db.VarChar(100)
-  riskLevelColor String @db.VarChar(100)
+  sensoryPerception  String @db.VarChar(100)
+  moisture           String @db.VarChar(100)
+  activity           String @db.VarChar(100)
+  mobility           String @db.VarChar(100)
+  nutrition          String @db.VarChar(100)
+  frictionAndShear   String @db.VarChar(100)
+  totalScore         String @db.VarChar(100)
+  riskLevel          String @db.VarChar(100)
+  riskLevelColor     String @db.VarChar(100)
 
   patient Patient @relation(fields: [patientIdx], references: [idx])
 }
 
 // Numeric Pain Rating Scale
 model NumericPainRatingScale {
-  idx Int @id @default(autoincrement())
-  patientIdx Int
-  patientRoomNumber String @db.VarChar(100)
-  patientName String @db.VarChar(100)
-  patientGender String @db.VarChar(100)
+  idx                Int    @id @default(autoincrement())
+  patientIdx         Int
+  patientRoomNumber  String @db.VarChar(100)
+  patientName        String @db.VarChar(100)
+  patientGender      String @db.VarChar(100)
   patientDateOfBirth String @db.VarChar(100)
-  painLocation String @db.VarChar(100)
-  painCause String @db.VarChar(100)
-  painScore String @db.VarChar(100)
-  painLevel String @db.VarChar(100)
-  painLevelColor String @db.VarChar(100)
+  painLocation       String @db.VarChar(100)
+  painCause          String @db.VarChar(100)
+  painScore          String @db.VarChar(100)
+  painLevel          String @db.VarChar(100)
+  painLevelColor     String @db.VarChar(100)
 
   patient Patient @relation(fields: [patientIdx], references: [idx])
 }
 
 // MMSE
 model MMSE {
-  idx Int @id @default(autoincrement())
-  patientIdx Int
-  patientRoomNumber String @db.VarChar(100)
-  patientName String @db.VarChar(100)
-  patientGender String @db.VarChar(100)
-  patientDateOfBirth String @db.VarChar(100)
-  orientationToTime String @db.VarChar(100)
-  orientationToPlace String @db.VarChar(100)
-  registration String @db.VarChar(100)
+  idx                     Int    @id @default(autoincrement())
+  patientIdx              Int
+  patientRoomNumber       String @db.VarChar(100)
+  patientName             String @db.VarChar(100)
+  patientGender           String @db.VarChar(100)
+  patientDateOfBirth      String @db.VarChar(100)
+  orientationToTime       String @db.VarChar(100)
+  orientationToPlace      String @db.VarChar(100)
+  registration            String @db.VarChar(100)
   attentionAndCalculation String @db.VarChar(100)
-  recall String @db.VarChar(100)
-  language String @db.VarChar(100)
-  visualConstruction String @db.VarChar(100)
-  totalScore String @db.VarChar(100)
-  cognitiveImpairment String @db.VarChar(100)
+  recall                  String @db.VarChar(100)
+  language                String @db.VarChar(100)
+  visualConstruction      String @db.VarChar(100)
+  totalScore              String @db.VarChar(100)
+  cognitiveImpairment     String @db.VarChar(100)
 
   patient Patient @relation(fields: [patientIdx], references: [idx])
 }
 
 // 투약 기록
 model MedicationRecord {
-  idx Int @id @default(autoincrement())
-  patientIdx Int
-  medicationDate DateTime @db.Timestamp(0)
-  medicationTime String @db.VarChar(100)
-  medicationName String @db.VarChar(100)
-  medicationDose String @db.VarChar(100)
-  medicationEmployee String @db.VarChar(100)
-  medicationResult String @db.VarChar(100)
+  idx                Int      @id @default(autoincrement())
+  patientIdx         Int
+  medicationDate     DateTime @db.Timestamp(0)
+  medicationTime     String   @db.VarChar(100)
+  medicationName     String   @db.VarChar(100)
+  medicationDose     String   @db.VarChar(100)
+  medicationEmployee String   @db.VarChar(100)
+  medicationResult   String   @db.VarChar(100)
 
   patient Patient @relation(fields: [patientIdx], references: [idx])
 }

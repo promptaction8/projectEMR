@@ -105,7 +105,6 @@ function WardSubBar() {
     const extendLoginTime = useMutation({
         mutationFn: async () => {
             // 시간 연장
-            await new Promise((resolve) => setTimeout(resolve, 4000))
             await axios.post(
                 '/api/token-reset',
                 {},

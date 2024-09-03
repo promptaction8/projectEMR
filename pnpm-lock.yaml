@@ -116,6 +116,9 @@ dependencies:
   use-router:
     specifier: ^0.4.2
     version: 0.4.2
+  zod:
+    specifier: ^3.23.8
+    version: 3.23.8
 
 devDependencies:
   '@tanstack/react-query-devtools':
@@ -3855,6 +3858,10 @@ packages:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
     dev: true
+
+  /zod@3.23.8:
+    resolution: {integrity: sha512-XBx9AXhXktjUqnepgTiE5flcKIYWi/rme0Eaj+5Y0lftuGBq+jyRu/md4WnuxqgP1ubdpNCsYEYPxrzVHD8d6g==}
+    dev: false
 
   github.com/github/gh-copilot/f85a1926cb1c9369a2f1ad7f8a1a7b074ba12eab:
     resolution: {tarball: https://codeload.github.com/github/gh-copilot/tar.gz/f85a1926cb1c9369a2f1ad7f8a1a7b074ba12eab}

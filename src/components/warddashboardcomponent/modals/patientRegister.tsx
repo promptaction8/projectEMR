@@ -11,19 +11,17 @@ interface IPatientRegister {
     insuranceStatus: boolean
     occupation: string
     address: string
-    emergencyContactName: string
-    emergencyContactPhone: string
     religion: string
     primaryPhysician: string
     bloodType: string
     marriageStatus: string
-    patientCountry: string
-    patientGuardianName: string
-    patientGuardianRelationship: string
-    patientGuardianPhone: string
-    insuranceType: string
-    insuranceCompany: string
-    insuranceNumber: string
+    nationality: string
+    guardianName: string
+    guardianRelation: string
+    guardianPhone: string
+    type: string
+    company: string
+    code: string
     mainSymptoms: string
     pastMedicalHistory: string
     allergicHistory: string
@@ -33,6 +31,7 @@ interface IPatientRegister {
     physicalHealthStatus: string
     previousTreatmentHistory: string
     livingEnvironment: string
+    roomNumber: string
 }
 
 function PatientRegister() {
@@ -225,15 +224,15 @@ function PatientRegister() {
                     <label className="text-lg font-medium">
                         국적
                         <input
-                            {...register('patientCountry', {
+                            {...register('nationality', {
                                 required: '환자의 국적을 입력하세요',
                             })}
                             type="text"
                             placeholder="환자의 국적을 입력하세요"
                             className="border border-gray-300 rounded-md p-3 mt-2 w-full focus:outline-none focus:ring-2 focus:ring-[#0EA5E9] transition duration-300"
                         />
-                        {errors.patientCountry && (
-                            <p>{errors.patientCountry.message}</p>
+                        {errors.nationality && (
+                            <p>{errors.nationality.message}</p>
                         )}
                     </label>
                 </div>
@@ -243,15 +242,15 @@ function PatientRegister() {
                     <label className="text-lg font-medium">
                         보호자 성함
                         <input
-                            {...register('patientGuardianName', {
+                            {...register('guardianName', {
                                 required: '보호자 성함을 입력하세요',
                             })}
                             type="text"
                             placeholder="보호자 성함을 입력하세요"
                             className="border border-gray-300 rounded-md p-3 mt-2 w-full focus:outline-none focus:ring-2 focus:ring-[#0EA5E9] transition duration-300"
                         />
-                        {errors.patientGuardianName && (
-                            <p>{errors.patientGuardianName.message}</p>
+                        {errors.guardianName && (
+                            <p>{errors.guardianName.message}</p>
                         )}
                     </label>
                 </div>
@@ -261,15 +260,15 @@ function PatientRegister() {
                     <label className="text-lg font-medium">
                         보호자와의 관계
                         <input
-                            {...register('patientGuardianRelationship', {
+                            {...register('guardianRelation', {
                                 required: '보호자와의 관계를 입력하세요',
                             })}
                             type="text"
                             placeholder="보호자와의 관계를 입력하세요"
                             className="border border-gray-300 rounded-md p-3 mt-2 w-full focus:outline-none focus:ring-2 focus:ring-[#0EA5E9] transition duration-300"
                         />
-                        {errors.patientGuardianRelationship && (
-                            <p>{errors.patientGuardianRelationship.message}</p>
+                        {errors.guardianRelation && (
+                            <p>{errors.guardianRelation.message}</p>
                         )}
                     </label>
                 </div>
@@ -279,34 +278,53 @@ function PatientRegister() {
                     <label className="text-lg font-medium">
                         보호자 전화번호
                         <input
-                            {...register('patientGuardianPhone', {
+                            {...register('guardianPhone', {
                                 required: '보호자 전화번호를 입력하세요',
                             })}
                             type="tel"
                             placeholder="보호자 전화번호를 입력하세요"
                             className="border border-gray-300 rounded-md p-3 mt-2 w-full focus:outline-none focus:ring-2 focus:ring-[#0EA5E9] transition duration-300"
                         />
-                        {errors.patientGuardianPhone && (
-                            <p>{errors.patientGuardianPhone.message}</p>
+                        {errors.guardianPhone && (
+                            <p>{errors.guardianPhone.message}</p>
                         )}
                     </label>
                 </div>
 
+                {/* 보험 가입 여부 */}
+                <div className="mb-4">
+                    <label className="text-lg font-medium">
+                        보험 가입 여부
+                        <select
+                            {...register('insuranceStatus', {
+                                required: '보험 가입 여부를 선택하세요',
+                            })}
+                            className="border border-gray-300 rounded-md p-3 mt-2 w-full focus:outline-none focus:ring-2 focus:ring-[#0EA5E9] transition duration-300"
+                        >
+                            <option value="">
+                                보험 가입 여부를 선택하세요
+                            </option>
+                            <option value="true">가입</option>
+                            <option value="false">미가입</option>
+                        </select>
+                        {errors.insuranceStatus && (
+                            <p>{errors.insuranceStatus.message}</p>
+                        )}
+                    </label>
+                </div>
                 {/* 보험 종류 */}
                 <div className="mb-4">
                     <label className="text-lg font-medium">
                         보험 종류
                         <input
-                            {...register('insuranceType', {
+                            {...register('type', {
                                 required: '보험 종류를 입력하세요',
                             })}
                             type="text"
                             placeholder="보험 종류를 입력하세요"
                             className="border border-gray-300 rounded-md p-3 mt-2 w-full focus:outline-none focus:ring-2 focus:ring-[#0EA5E9] transition duration-300"
                         />
-                        {errors.insuranceType && (
-                            <p>{errors.insuranceType.message}</p>
-                        )}
+                        {errors.type && <p>{errors.type.message}</p>}
                     </label>
                 </div>
 
@@ -315,16 +333,14 @@ function PatientRegister() {
                     <label className="text-lg font-medium">
                         보험 회사
                         <input
-                            {...register('insuranceCompany', {
+                            {...register('company', {
                                 required: '보험 회사를 입력하세요',
                             })}
                             type="text"
                             placeholder="보험 회사를 입력하세요"
                             className="border border-gray-300 rounded-md p-3 mt-2 w-full focus:outline-none focus:ring-2 focus:ring-[#0EA5E9] transition duration-300"
                         />
-                        {errors.insuranceCompany && (
-                            <p>{errors.insuranceCompany.message}</p>
-                        )}
+                        {errors.company && <p>{errors.company.message}</p>}
                     </label>
                 </div>
 
@@ -333,16 +349,14 @@ function PatientRegister() {
                     <label className="text-lg font-medium">
                         보험 번호
                         <input
-                            {...register('insuranceNumber', {
+                            {...register('code', {
                                 required: '보험 번호를 입력하세요',
                             })}
                             type="text"
                             placeholder="보험 번호를 입력하세요"
                             className="border border-gray-300 rounded-md p-3 mt-2 w-full focus:outline-none focus:ring-2 focus:ring-[#0EA5E9] transition duration-300"
                         />
-                        {errors.insuranceNumber && (
-                            <p>{errors.insuranceNumber.message}</p>
-                        )}
+                        {errors.code && <p>{errors.code.message}</p>}
                     </label>
                 </div>
 
@@ -490,6 +504,40 @@ function PatientRegister() {
                     </label>
                 </div>
 
+                {/* 종교 */}
+                <div className="mb-4">
+                    <label className="text-lg font-medium">
+                        종교
+                        <input
+                            {...register('religion', {
+                                required: '종교를 입력하세요',
+                            })}
+                            type="text"
+                            placeholder="종교를 입력하세요"
+                            className="border border-gray-300 rounded-md p-3 mt-2 w-full focus:outline-none focus:ring-2 focus:ring-[#0EA5E9] transition duration-300"
+                        />
+                        {errors.religion && <p>{errors.religion.message}</p>}
+                    </label>
+                </div>
+
+                {/* 주치의 */}
+                <div className="mb-4">
+                    <label className="text-lg font-medium">
+                        주치의
+                        <input
+                            {...register('primaryPhysician', {
+                                required: '주치의를 입력하세요',
+                            })}
+                            type="text"
+                            placeholder="주치의를 입력하세요"
+                            className="border border-gray-300 rounded-md p-3 mt-2 w-full focus:outline-none focus:ring-2 focus:ring-[#0EA5E9] transition duration-300"
+                        />
+                        {errors.primaryPhysician && (
+                            <p>{errors.primaryPhysician.message}</p>
+                        )}
+                    </label>
+                </div>
+
                 {/* 생활 환경 */}
                 <div className="mb-4">
                     <label className="text-lg font-medium">
@@ -507,10 +555,27 @@ function PatientRegister() {
                         )}
                     </label>
                 </div>
-
+                {/* 병실  */}
+                <div className="mb-4">
+                    <label className="text-lg font-medium">
+                        병실
+                        <input
+                            {...register('roomNumber', {
+                                required: '병실을 입력하세요',
+                            })}
+                            type="text"
+                            placeholder="병실을 입력하세요"
+                            className="border border-gray-300 rounded-md p-3 mt-2 w-full focus:outline-none focus:ring-2 focus:ring-[#0EA5E9] transition duration-300"
+                        />
+                        {errors.roomNumber && (
+                            <p>{errors.roomNumber.message}</p>
+                        )}
+                    </label>
+                </div>
+                {/* 등록하기 버튼 */}
                 <button
                     type="submit"
-                    className="mt-6 bg-[#0EA5E9] text-white rounded-lg py-2 px-4 hover:bg-[#0284C7] transition duration-300"
+                    className="mt-6 bg-white text-blue-600 border-blue-600 border-2 rounded-lg py-2 px-4 hover:bg-[#0284C7] transition duration-300"
                 >
                     등록하기
                 </button>

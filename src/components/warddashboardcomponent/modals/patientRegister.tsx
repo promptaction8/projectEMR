@@ -5,7 +5,7 @@ import { useMutation } from '@tanstack/react-query'
 interface IPatientRegister {
     name: string
     dateOfBirth: string
-    gender: string
+    gender: boolean
     phone: string
     ssn: string
     insuranceStatus: boolean
@@ -14,7 +14,7 @@ interface IPatientRegister {
     religion: string
     primaryPhysician: string
     bloodType: string
-    marriageStatus: string
+    marriageStatus: boolean
     nationality: string
     guardianName: string
     guardianRelation: string

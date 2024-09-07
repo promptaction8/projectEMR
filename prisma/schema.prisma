@@ -121,30 +121,15 @@ model NursingPlan {
 
 //간호정보조사지
 model NursingSurvey {
-  patientIdx           Int
-  idx                  Int      @id @default(autoincrement())
-  name                 String   @db.VarChar(100)
-  gender               Boolean  @default(false)
-  dateOfBirth          DateTime @db.Timestamp(0)
-  phone                String   @db.VarChar(50)
-  address              String   @db.VarChar(50)
-  pastMedicalHistory   String   @db.VarChar(200)
-  familyMedicalHistory String   @db.VarChar(200)
-  allergicHistory      String   @db.VarChar(100)
-  usingDrugs           String   @db.VarChar(200)
-  mainSymptoms         String   @db.VarChar(200)
-  vitalSigns           String   @db.VarChar(200)
-  physicalStatus       String   @db.VarChar(200)
-  mentalStatus         String   @db.VarChar(200)
-  smokingStatus        String   @db.VarChar(200)
-  drinkingStatus       String   @db.VarChar(200)
-  dietStatus           String   @db.VarChar(200)
-  occupationStatus     String   @db.VarChar(200)
-  religionStatus       String   @db.VarChar(100)
-  contury              String   @db.VarChar(50)
-  needNursingService   String   @db.VarChar(200)
-  needEducation        String   @db.VarChar(200)
-  roomNumber           String   @db.VarChar(50)
+  patientIdx Int
+  idx        Int @id @default(autoincrement())
+
+  vitalSigns         String @db.VarChar(200)
+  smokingStatus      String @db.VarChar(200)
+  drinkingStatus     String @db.VarChar(200)
+  dietStatus         String @db.VarChar(200)
+  needNursingService String @db.VarChar(200)
+  needEducation      String @db.VarChar(200)
 
   patient Patient @relation(fields: [patientIdx], references: [idx])
 }
@@ -275,14 +260,14 @@ model MMSE {
 
 // 투약 기록
 model MedicationRecord {
-  idx                Int      @id @default(autoincrement())
-  patientIdx         Int
-  medicationDate     DateTime @db.Timestamp(0)
-  medicationTime     String   @db.VarChar(100)
-  medicationName     String   @db.VarChar(100)
-  medicationDose     String   @db.VarChar(100)
-  medicationEmployee String   @db.VarChar(100)
-  medicationResult   String   @db.VarChar(100)
+  idx        Int      @id @default(autoincrement())
+  patientIdx Int
+  date       DateTime @db.Timestamp(0)
+  time       String   @db.VarChar(100)
+  name       String   @db.VarChar(100)
+  dose       String   @db.VarChar(100)
+  employee   String   @db.VarChar(100)
+  result     String   @db.VarChar(100)
 
   patient Patient @relation(fields: [patientIdx], references: [idx])
 }

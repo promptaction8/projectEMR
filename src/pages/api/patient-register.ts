@@ -57,7 +57,6 @@ export default async function handler(
             console.error(e)
             return res.status(500).json('환자 등록에 실패했습니다') // Internal Server Error
         }
-        console.log('🚀 ~ req.body:', req.body)
         return res.status(200).json('환자 등록 성공')
     }
     return res.status(405).end() // Method Not Allowed

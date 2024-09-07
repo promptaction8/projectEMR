@@ -113,12 +113,6 @@ export const patientRegister = async (data: IPatientRegister) => {
         },
     })
     // 두번 넣는거 안됨? 됨?
-    const nursingSurvey = await prisma.nursingSurvey.create({
-        data: {
-            name,
-            gender,
-            patientIdx: patient.idx,
-        },
-    })
-    return { patient, insurance, medicalHistory, nursingSurvey }
+
+    return { patient, insurance, medicalHistory }
 }

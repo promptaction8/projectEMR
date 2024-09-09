@@ -8,6 +8,7 @@ import { Modal } from 'react-responsive-modal'
 import 'react-responsive-modal/styles.css'
 import PatientRegister from './modals/patientRegister'
 import TemplateDropDown from './templateDropDown'
+import NursingInfoSurvey from './modals/nursingInfoSurvey'
 
 function WardSubBar() {
     const [timeRemaining, setTimeRemaining] = useState<string>('')
@@ -206,6 +207,16 @@ function WardSubBar() {
                         </Modal>
 
                         <button
+                            onClick={onOpenModal3}
+                            className="bg-white text-blue-600  border-blue-600 border-2 px-10 py-5 rounded-md hover:bg-[#0EA5E9] hover:text-white transition duration-300 transform hover:scale-105"
+                        >
+                            간호정보조사지
+                        </button>
+                        <Modal open={open3} onClose={onCloseModal3} center>
+                            <NursingInfoSurvey />
+                        </Modal>
+
+                        <button
                             onClick={onOpenModal2}
                             className="bg-white text-blue-600  border-blue-600 border-2 px-10 py-5 rounded-md hover:bg-[#0EA5E9] hover:text-white transition duration-300 transform hover:scale-105"
                         >
@@ -223,18 +234,6 @@ function WardSubBar() {
                         <Modal
                             open={open9}
                             onClose={onCloseModal9}
-                            center
-                        ></Modal>
-
-                        <button
-                            onClick={onOpenModal3}
-                            className="bg-white text-blue-600  border-blue-600 border-2 px-10 py-5 rounded-md hover:bg-[#0EA5E9] hover:text-white transition duration-300 transform hover:scale-105"
-                        >
-                            간호정보조사지
-                        </button>
-                        <Modal
-                            open={open3}
-                            onClose={onCloseModal3}
                             center
                         ></Modal>
 

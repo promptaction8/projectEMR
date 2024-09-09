@@ -30,28 +30,13 @@ model Employeeaccount {
 }
 
 model Patient {
-  idx              Int      @id @default(autoincrement())
-  name             String   @db.VarChar(100)
-  dateOfBirth      DateTime @db.Timestamp(0)
-  gender           Boolean  @default(false)
-  phone            String   @unique @db.VarChar(50)
-  ssn              String   @unique @db.VarChar(50)
-  address          String   @db.VarChar(200)
-  occupation       String   @db.VarChar(100)
-  bloodType        String   @db.VarChar(20)
-  marriageStatus   Boolean  @default(false)
-  nationality      String   @db.VarChar(50)
-  guardianName     String   @db.VarChar(50)
-  guardianRelation String   @db.VarChar(50)
-  guardianPhone    String   @db.VarChar(50)
-  insuranceStatus  Boolean
-  religion         String   @db.VarChar(20)
-  primaryPhysician String   @db.VarChar(20)
-  roomNumber       String   @db.VarChar(50)
-  createdAt        DateTime @default(now()) @db.Timestamp(0)
-  updatedAt        DateTime @default(now()) @db.Timestamp(0)
+  idx         Int      @id @default(autoincrement())
+  name        String   @db.VarChar(100)
+  ssn         String   @unique @db.VarChar(50)
+  chartNumber String   @db.VarChar(50)
+  createdAt   DateTime @default(now()) @db.Timestamp(0)
+  updatedAt   DateTime @default(now()) @db.Timestamp(0)
 
-  insurance              Insurance[]
   medicalHistory         MedicalHistory[]
   nursingHistory         NursingHistory[]
   nursingPlan            NursingPlan[]
@@ -64,16 +49,6 @@ model Patient {
   numericPainRatingScale NumericPainRatingScale[]
   mmse                   MMSE[]
   medicationRecord       MedicationRecord[]
-}
-
-model Insurance {
-  patientIdx Int
-  idx        Int    @id @default(autoincrement())
-  type       String @db.VarChar(50)
-  company    String @db.VarChar(50)
-  code       String @db.VarChar(50)
-
-  patient Patient @relation(fields: [patientIdx], references: [idx])
 }
 
 model MedicalHistory {
@@ -121,15 +96,33 @@ model NursingPlan {
 
 //간호정보조사지
 model NursingSurvey {
-  patientIdx Int
-  idx        Int @id @default(autoincrement())
-
-  vitalSigns         String @db.VarChar(200)
-  smokingStatus      String @db.VarChar(200)
-  drinkingStatus     String @db.VarChar(200)
-  dietStatus         String @db.VarChar(200)
-  needNursingService String @db.VarChar(200)
-  needEducation      String @db.VarChar(200)
+  patientIdx       Int
+  idx              Int     @id @default(autoincrement())
+  sex              String  @db.VarChar(20)
+  age              String  @db.VarChar(30)
+  address          String  @db.VarChar(200)
+  occupation       String? @db.VarChar(100)
+  bloodType        String? @db.VarChar(20)
+  marriageStatus   Boolean @default(false)
+  nationality      String? @db.VarChar(50)
+  guardianName     String? @db.VarChar(50)
+  guardianRelation String? @db.VarChar(50)
+  guardianPhone    String? @db.VarChar(50)
+  insuranceStatus  Boolean
+  insuranceType    String? @db.VarChar(50)
+  insuranceCompany String? @db.VarChar(50)
+  insuranceCode    String? @db.VarChar(50)
+  religion         String? @db.VarChar(20)
+  primaryDoctor    String? @db.VarChar(20)
+  primaryNurse     String? @db.VarChar(20)
+  vitalSigns       String? @db.VarChar(200)
+  painLevel        String? @db.VarChar(200)
+  smokingStatus    String? @db.VarChar(200)
+  drinkingStatus   String? @db.VarChar(200)
+  allergicHistory  String? @db.VarChar(200)
+  roomNumber       String? @db.VarChar(50)
+  admissionDate    String? @db.VarChar(50)
+  dischargeDate    String? @db.VarChar(50)
 
   patient Patient @relation(fields: [patientIdx], references: [idx])
 }

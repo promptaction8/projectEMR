@@ -41,8 +41,10 @@
         "react-icons": "^5.2.1",
         "react-query": "^3.39.3",
         "react-responsive-modal": "^6.4.2",
+        "react-select": "^5.8.0",
         "react-toastify": "^10.0.3",
         "react-tooltip": "^5.28.0",
+        "select": "^1.1.2",
         "styled-components": "^6.1.11",
         "use-router": "^0.4.2",
         "zod": "^3.23.8"

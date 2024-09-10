@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { useRouter } from 'next/router'
 import axios from 'axios'
 import { toast } from 'react-toastify'
@@ -9,6 +9,7 @@ import 'react-responsive-modal/styles.css'
 import PatientRegister from './modals/patientRegister'
 import TemplateDropDown from './templateDropDown'
 import NursingInfoSurvey from './modals/nursingInfoSurvey'
+import Select from 'react-select'
 
 function WardSubBar() {
     const [timeRemaining, setTimeRemaining] = useState<string>('')
@@ -140,6 +141,22 @@ function WardSubBar() {
     const tokenData = jwtInfo?.verifyToken
     const tokenId = tokenData?.id
 
+    // Select option으로 간호정보기록지 등록, 조회 드롭다운 만들기
+    const nursingSurveyOptions = [
+        { value: 'register', label: '간호정보기록지 등록' },
+        { value: 'list', label: '간호정보기록지 조회' },
+    ]
+    const placeHolder = '간호정보기록지'
+    const [selectedOption, setSelectedOption] = useState<any>(null)
+    const handleChange = (selectedOption: any) => {
+        setSelectedOption(selectedOption)
+        if (selectedOption.value === 'register') {
+            onOpenModal3()
+        } else if (selectedOption.value === 'list') {
+            onOpenModal2()
+        }
+    }
+
     // 모달 연결
     // PatientRegister 모달
     const [open, setOpen] = useState(false)
@@ -189,11 +206,11 @@ function WardSubBar() {
     return (
         <>
             <div className="bg-gray-100 p-6 mb-10 mt-10 text-white items-center text-sm font-bold">
-                <div className="flex flex-wrap justify-between mt-2 ml-40">
+                <div className="flex flex-wrap justify-between mr-56 mt-2 ml-52">
                     <div className="flex space-x-7">
                         <button
                             onClick={onOpenModal}
-                            className="bg-white text-blue-600  border-blue-600 border-2 px-10 py-5 rounded-md hover:bg-[#0EA5E9] hover:text-white transition duration-300 transform hover:scale-105"
+                            className="bg-white text-blue-600  border-blue-600 border-2 px-4 py-2 rounded-md hover:bg-blue-600 hover:text-white duration-300 transform hover:scale-105"
                         >
                             환자 등록
                         </button>
@@ -206,19 +223,19 @@ function WardSubBar() {
                             <PatientRegister />
                         </Modal>
 
-                        <button
-                            onClick={onOpenModal3}
-                            className="bg-white text-blue-600  border-blue-600 border-2 px-10 py-5 rounded-md hover:bg-[#0EA5E9] hover:text-white transition duration-300 transform hover:scale-105"
-                        >
-                            간호정보조사지
-                        </button>
-                        <Modal open={open3} onClose={onCloseModal3} center>
-                            <NursingInfoSurvey />
-                        </Modal>
+                        {/* Select option으로 간호정보기록지 등록, 조회 드롭다운 */}
+
+                        <Select
+                            value={selectedOption}
+                            onChange={handleChange}
+                            options={nursingSurveyOptions}
+                            placeholder={placeHolder}
+                            className="w-52"
+                        />
 
                         <button
                             onClick={onOpenModal2}
-                            className="bg-white text-blue-600  border-blue-600 border-2 px-10 py-5 rounded-md hover:bg-[#0EA5E9] hover:text-white transition duration-300 transform hover:scale-105"
+                            className="bg-white text-blue-600  border-blue-600 border-2 px-4 py-2 rounded-md hover:bg-blue-600 hover:text-white transition duration-300 transform hover:scale-105"
                         >
                             간호 기록
                         </button>
@@ -226,20 +243,22 @@ function WardSubBar() {
                             open={open2}
                             onClose={onCloseModal2}
                             center
+                            closeOnOverlayClick={false}
                         ></Modal>
 
-                        <button className="bg-white text-blue-600  border-blue-600 border-2 px-10 py-5 rounded-md hover:bg-[#0EA5E9] hover:text-white transition duration-300 transform hover:scale-105">
+                        <button className="bg-white text-blue-600  border-blue-600 border-2 px-10 py-5 rounded-md hover:bg-blue-600 hover:text-white transition duration-300 transform hover:scale-105">
                             간호 계획
                         </button>
                         <Modal
                             open={open9}
                             onClose={onCloseModal9}
                             center
+                            closeOnOverlayClick={false}
                         ></Modal>
 
                         <button
                             onClick={onOpenModal4}
-                            className="bg-white text-blue-600  border-blue-600 border-2 px-10 py-5 rounded-md hover:bg-[#0EA5E9] hover:text-white transition duration-300 transform hover:scale-105"
+                            className="bg-white text-blue-600  border-blue-600 border-2 px-10 py-5 rounded-md hover:bg-blue-600 hover:text-white transition duration-300 transform hover:scale-105"
                         >
                             수술 등록
                         </button>
@@ -247,11 +266,12 @@ function WardSubBar() {
                             open={open4}
                             onClose={onCloseModal4}
                             center
+                            closeOnOverlayClick={false}
                         ></Modal>
 
                         <button
                             onClick={onOpenModal5}
-                            className="bg-white text-blue-600  border-blue-600 border-2 px-10 py-5 rounded-md hover:bg-[#0EA5E9] hover:text-white transition duration-300 transform hover:scale-105"
+                            className="bg-white text-blue-600  border-blue-600 border-2 px-10 py-5 rounded-md hover:bg-blue-600 hover:text-white transition duration-300 transform hover:scale-105"
                         >
                             협진
                         </button>
@@ -259,11 +279,12 @@ function WardSubBar() {
                             open={open5}
                             onClose={onCloseModal5}
                             center
+                            closeOnOverlayClick={false}
                         ></Modal>
 
                         <button
                             onClick={onOpenModal6}
-                            className="bg-white text-blue-600  border-blue-600 border-2 px-10 py-5 rounded-md hover:bg-[#0EA5E9] hover:text-white transition duration-300 transform hover:scale-105"
+                            className="bg-white text-blue-600  border-blue-600 border-2 px-10 py-5 rounded-md hover:bg-blue-600 hover:text-white transition duration-300 transform hover:scale-105"
                         >
                             PRN 오더
                         </button>
@@ -271,15 +292,16 @@ function WardSubBar() {
                             open={open6}
                             onClose={onCloseModal6}
                             center
+                            closeOnOverlayClick={false}
                         ></Modal>
 
-                        <div className="bg-white text-blue-600  border-blue-600 border-2 px-10 py-5 rounded-md hover:bg-[#0EA5E9] hover:text-white transition duration-300 transform hover:scale-105">
+                        <div className="bg-white text-blue-600  border-blue-600 border-2 px-10 py-5 rounded-md hover:bg-blue-600 hover:text-white transition duration-300 transform hover:scale-105">
                             <TemplateDropDown />
                         </div>
 
                         <button
                             onClick={onOpenModal8}
-                            className="bg-white text-blue-600  border-blue-600 border-2 px-10 py-5 rounded-md hover:bg-[#0EA5E9] hover:text-white transition duration-300 transform hover:scale-105"
+                            className="bg-white text-blue-600  border-blue-600 border-2 px-10 py-5 rounded-md hover:bg-blue-600 hover:text-white transition duration-300 transform hover:scale-105"
                         >
                             투약 기록 목록
                         </button>
@@ -287,6 +309,7 @@ function WardSubBar() {
                             open={open8}
                             onClose={onCloseModal8}
                             center
+                            closeOnOverlayClick={false}
                         ></Modal>
                     </div>
                     <div className="flex flex-row justify-center items-center">
@@ -299,7 +322,7 @@ function WardSubBar() {
                         <button
                             onClick={extendLoginTimeMutate}
                             disabled={extendLoginTime.isPending}
-                            className="bg-white text-blue-600 border-2 border-blue-600 px-10 py-5 mr-40 rounded-md hover:bg-[#0EA5E9] hover:text-white transition duration-300 transform hover:scale-105"
+                            className="bg-white text-blue-600 border-2 border-blue-600 px-10 py-5 mr-40 rounded-md hover:bg-blue-600 hover:text-white transition duration-300 transform hover:scale-105"
                         >
                             {extendLoginTime.isPending ? (
                                 <div className="flex items-center justify-center">
@@ -312,7 +335,7 @@ function WardSubBar() {
                         <button
                             disabled={logout.isPending}
                             onClick={logoutMutate}
-                            className="bg-white text-blue-600 border-2 border-blue-600 px-10 py-5 mr-40 rounded-md hover:bg-[#0EA5E9] hover:text-white transition duration-300 transform hover:scale-105"
+                            className="bg-white text-blue-600 border-2 border-blue-600 px-10 py-5 mr-40 rounded-md hover:bg-blue-600 hover:text-white transition duration-300 transform hover:scale-105"
                         >
                             {logout.isPending ? (
                                 <div className="flex items-center justify-center">

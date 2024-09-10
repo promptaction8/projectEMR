@@ -98,12 +98,13 @@ function NursingInfoSurvey() {
     const nursingSurveySubmit: SubmitHandler<INursingSurvey> = async (data) => {
         await nursingSurvey.mutate(data)
     }
+    console.log('🚀 ~ NursingInfoSurvey ~ nursingSurvey:', nursingSurvey)
     // nursingSurvey return 받은거 가져다 쓰기
     const sex = nursingSurvey.data?.sex
     return (
         <div className="bg-white rounded-lg p-10 w-160">
             {/* 환자 조회하기 */}
-            <h1 className="text-lg font-semibold">간호정보조사지</h1>
+            <h1 className="text-lg font-semibold">간호정보조사지 등록</h1>
             <p className="text-sm text-black mt-2">
                 환자 이름과 차트 번호를 입력하여 환자 조회 후 작성해주세요.
             </p>

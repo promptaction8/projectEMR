@@ -4,6 +4,7 @@ import { useMutation } from '@tanstack/react-query'
 import axios from 'axios'
 import { toast } from 'react-toastify'
 import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
 
 interface IPatientRegister {
     name: string
@@ -16,12 +17,12 @@ function PatientRegister() {
         handleSubmit,
         formState: { errors },
     } = useForm<IPatientRegister>()
-    //router
-    const router = useRouter()
     // useMutation hook
     const patientRegister = useMutation({
         mutationFn: async (data: IPatientRegister) => {
             const response = await axios.post('/api/patient-register', data)
+            console.log('🚀 ~ mutationFn: ~ response:', response)
+            return response.data
         },
         onSuccess: async () => {
             toast.success('환자 등록이 완료되었습니다.')
@@ -34,7 +35,7 @@ function PatientRegister() {
     const onSubmit: SubmitHandler<IPatientRegister> = async (data) => {
         await patientRegister.mutate(data)
     }
-
+    console.log('🚀 ~ PatientRegister ~ patientRegister:', patientRegister)
     return (
         <div className="bg-white rounded-lg p-10 w-160">
             <h2 className="text-lg font-semibold">환자 등록</h2>
@@ -75,7 +76,6 @@ function PatientRegister() {
                 <button
                     //등록
                     disabled={patientRegister.isPending}
-                    onClick={handleSubmit(onSubmit)}
                     type="submit"
                     className="mt-6 bg-white text-blue-600 border-blue-600 border-2 rounded-lg py-2 px-4 hover:bg-[#0284C7] transition duration-300"
                 >

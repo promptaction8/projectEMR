@@ -173,7 +173,7 @@ function SubBarButtons() {
     const onOpenModal10 = () => setOpen10(true)
     const onCloseModal10 = () => setOpen10(false)
     return (
-        <div className="flex space-x-7">
+        <div className="flex space-x-7 ">
             <Select
                 value={selectedPatientOption}
                 onChange={handlePatientChange}
@@ -196,7 +196,7 @@ function SubBarButtons() {
                 onChange={handleChange}
                 options={nursingSurveyOptions}
                 placeholder={' 간호정보기록지'}
-                className=" text-black  "
+                className="text-black"
             />
             {/*간호정보기록지 등록 모달 */}
             <Modal

@@ -16,8 +16,8 @@ import SubBarTokens from './subBarTokens'
 function WardSubBar() {
     return (
         <>
-            <div className="bg-gray-100 p-6 mb-10 mt-10 text-white items-center text-sm font-semibold border-2 border-solid border-black">
-                <div className="flex flex-wrap justify-between mr-56 mt-2 ml-52 pr-18 border-2 border-solid border-black">
+            <div className="bg-gray-100 p-6 mb-10 mt-10 text-white items-center text-sm font-semibold ">
+                <div className="flex flex-wrap justify-between mr-56 mt-2 ml-52 pr-18 ">
                     <SubBarButtons />
                     <SubBarTokens />
                 </div>

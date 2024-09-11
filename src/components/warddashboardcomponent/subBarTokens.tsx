@@ -143,7 +143,7 @@ function SubBarTokens() {
     const tokenId = tokenData?.id
 
     return (
-        <div className="flex flex-row justify-center items-center border-2 border-solid border-black">
+        <div className="flex flex-row justify-center items-center ">
             <div className="text-blue-600 mr-40 text-sm">
                 {tokenId}님 환영합니다
             </div>

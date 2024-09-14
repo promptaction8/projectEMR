@@ -51,18 +51,18 @@ function EmployeeDepart() {
             if (axios.isAxiosError(error)) {
                 if (error.response) {
                     if (error.response.status === 401) {
-                        router.push('/login')
+                        router.push('/LoginF')
                         toast.success('로그아웃 되었습니다.')
                     } else {
-                        router.push('/login')
+                        router.push('/LoginF')
                         toast.success('로그아웃 되었습니다.')
                     }
                 } else {
-                    router.push('/login')
+                    router.push('/LoginF')
                     toast.success('로그아웃 되었습니다.')
                 }
             } else {
-                router.push('/login')
+                router.push('/LoginF')
                 toast.success('로그아웃 되었습니다.')
             }
         },
@@ -90,7 +90,7 @@ function EmployeeDepart() {
     // 약제부 map
     const pharmacy = ['약품 목록(미구현)', '처방전 관리(미구현)']
     return (
-        <div className="flex flex-col items-center w-full h-full">
+        <div className="flex flex-col items-center w-full h-full dark:text-black">
             <div className="bg-white rounded-lg p-6 w-full">
                 <p className="text-md font-semibold text-gray-600 text-center my-10 ">
                     성공적으로 로그인했습니다.

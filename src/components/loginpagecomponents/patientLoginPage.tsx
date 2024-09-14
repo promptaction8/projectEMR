@@ -1,4 +1,5 @@
-import PatientLogin from './patientLogin'
+
+import PatientLogin from '../patientLogin'
 
 function PatientLoginPage() {
     return (

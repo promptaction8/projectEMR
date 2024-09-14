@@ -4,11 +4,11 @@ import WardSubBar from './warddashboardcomponent/wardSubBar'
 
 function DashboardPage() {
     return (
-        <div className="flex flex-col h-full w-full bg-gray-100 font-sans dark:bg-gray-100">
+        <div className="flex flex-col h-full w-full bg-gray-100 font-sans dark:bg-gray-100 dark:text-black">
             {/* 추가 바 */}
             <WardSubBar />
             {/* 대시보드 컴포넌트 */}
-            <div className="flex flex-grow p-4 font-bold">
+            <div className="flex flex-grow p-4 font-bold dark:text-black">
                 <div className="flex flex-col w-1/5 pr-8  ml-50">
                     {/* 왼쪽 상단 작은 박스 */}
                     <div className="bg-white shadow-lg p-10 mb-20 h-80 rounded-xl ">

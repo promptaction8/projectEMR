@@ -56,7 +56,7 @@ function EmployeeAccount() {
     }
 
     return (
-        <div className="p-10 w-120 bg-white rounded-lg">
+        <div className="p-10 w-120 bg-white rounded-lg dark:text-gray-900">
             <h2 className="text-lg font-semibold">직원 계정 생성</h2>
             <form className="">
                 {/* 직원 ID */}

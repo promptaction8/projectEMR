@@ -2,6 +2,7 @@ import React from 'react'
 import HeaderBar from '@/components/headerBar'
 import Login from '@/components/loginpagecomponents/login'
 import Head from 'next/head'
+import LoginF from '@/components/login'
 
 function LoginPage() {
     return (
@@ -30,7 +31,7 @@ function LoginPage() {
                     content="User Authentication Page"
                 />
             </Head>
-            <Login />
+            <LoginF />
         </>
     )
 }

@@ -52,7 +52,7 @@ function Template({ children }: any) {
     }, [isError, isFetched, router])
 
     return (
-        <div className="flex flex-col h-screen w-screen bg-white font-sans dark:bg-gray-700">
+        <div className="flex flex-col h-screen w-screen bg-white font-sans dark:bg-gray-900 text-gray-900 dark:text-white">
             <HeaderBar />
             {children}
         </div>

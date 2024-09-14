@@ -35,9 +35,8 @@ function PatientRegister() {
     const onSubmit: SubmitHandler<IPatientRegister> = async (data) => {
         await patientRegister.mutate(data)
     }
-    console.log('🚀 ~ PatientRegister ~ patientRegister:', patientRegister)
     return (
-        <div className="bg-white rounded-lg p-10 w-160">
+        <div className="bg-white rounded-lg p-10 w-160 dark:text-black">
             <h2 className="text-lg font-semibold">환자 등록</h2>
             <form onSubmit={handleSubmit(onSubmit)}>
                 {/* 환자 이름 */}

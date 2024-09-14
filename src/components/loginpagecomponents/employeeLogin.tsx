@@ -74,7 +74,7 @@ function EmployeeLogin() {
     }
     return (
         <>
-            <div className="flex flex-col items-center justify-center h-full">
+            <div className="flex flex-col items-center justify-center h-full dark:text-black">
                 <div className="flex flex-col border-2 rounded-md border-blue-600  w-120 shadow-7xl bg-white p-10">
                     <div className="flex h-16 w-full items-center justify-center">
                         <div className="text-4xl text-blue-600 font-semibold">
@@ -129,7 +129,7 @@ function EmployeeLogin() {
                                 >
                                     {employeeLogin.isPending ? (
                                         <div className="flex items-center justify-center">
-                                            <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                                            <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white dark:animate-spin dark:border-b-2 dark:border-white"></div>
                                         </div>
                                     ) : (
                                         '로그인'

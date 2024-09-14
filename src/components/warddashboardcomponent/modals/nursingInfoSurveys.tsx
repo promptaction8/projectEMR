@@ -13,6 +13,8 @@ interface IGetPatient {
     name: string
     chartNumber: string
 }
+
+// useMutation이 아니라 useQuery로 조회(get) 해야함.
 function NursingInfoSurveys() {
     const {
         register: register1,
@@ -51,7 +53,7 @@ function NursingInfoSurveys() {
     const onCloseModal = () => setOpen(false)
 
     return (
-        <div className="w-180">
+        <div className="w-180 dark:text-black">
             <h1 className="text-lg font-semibold">간호정보조사지 조회</h1>
             <p className="text-sm text-black mt-2">
                 환자 이름과 차트 번호를 입력하여 환자 조회 후 작성해주세요.

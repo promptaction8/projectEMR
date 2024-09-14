@@ -1,5 +1,5 @@
 import React from 'react'
-import EmployeeLoginPage from '@/components/employeeLoginPage'
+import EmployeeLoginPage from '@/components/employeeloginpage'
 import Head from 'next/head'
 
 function EmployeePage() {

@@ -76,7 +76,7 @@ export function LoginState({ isEmployeeLogin }: { isEmployeeLogin: boolean }) {
 
 
     return (
-        <div className="w-120  p-40 border border-gray-400 border-solid rounded-b-md bg-gray-700 border-t-0">
+        <div className="w-120  p-40 border border-gray-400 border-solid rounded-b-md bg-white dark:bg-gray-700 border-t-0">
                 <>
                     <form onSubmit={handleSubmit(login)}>
                         <div className="relative flex items-center my-10">
@@ -84,11 +84,11 @@ export function LoginState({ isEmployeeLogin }: { isEmployeeLogin: boolean }) {
                                 <input
                                     {...register('id', { required: true })}
                                     maxLength={20}
-                                    className=" bg-transparent  flex border border-solid border-white  rounded p-10 pr-10 w-full dark:text-white text-black font-mono"
+                                    className=" bg-transparent  flex border border-solid dark:border-white  rounded p-10 pr-10 w-full dark:text-white text-black font-mono"
                                     type="text"
                                     name="id"
                                 />
-                                <span className="absolute left-0 top-2 ml-10 px-8 text-lg uppercase -translate-y-6 dark:bg-gray-700 bg-white text-white">
+                                <span className="absolute left-0 top-2 ml-10 px-8 text-lg uppercase -translate-y-6  dark:bg-gray-700 bg-white text-gray-900 dark:text-white">
                                     id
                                 </span>
                             </label>
@@ -101,11 +101,11 @@ export function LoginState({ isEmployeeLogin }: { isEmployeeLogin: boolean }) {
                                     {...register('password', {
                                         required: true,
                                     })}
-                                    className=" bg-transparent  flex border border-solid border-white rounded p-10 pr-10 w-full dark:text-white text-black font-mono"
+                                    className=" bg-transparent  flex border border-solid dark:border-white  rounded p-10 pr-10 w-full dark:text-white text-black font-mono"
                                     type={showPassword ? 'text' : 'password'}
                                     name="password"
                                 />
-                                <span className="absolute left-0 top-2 ml-10 px-8 text-lg uppercase -translate-y-6  dark:bg-gray-700 bg-white text-white">
+                                <span className="absolute left-0 top-2 ml-10 px-8 text-lg uppercase -translate-y-6  dark:bg-gray-700 bg-white text-gray-900 dark:text-white">
                                     password
                                 </span>
                             </label>
@@ -122,7 +122,7 @@ export function LoginState({ isEmployeeLogin }: { isEmployeeLogin: boolean }) {
                         <button
                             type="submit"
                             disabled={employeeLogin.isPending}
-                            className="bg-transparent dark:text-white text-black bg-[#0ea7e9] border-solid rounded-md h-12 p-3 mt-60 hover:bg-[#0A74B9] hover:text-white transition duration-300 w-full"
+                            className=" dark:text-white text-white dark:bg-[#0ea7e9] bg-[#0ea7e9] border-solid rounded-md h-12 p-3 mt-60 hover:bg-[#0A74B9] hover:text-white transition duration-300 w-full"
                         >
                             {employeeLogin.isPending ? (
                                 <div className="flex items-center justify-center">

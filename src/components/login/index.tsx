@@ -43,25 +43,25 @@ const LoginF: React.FC = () => {
                     <div className="p-20 ">
                         <div className="flex flex-row justify-between w-full">
                             <button
-                                className={`flex flex-1 justify-center items-center relative  border border-gray-400 bg-gray-700  p-8 rounded-t-md
+                                className={`flex flex-1 relative justify-center items-center  border-gray-400 border bg-white dark:bg-gray-700 p-8 rounded-t-md
                             ${
                                 isEmployeeLogin
-                                    ? 'text-md font-extrabold border-b-0'
-                                    : 'text-md font-normal'
+                                    ? 'text-md text-gray-900 dark:text-white font-extrabold border-b-0'
+                                    : 'text-md text-gray-900 dark:text-white font-normal'
                             }
-                            text-white`}
+                            `}
                                 onClick={() => handleTabClick(true)}
                             >
                                 직원 로그인
                             </button>
                             <button
-                                className={`flex flex-1 relative justify-center items-center  border-gray-400 border bg-gray-700 p-8 rounded-t-md
+                                className={`flex flex-1 relative justify-center items-center  border-gray-400 border bg-white dark:bg-gray-700 p-8 rounded-t-md
                             ${
                                 !isEmployeeLogin
-                                    ? 'text-md font-extrabold border-b-0'
-                                    : 'text-md font-normal'
+                                    ? 'text-md text-gray-900 dark:text-white font-extrabold border-b-0'
+                                    : 'text-md text-gray-900 dark:text-white font-normal'
                             }
-                            text-whites`}
+                            `}
                                 onClick={() => handleTabClick(false)}
                             >
                                 환자 로그인

@@ -2,7 +2,7 @@ import React from 'react'
 
 export function FooterCustom() {
     return (
-        <footer className="p-6 text-center w-120 mx-auto my-10 rounded-md shadow-lg dark:text-white text-gray-900">
+        <footer className="p-6 text-center w-full mx-auto my-10  dark:text-white text-gray-900">
             <p className="text-sm mb-2">
                 &copy; 2024 Yang Jinwoo. All rights reserved.
             </p>

@@ -34,34 +34,34 @@ const LoginF: React.FC = () => {
             <div className="p-40 rounded-lg ">
                 <div className="w-120 flex flex-col justify-center items-center">
                     <span className="text-5xl font-bold text-[#0EA5E9] mb-20">
-                        Login
+                        EMR MEDICAL
                     </span>
                     {/* 그라데이션 밑줄 추가 */}
                     <div className="left-0 right-0 bottom-0 mb-40">
-                        <div className="h-1 w-120  bg-gradient-to-r from-transparent via-blue-600 to-transparent"></div>
+                        <div className="h-1 w-140  bg-gradient-to-r from-transparent via-blue-600 to-transparent"></div>
                     </div>
                     <div className="p-20 ">
                         <div className="flex flex-row justify-between w-full">
                             <button
-                                className={`relative  border-t-2 border-l-2 border-r-2 border-[#0EA5E9] p-8 rounded-t-md
+                                className={`flex flex-1 justify-center items-center relative  border border-gray-400 bg-gray-700  p-8 rounded-t-md
                             ${
                                 isEmployeeLogin
-                                    ? 'text-2xl font-extrabold'
-                                    : 'text-lg font-normal'
+                                    ? 'text-md font-extrabold border-b-0'
+                                    : 'text-md font-normal'
                             }
-                            text-[#0EA5E9]`}
+                            text-white`}
                                 onClick={() => handleTabClick(true)}
                             >
                                 직원 로그인
                             </button>
                             <button
-                                className={`relative  border-t-2 border-l-2 border-r-2 border-[#0EA5E9] p-8 rounded-t-md
+                                className={`flex flex-1 relative justify-center items-center  border-gray-400 border bg-gray-700 p-8 rounded-t-md
                             ${
                                 !isEmployeeLogin
-                                    ? 'text-2xl font-extrabold'
-                                    : 'text-lg font-normal'
+                                    ? 'text-md font-extrabold border-b-0'
+                                    : 'text-md font-normal'
                             }
-                            text-[#0EA5E9]`}
+                            text-whites`}
                                 onClick={() => handleTabClick(false)}
                             >
                                 환자 로그인
@@ -72,7 +72,7 @@ const LoginF: React.FC = () => {
                     <div>
                         <div className="flex flex-row justify-center items-center gap-16 m-4 ">
                             <p
-                                className="text-sm cursor-pointer text-[#0ea7e9] hover:text-[#0A74B9] transition duration-300"
+                                className="text-sm cursor-pointer text-gray-900 dark:text-white hover:text-[#0A74B9] transition duration-300"
                                 onClick={handleOpenModal3}
                             >
                                 비밀번호 찾기
@@ -85,9 +85,9 @@ const LoginF: React.FC = () => {
                                 <FindEmployeePassword />
                             </Modal>
                             {/* 세로 구분선 */}
-                            <div className="border-r-2 border-solid border-[#0ea7e9] h-4 mt-10"></div>
+                            <div className="border-r-2 border-solid border-black dark:border-white h-4 mt-10"></div>
                             <p
-                                className="text-sm cursor-pointer text-[#0ea7e9] hover:text-[#0A74B9] transition duration-300"
+                                className="text-sm cursor-pointer text-gray-900 dark:text-white hover:text-[#0A74B9] transition duration-300"
                                 onClick={onOpenModal2}
                             >
                                 직원 계정 생성

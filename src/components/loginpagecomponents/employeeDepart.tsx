@@ -11,25 +11,6 @@ function EmployeeDepart() {
     const navigateTo = (path: string) => {
         router.push(path)
     }
-    // 첫 번째 코드: axios.post에 null을 보냅니다. 서버가 null을 받는 것이 의도된 동작이라면 괜찮지만, 일반적으로 로그아웃 요청에는 빈 객체 {}가 사용됩니다.
-    // const logout = useMutation({
-    //     mutationFn: async () => {
-    //         await axios.post('/api/logout', null, {
-    //             withCredentials: true,
-    //         })
-    //         return null
-    //     },
-    //     onSuccess: () => {
-    //         toast.success('로그아웃 성공')
-    //         router.push('/')
-    //     },
-    //     onError: (error: any) => {
-    //         toast.error(error.response.data.message)
-    //     },
-    // })
-    // const logoutMutate = async () => {
-    //     await logout.mutate()
-    // }
 
     // 로그아웃
     const logout = useMutation({
@@ -90,20 +71,20 @@ function EmployeeDepart() {
     // 약제부 map
     const pharmacy = ['약품 목록(미구현)', '처방전 관리(미구현)']
     return (
-        <div className="flex flex-col items-center w-full h-full dark:text-black">
-            <div className="bg-white rounded-lg p-6 w-full">
-                <p className="text-md font-semibold text-gray-600 text-center my-10 ">
+        <div className="flex flex-col items-center w-full h-full dark:text-black dark:bg-gray-700">
+            <div className="bg-white dark:bg-gray-900 dark:text-white rounded-lg p-6 w-full">
+                <p className="text-md font-semibold text-gray-600 dark:text-white text-center my-10 ">
                     성공적으로 로그인했습니다.
                 </p>
-                <p className="text-md font-semibold text-gray-600 text-center my-10 ">
+                <p className="text-md font-semibold text-gray-600 dark:text-white text-center my-10 ">
                     접근 가능한 부서 목록을 로딩합니다.
                 </p>
-                <div className="relative">
+                <div className="relative dark:bg-gray-900 dark:text-white">
                     <div className="flex items-center mb-6">
                         <FiFolder className="text-2xl mr-2 text-blue-600" />
                         <span className="text-xl font-semibold">부서 목록</span>
                     </div>
-                    <div className="bg-gray-50 border rounded-lg shadow-md mt-2">
+                    <div className="bg-gray-50 dark:bg-gray-300 dark:text-black border rounded-lg shadow-md mt-2">
                         <ul className="py-2">
                             <li className="font-bold text-gray-800 px-4 py-2 border-b">
                                 진료부

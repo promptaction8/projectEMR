@@ -13,7 +13,7 @@ import EmployeeAccount from '../loginpagecomponents/modal/employeeAccount'
 import { useQuery } from '@tanstack/react-query'
 import FindEmployeePassword from '../loginpagecomponents/modal/employeePassword'
 import { FiLogIn } from 'react-icons/fi'
-import { IoMdEye } from 'react-icons/io'
+import { IoMdCloseCircle, IoMdEye } from 'react-icons/io'
 import { IoMdEyeOff } from 'react-icons/io'
 
 interface IEmployeeLoginData {
@@ -26,6 +26,7 @@ export function LoginState({ isEmployeeLogin }: { isEmployeeLogin: boolean }) {
         handleSubmit,
         register,
         formState: { errors },
+        resetField
     } = useForm<IEmployeeLoginData>()
 
     const [token, setToken] = useAtom(tokenAtom)
@@ -68,13 +69,14 @@ export function LoginState({ isEmployeeLogin }: { isEmployeeLogin: boolean }) {
     const [showPassword, setShowPassword] = useState(false)
     const togglePassword = () => setShowPassword(!showPassword)
 
-    return (
-        <div className="w-120 h-100 p-40 border-2 border-[#0ea7e9] border-solid rounded-b-md">
-            <h2 className="font-bold text-xl text-[#0ea5e9] mb-30">
-                {isEmployeeLogin === true ? '직원' : '환자'} 로그인
-            </h2>
+    // resetField 함수를 사용하여 input value 초기화
+    const clearInputId = () => resetField('id')
+    const clearInputPassword = () => resetField('password')
 
-            {isEmployeeLogin === true && (
+
+
+    return (
+        <div className="w-120  p-40 border border-gray-400 border-solid rounded-b-md bg-gray-700 border-t-0">
                 <>
                     <form onSubmit={handleSubmit(login)}>
                         <div className="relative flex items-center my-10">
@@ -82,15 +84,15 @@ export function LoginState({ isEmployeeLogin }: { isEmployeeLogin: boolean }) {
                                 <input
                                     {...register('id', { required: true })}
                                     maxLength={20}
-                                    className=" bg-transparent  flex border-2 border-solid border-[#0EA5E9] rounded p-10 pr-10 w-full dark:text-white text-black font-mono"
+                                    className=" bg-transparent  flex border border-solid border-white  rounded p-10 pr-10 w-full dark:text-white text-black font-mono"
                                     type="text"
                                     name="id"
                                 />
-                                <span className="absolute left-0 top-2 ml-10 px-8 text-lg uppercase -translate-y-6 dark:bg-gray-900 bg-white text-[#0ea5e9]">
+                                <span className="absolute left-0 top-2 ml-10 px-8 text-lg uppercase -translate-y-6 dark:bg-gray-700 bg-white text-white">
                                     id
                                 </span>
                             </label>
-                            <FiLogIn className="absolute right-3 top-1/2 transform -translate-y-1/2 text-[#0EA5E9] text-2xl" />
+                            <IoMdCloseCircle onClick={clearInputId} className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white text-2xl cursor-pointer" />
                         </div>
 
                         <div className="relative flex items-center mt-30">
@@ -99,26 +101,28 @@ export function LoginState({ isEmployeeLogin }: { isEmployeeLogin: boolean }) {
                                     {...register('password', {
                                         required: true,
                                     })}
-                                    className=" bg-transparent  flex border-2 border-solid border-[#0EA5E9] rounded p-10 pr-10 w-full dark:text-white text-black font-mono"
+                                    className=" bg-transparent  flex border border-solid border-white rounded p-10 pr-10 w-full dark:text-white text-black font-mono"
                                     type={showPassword ? 'text' : 'password'}
                                     name="password"
                                 />
-                                <span className="absolute left-0 top-2 ml-10 px-8 text-lg uppercase -translate-y-6  dark:bg-gray-900 bg-white text-[#0ea5e9]">
+                                <span className="absolute left-0 top-2 ml-10 px-8 text-lg uppercase -translate-y-6  dark:bg-gray-700 bg-white text-white">
                                     password
                                 </span>
                             </label>
                             <div
-                                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-[#0EA5E9] text-2xl"
+                                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white text-2xl cursor-pointer"
                                 onClick={togglePassword}
                             >
                                 {showPassword ? <IoMdEye /> : <IoMdEyeOff />}
+
                             </div>
+                            <IoMdCloseCircle onClick={clearInputPassword} className="absolute right-10 top-1/2 transform -translate-y-1/2 text-white text-2xl cursor-pointer" />
                         </div>
 
                         <button
                             type="submit"
                             disabled={employeeLogin.isPending}
-                            className="bg-transparent dark:text-white text-black border-[#0ea7e9] border-2 border-solid rounded-md h-12 p-3 mt-60 hover:bg-[#0A74B9] hover:text-white transition duration-300 w-full"
+                            className="bg-transparent dark:text-white text-black bg-[#0ea7e9] border-solid rounded-md h-12 p-3 mt-60 hover:bg-[#0A74B9] hover:text-white transition duration-300 w-full"
                         >
                             {employeeLogin.isPending ? (
                                 <div className="flex items-center justify-center">
@@ -137,7 +141,7 @@ export function LoginState({ isEmployeeLogin }: { isEmployeeLogin: boolean }) {
                         </div>
                     </form>
                 </>
-            )}
+
         </div>
     )
 }

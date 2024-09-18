@@ -30,9 +30,9 @@ function Index() {
                     content="Employee Department Management"
                 />
             </Head>
-            <div className="flex flex-col h-screen w-screen bg-gray-100 font-sans">
+            <div className="flex flex-col h-screen w-screen dark:bg-gray-900  bg-gray-100 font-sans">
                 <div className="flex flex-col items-center justify-center h-full">
-                    <div className="flex flex-col border-2 rounded-md border-blue-600 w-120 shadow-7xl bg-white p-10">
+                    <div className="flex flex-col border-2 rounded-md border-blue-600 w-120 shadow-7xl bg-white dark:bg-gray-900 p-10">
                         <EmployeeDepart />
                     </div>
                 </div>

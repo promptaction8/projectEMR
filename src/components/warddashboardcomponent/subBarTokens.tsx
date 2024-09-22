@@ -143,21 +143,21 @@ function SubBarTokens() {
     const tokenId = tokenData?.id
 
     return (
-        <div className="flex flex-row justify-center items-center md:mt-15">
-            <div className="text-blue-600 mr-40 text-sm">
+        <div className="flex flex-row items-center md:mt-15">
+            <div className="dark:text-white dark:bg-gray-700 mr-40 text-sm">
                 {tokenId}님 환영합니다
             </div>
-            <div className="text-blue-600 m-6 mr-80 text-sm">
+            <div className="dark:text-white dark:bg-gray-700 m-6 mr-80 text-sm">
                 로그인 만료시간: {timeRemaining}
             </div>
             <button
                 onClick={extendLoginTimeMutate}
                 disabled={extendLoginTime.isPending}
-                className="bg-white text-blue-600 border-2 border-blue-600 px-10 py-5 mr-40 rounded-md hover:bg-blue-600 hover:text-white transition duration-300 transform hover:scale-105"
+                className="bg-white text-blue-600 border  dark:bg-gray-400 dark:text-white   px-10 py-5 mr-40 rounded-md hover:bg-blue-600 hover:text-white transition duration-300 transform "
             >
                 {extendLoginTime.isPending ? (
                     <div className="flex items-center justify-center">
-                        <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-gray-900"></div>
+                        <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-gray-900 dark:border-white"></div>
                     </div>
                 ) : (
                     '로그인 시간 연장'
@@ -166,7 +166,7 @@ function SubBarTokens() {
             <button
                 disabled={logout.isPending}
                 onClick={logoutMutate}
-                className="bg-white text-blue-600 border-2 border-blue-600 px-10 py-5 mr-40 rounded-md hover:bg-blue-600 hover:text-white transition duration-300 transform hover:scale-105"
+                className="bg-white text-blue-600 border  dark:bg-gray-400 dark:text-white   px-10 py-5 mr-40 rounded-md hover:bg-blue-600 hover:text-white transition duration-300 transform "
             >
                 {logout.isPending ? (
                     <div className="flex items-center justify-center">

@@ -11,7 +11,7 @@ interface IPatientRegister {
     ssn: string
 }
 
-function PatientRegister() {
+export function PatientRegister() {
     const {
         register,
         handleSubmit,
@@ -36,7 +36,7 @@ function PatientRegister() {
         await patientRegister.mutate(data)
     }
     return (
-        <div className="bg-white rounded-lg p-10 w-160 dark:text-black">
+        <div className="bg-white rounded-lg p-10  dark:text-black">
             <h2 className="text-lg font-semibold">환자 등록</h2>
             <form onSubmit={handleSubmit(onSubmit)}>
                 {/* 환자 이름 */}
@@ -90,5 +90,3 @@ function PatientRegister() {
         </div>
     )
 }
-
-export default PatientRegister

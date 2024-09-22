@@ -43,7 +43,7 @@ interface INursingSurvey {
     dischargeDate: string
 }
 
-function NursingInfoSurvey() {
+export function NursingInfoSurvey() {
     const {
         register: register1,
         handleSubmit: handleSubmit1,
@@ -101,7 +101,7 @@ function NursingInfoSurvey() {
     // nursingSurvey return 받은거 가져다 쓰기
     const sex = nursingSurvey.data?.sex
     return (
-        <div className="bg-white rounded-lg p-10 w-160 dark:text-black">
+        <div className="bg-white rounded-lg p-10 dark:text-black">
             {/* 환자 조회하기 */}
             <h1 className="text-lg font-semibold">간호정보조사지 등록</h1>
             <p className="text-sm text-black mt-2">
@@ -750,4 +750,4 @@ function NursingInfoSurvey() {
     )
 }
 
-export default NursingInfoSurvey
+

@@ -15,7 +15,7 @@ interface IGetPatient {
 }
 
 // useMutation이 아니라 useQuery로 조회(get) 해야함.
-function NursingInfoSurveys() {
+export function NursingInfoSurveys() {
     const {
         register: register1,
         handleSubmit: handleSubmit1,
@@ -210,4 +210,4 @@ function NursingInfoSurveys() {
     )
 }
 
-export default NursingInfoSurveys
+
